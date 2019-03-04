@@ -1,5 +1,5 @@
-# OpenGLCircuitRace
-A University project developped with C++ and OpenGL. This project is a little race game developped by Nicolas Bouchard, Timothée Guy and Timothée Laurent. In this game, you can control a car and drive it on a circuit.
+# OpenGL Circuit Race Project
+This project is a little race game in which you can control a car and drive it around a circuit. This game was developped as part of the OpenGL optional class taught in the 1st year of Master's degree in Computer Science at the Université de Franche-Comté. 
 
 ### Requirements
 - The circuit is flat;
@@ -13,4 +13,9 @@ A University project developped with C++ and OpenGL. This project is a little ra
 
 ### Usage
 
-### Structuration
+### Structure
+
+### Authors
+- Nicolas Bouchard;
+- Timothée Guy;
+- Timothée Laurent.
