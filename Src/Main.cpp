@@ -28,7 +28,14 @@ static void init(void) {
 /* Scene function */
 static void scene(void) {
 	glPushMatrix();
-	glutSolidTorus(0.2, 0.5, 72, 180);
+	glPushMatrix();
+	glScalef(2.0, 0.5, 1.0);
+	glutSolidCube(1.0);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 0.5, 0.0);
+	glutSolidCube(1.0);
+	glPopMatrix();
 	glPopMatrix();
 }
 
