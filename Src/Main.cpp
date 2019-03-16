@@ -15,9 +15,15 @@
 /* Global variables */
 static int pMode = 1; 
 
+static int wTx = 600;
+static int wTy = 360;
+static int wPx = 50;
+static int wPy = 50;
 
 /* Init function */
 static void init(void) {
+	glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, {1.0F, 1.0F, 1.0F, 1.0F});
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glDepthFunc(GL_LESS);
@@ -44,6 +50,7 @@ static void display(void) {
 	printf("D\n");
 	glPolygonMode(GL_FRONT_AND_BACK, (pMode == 1) ? GL_FILL : GL_LINE);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	gluLookAt(0.0, 5.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	scene();
 	glFlush();
 	glutSwapBuffers();
@@ -54,11 +61,13 @@ static void display(void) {
 
 /* Reshape function */
 static void reshape(int wx, int wy) {
+	wTx = wx;
+	wTy = wy;
 	printf("R\n");
 	glViewport(0, 0, wx, wy);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	double ratio = (double)wx / wy;
+	double ratio = (double) wx / wy;
 	if (wx > wy)
 		glOrtho(-ratio, ratio, -1.0, 1.0, -1.0, 1.0);
 	else
@@ -117,17 +126,17 @@ int main(int argc, char **argv) {
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
-	glutInitWindowSize(400.0, 400.0);
-	glutInitWindowPosition(100.0, 100.0);
-	glutCreateWindow("Gestion événementielle de GLUt");
+	glutInitWindowSize(wTx, wTy);
+	glutInitWindowPosition(wPx, wPy);
+	glutCreateWindow("Circuit");
 	init();
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(special);
 	glutMouseFunc(mouse);
-	//glutMotionFunc(mouseMotion);
-	//glutPassiveMotionFunc(passiveMouseMotion);
+	glutMotionFunc(mouseMotion);
+	glutPassiveMotionFunc(passiveMouseMotion);
 	glutReshapeFunc(reshape);
-	//glutIdleFunc(idle);
+	glutIdleFunc(idle);
 	glutDisplayFunc(display);
 	glutMainLoop();
 	return(0);
