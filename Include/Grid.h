@@ -2,7 +2,7 @@
 	Racing game project - Grid class
 
 	2019
-	Nicolas Bouchard, Timoth�e Guy, Timoth�e Laurent
+	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
 
 #ifndef GRID_H
