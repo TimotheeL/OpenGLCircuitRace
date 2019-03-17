@@ -2,7 +2,7 @@
 	Racing game project - Main program
 	
 	2019
-	Nicolas Bouchard, Timothée Guy, Timothée Laurent
+	Nicolas Bouchard, Timothï¿½e Guy, Timothï¿½e Laurent
 */
 
 #include <stdlib.h>
