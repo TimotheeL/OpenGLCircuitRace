@@ -22,8 +22,6 @@ static int wPy = 50;
 
 /* Init function */
 static void init(void) {
-	glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, {1.0F, 1.0F, 1.0F, 1.0F});
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glDepthFunc(GL_LESS);
@@ -47,11 +45,19 @@ static void scene(void) {
 
 /* Display function */
 static void display(void) {
-	printf("D\n");
-	glPolygonMode(GL_FRONT_AND_BACK, (pMode == 1) ? GL_FILL : GL_LINE);
+	if (pMode == 1) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glEnable(GL_LIGHTING);
+	}
+	else {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glDisable(GL_LIGHTING);
+	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	gluLookAt(0.0, 5.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	glPushMatrix();
+	gluLookAt(30.0, 20.0, -50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	scene();
+	glPopMatrix();
 	glFlush();
 	glutSwapBuffers();
 	int error = glGetError();
@@ -63,15 +69,14 @@ static void display(void) {
 static void reshape(int wx, int wy) {
 	wTx = wx;
 	wTy = wy;
-	printf("R\n");
 	glViewport(0, 0, wx, wy);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	double ratio = (double) wx / wy;
+	double ratio = (double)wx / wy;
 	if (wx > wy)
-		glOrtho(-ratio, ratio, -1.0, 1.0, -1.0, 1.0);
+		glOrtho(-ratio, ratio, -1.0, 1.0, -10.0, 100.0);
 	else
-		glOrtho(-1.0, 1.0, -1.0 / ratio, 1.0 / ratio, -1.0, 1.0);
+		glOrtho(-1.0, 1.0, -1.0 / ratio, 1.0 / ratio, -10.0, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
