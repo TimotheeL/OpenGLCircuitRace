@@ -21,12 +21,12 @@
     <ClCompile Include="..\..\Src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tree.cpp">
+    <ClCompile Include="..\..\Src\Tree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tree.h">
+    <ClInclude Include="..\..\Include\Tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

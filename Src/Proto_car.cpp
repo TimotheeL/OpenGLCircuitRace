@@ -14,6 +14,7 @@
 
 #include <RacingCar.h>
 #include <Grid.h>
+#include <Position.h>
 
 /* Global variables */
 static int pMode = 1;
@@ -26,8 +27,12 @@ double accumulator = 0.0;	/* Time accumulator */
 bool keyStates[256];
 bool keySpecialStates[256];
 
-RacingCar *rc = new RacingCar();	/* A Racing car */
-Grid *grid = new Grid();			/* A grid */
+/* Racing Cars */
+RacingCar *rc = new RacingCar();
+RacingCar *rc2 = new RacingCar(); // This one doesn't move
+
+/* A grid */
+Grid *grid = new Grid();
 
 /* Init function */
 static void init(void) {
@@ -43,14 +48,16 @@ static void scene(void) {
 	glPushMatrix();
 
 		/* Draw the camera locked on the racing car */
+		Position rcpos = rc->getPos();
 		gluLookAt(
-			0.0 + rc->x, 10.0 + rc->y, 10.0 + rc->z,
-			rc->x, rc->y, rc->z,
+			0.0 + rcpos.x, 12.0 + rcpos.y, 7.0 + rcpos.z,
+			rcpos.x, rcpos.y, rcpos.z,
 			0.0, 1.0, 0.0
 		);
 
 		/* Draw objects */
 		rc->draw();
+		rc2->draw();
 		grid->draw();
 
 	glPopMatrix();

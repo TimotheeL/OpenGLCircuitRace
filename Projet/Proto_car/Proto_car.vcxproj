@@ -101,11 +101,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Grid.cpp" />
+    <ClCompile Include="..\..\Src\Position.cpp" />
     <ClCompile Include="..\..\Src\Proto_car.cpp" />
     <ClCompile Include="..\..\Src\RacingCar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\Grid.h" />
+    <ClInclude Include="..\..\Include\Position.h" />
     <ClInclude Include="..\..\Include\RacingCar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

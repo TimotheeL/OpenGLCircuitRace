@@ -25,24 +25,23 @@ void Grid::draw(void) {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glPushMatrix();
+	glBegin(GL_QUADS);
 
 	int xsize = 0, ysize = 0;
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 20; i++) {
 		xsize = 0;
-		for (int j = 0; j < 10; j++) {
-			glBegin(GL_POLYGON);
+		for (int j = 0; j < 20; j++) {
 			glNormal3f(0.0, 1.0, 0.0);
-			glVertex3f(-20.0 + xsize, 0.0, -20.0 + ysize);
-			glVertex3f(-10.0 + xsize, 0.0, -20.0 + ysize);
-			glVertex3f(-10.0 + xsize, 0.0, -10.0 + ysize);
-			glVertex3f(-20.0 + xsize, 0.0, -10.0 + ysize);
-			glEnd();
+			glVertex3f(-40.0 + xsize, 0.0, -40.0 + ysize);
+			glVertex3f(-30.0 + xsize, 0.0, -40.0 + ysize);
+			glVertex3f(-30.0 + xsize, 0.0, -30.0 + ysize);
+			glVertex3f(-40.0 + xsize, 0.0, -30.0 + ysize);
 			xsize += 10.0;
 		}
 		ysize += 10.0;
 		
 	}
-
+	glEnd();
 	glPopMatrix();
 }

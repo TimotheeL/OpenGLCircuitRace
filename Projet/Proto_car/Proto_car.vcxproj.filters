@@ -27,12 +27,18 @@
     <ClCompile Include="..\..\Src\Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Position.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\RacingCar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Position.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

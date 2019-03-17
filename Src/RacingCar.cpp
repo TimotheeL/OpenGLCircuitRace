@@ -22,25 +22,43 @@ const float RacingCar::MAX_SPD_BW = 5.0;
 const float RacingCar::ACCEL = 3.0;
 const float RacingCar::ROT_ANGLE = 2.0;
 
-/* Constructor */
-RacingCar::RacingCar(void) {
-	x = 0.0;
-	y = 0.0;
-	z = 0.0;
-	rotation = 0.0;
+/* Constructors */
+RacingCar::RacingCar(float cx, float cy, float cz) {
+	pos = new Position(cx, cy, cz);
+	tiresAngle = 0.0;
 	speed = 0.0;
-	b_handbrake = false;
+	handbrakeState = false;
 	dirForward = true;
+}
+
+RacingCar::RacingCar(void):RacingCar(0.0, 0.0, 0.0) { }
+
+
+RacingCar::RacingCar(RacingCar *rc) {
+	pos = rc->getPos();
+	tiresAngle = rc->getTiresAngle();
+	speed = rc->getSpeed();
+	handbrakeState = rc->getHandbrakeState();
+	dirForward = rc->getDirForward();
 }
 
 /* Destructor */
 RacingCar::~RacingCar(void) { }
 
+/* Getters */
+Position RacingCar::getPos(void) { return pos; }
+
+float RacingCar::getTiresAngle(void) { return tiresAngle; }
+float RacingCar::getSpeed(void) { return speed; }
+
+bool RacingCar::getHandbrakeState(void) { return handbrakeState; }
+bool RacingCar::getDirForward(void) { return dirForward; }
+
 /* Draw */
 void RacingCar::draw(void) {
 	glPushMatrix();
-		glTranslatef(x, y, z);
-		glRotatef(rotation, 0.0, -1.0, 0.0);
+		glTranslatef(pos.x, pos.y, pos.z);
+		glRotatef(tiresAngle, 0.0, -1.0, 0.0);
 
 		glPushMatrix();
 			glScalef(2.0, 0.5, 1.0);
@@ -95,21 +113,21 @@ void RacingCar::handleInputs(bool *keyStates, bool *specialKeyStates) {
 void RacingCar::handleMovement(double deltaTime) {
 	// If the speed isn't at zero
 	if (speed != 0.0) {
-		float angle = rotation * PI / 180;
+		float radangle = tiresAngle * PI / 180;
 
 		// Calculate new position
 		if (dirForward) {
-			x += speed * deltaTime * cos(angle);
-			z += speed * deltaTime * sin(angle);
+			pos.x += speed * deltaTime * cos(radangle);
+			pos.z += speed * deltaTime * sin(radangle);
 		}
 		else {
-			x -= speed * deltaTime * cos(angle);
-			z -= speed * deltaTime * sin(angle);
+			pos.x -= speed * deltaTime * cos(radangle);
+			pos.z -= speed * deltaTime * sin(radangle);
 		}
 		
 		/* Slow the car over the time, if the handbrake is on, 
 		slow the car 10 times faster */
-		if (b_handbrake) {
+		if (handbrakeState) {
 			(speed > 0) ? speed -= 1.0 : speed = 0.0;
 		}
 		else {
@@ -132,26 +150,24 @@ void RacingCar::backward(float distance) {
 
 /* Turn right */
 void RacingCar::turnRight(float degrees) {
-	rotation += degrees;
+	tiresAngle += degrees;
 }
 
 /* Turn left */
 void RacingCar::turnLeft(float degrees) {
-	rotation -= degrees;
+	tiresAngle -= degrees;
 }
 
 /* Use the handbrake */
 void RacingCar::handbrake() {
-	b_handbrake = true;
+	handbrakeState = true;
 }
 
 /* Reset car's properties */
 void RacingCar::reset() {
-	x = 0.0;
-	y = 0.0;
-	z = 0.0;
-	rotation = 0.0;
+	pos = new Position();
+	tiresAngle = 0.0;
 	speed = 0.0;
-	b_handbrake = false;
+	handbrakeState = false;
 	dirForward = true;
 }
