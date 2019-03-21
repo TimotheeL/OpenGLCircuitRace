@@ -32,5 +32,5 @@ void TrackPart::setWidth(float width) {
 	this->width = width;
 }
 
-// Builder
-void TrackPart::build(void) {}
+// Drawer
+void TrackPart::draw(void) {}

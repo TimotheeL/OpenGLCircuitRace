@@ -27,8 +27,8 @@ public:
 	/* Setters */
 	void virtual setWidth(float width);
 
-	/* Builder */
-	void virtual build(void);
+	/* Drawer */
+	void virtual draw(void);
 };
 
 #endif // TrackPart

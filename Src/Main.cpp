@@ -11,7 +11,9 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <math.h>
 
+#include "Turn.h"
 #include "StraightLine.h"
 
 /* Global variables */
@@ -33,8 +35,14 @@ static void init(void) {
 
 /* Test functions */
 static void testNicolas(void) {
-	StraightLine myLine = new StraightLine(7.0, 10.0); 
-	myLine.build();
+	StraightLine myLine1 = new StraightLine(7.0, 10.0);
+	myLine1.draw();
+	Turn myTurn1 = new Turn(); 
+	myTurn1.setWidth(7.0);
+	myTurn1.setSoftness(10.0);
+	myTurn1.setDirection('l');
+	myTurn1.setAngle(45.0);
+	myTurn1.draw();
 }
 
 /* Scene function */
@@ -42,6 +50,24 @@ static void scene(void) {
 	glPushMatrix();
 	glPushMatrix();
 	testNicolas();
+	/* glBegin(GL_QUAD_STRIP);
+	for (int i = 0; i <= 20; i++) {
+		float rp = (float)i / 20;
+		float ar = 2.0*3.1415926535897932384626433832795 / (360.0 / 90.0);
+		float a = ar*rp;
+		float cs = cos(a);
+		float sn = -sin(a);
+		float x = 7.0 * cs;
+		float z = 7.0 * sn;
+
+		float xin = 7.0 * cs - 7.0 - 7.0 / 2;
+		float zin = 7.0 * sn;
+		float xout = ((7.0 + 7.0) * cs - 7.0 - 7.0 / 2);
+		float zout = (7.0 + 7.0) * sn;
+		glVertex3f(xin, 0.0, zin);
+		glVertex3f(xout, 0.0, zout);
+	}
+	glEnd(); */
 	glPopMatrix();
 	glPopMatrix();
 }
@@ -77,9 +103,9 @@ static void reshape(int wx, int wy) {
 	glLoadIdentity();
 	double ratio = (double)wx / wy;
 	if (ratio > 1.0)
-		gluPerspective(60.0, ratio, 0.2, 100.0);
+		gluPerspective(60.0, ratio, 0.2, 200.0);
 	else
-		gluPerspective(60.0 / ratio, ratio, 0.2, 100.0);
+		gluPerspective(60.0 / ratio, ratio, 0.2, 200.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }

@@ -12,7 +12,9 @@
 #include <GL/glu.h>
 
 // Regular constructor
-StraightLine::StraightLine(void) {}
+StraightLine::StraightLine(void):TrackPart() {
+	this->length = 7.0;
+}
 
 // 2-arguments constructor
 StraightLine::StraightLine(float width, float length) {
@@ -23,6 +25,7 @@ StraightLine::StraightLine(float width, float length) {
 
 // Copy constructor
 StraightLine::StraightLine(StraightLine *p1):TrackPart(p1) {
+	this->width = width;
 	this->length = p1->getLength();
 }
 
@@ -38,17 +41,16 @@ void StraightLine::setLength(float length) {
 	this->length = length;
 }
 
-// Builder
-void StraightLine::build(void) {
-	glColor3f(0.25, 0.25, 0.25);
+// Drawer
+void StraightLine::draw(void) {
+	glColor3f(0.5, 0.5, 0.5);
 	glPushMatrix();
 	glBegin(GL_QUADS);
 		glNormal3f(0.0F, 1.0F, 0.0F);
 		glVertex3f(-width / 2.0, 0.0, 0.0);
 		glVertex3f(width / 2.0, 0.0, 0.0);
-		glVertex3f(width / 2.0, length, 0.0);
-		glVertex3f(-width / 2.0, length, 0.0);
+		glVertex3f(width / 2.0, 0.0, length);
+		glVertex3f(-width / 2.0, 0.0, length);
 	glEnd();
 	glPopMatrix();
-	glTranslatef(0.0, 0.0, -length);
 }

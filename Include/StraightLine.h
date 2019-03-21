@@ -25,13 +25,13 @@ public:
 	~StraightLine(void);
 
 	/* Getters */
-	float virtual getLength(void);
+	float getLength(void);
 
 	/* Setters */
 	void setLength(float length);
 
-	/* Builder */
-	void build(void);
+	/* Drawer */
+	void draw(void);
 };
 
 #endif // StraightLine

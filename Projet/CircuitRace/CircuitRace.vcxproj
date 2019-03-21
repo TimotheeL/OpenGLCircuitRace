@@ -106,11 +106,13 @@
     <ClCompile Include="..\..\Src\StraightLine.cpp" />
     <ClCompile Include="..\..\Src\TrackPart.cpp" />
     <ClCompile Include="..\..\Src\Tree.cpp" />
+    <ClCompile Include="..\..\Src\Turn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\StraightLine.h" />
     <ClInclude Include="..\..\Include\TrackPart.h" />
     <ClInclude Include="..\..\Include\Tree.h" />
+    <ClInclude Include="..\..\Include\Turn.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
