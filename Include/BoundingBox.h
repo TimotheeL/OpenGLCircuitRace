@@ -1,5 +1,5 @@
 /*
-	Racing game project - Hitbox_rect class
+	Racing game project - BoundingBox class
 
 	2019
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
@@ -13,15 +13,23 @@
 class BoundingBox {
 public:
 	float length, width, height;
-	Position points[8];	// The 8 points of the hitbox
+	Position points[8];
+
+	/*	BoundingBox points structure
+
+		bottom   top
+		2-----1  6-----5
+		|     |  |     |
+		|  +  |  |  +  |	+ x
+		|     |  |     |	z
+		3-----0  7-----4
+	*/
 
 public:
-	/* Constructor */
+	/* Constructors */
 	BoundingBox(float objLength, float objWidth, float objHeight, Position *objCenter);
 
 	BoundingBox(BoundingBox *b);
-
-	BoundingBox(void);
 
 	/* Destructor */
 	~BoundingBox(void);

@@ -1,5 +1,5 @@
 /*
-	Racing game project - Hitbox_rect class
+	Racing game project - BoundingBox class
 
 	2019
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
@@ -17,13 +17,22 @@
 
 #define PI 3.14159265
 
-/* Constructor */
-BoundingBox::BoundingBox(float objLength, float objWidth, float objHeight, Position *objCenter) {
-	length = objLength;
-	width = objWidth;
-	height = objHeight;
+/*	BoundingBox points structure
 
-	update(objCenter);
+	bottom   top
+	2-----1  6-----5
+	|     |  |     |
+	|  +  |  |  +  |	+ x
+	|     |  |     |	z 
+	3-----0  7-----4
+*/
+
+/* Constructors */
+BoundingBox::BoundingBox(float objLength, float objWidth, float objHeight, Position *objCenter) {
+	length = objLength;		// Set length to object length
+	width = objWidth;		// Set width to object width
+	height = objHeight;		// Set height to object height
+	update(objCenter);		// Update the position of the box with the object position
 }
 
 BoundingBox::BoundingBox(BoundingBox *b) {
@@ -41,16 +50,19 @@ BoundingBox::~BoundingBox(void) { }
 
 /* Update hitbox's points with a new position */
 void BoundingBox::update(Position *newPos) {
+	// Calculate the radius of the box
 	float radius = sqrt(width*width + length * length) / 2;
+	// Calculate alpha, an angle of the rect triangle in the box
 	float alpha = atan2(width, length);
-
+	// Convert in rad
 	float radangle = newPos->angle * PI / 180;
 
-	float a = radangle + alpha;
-	float b = radangle - alpha;
-	float c = b + 180;
-	float d = a - 180;
+	float a = radangle + alpha; // Rotation angle for points +x +z (0,4)
+	float b = radangle - alpha;	// Rotation angle for points +x -z (1,5)
+	float c = b + 180;			// Rotation angle for points -x -z (2,6)
+	float d = a - 180;			// Rotation angle for points -x +z (3,7)
 
+	// Update each points
 	points[0] = new Position(
 		newPos->x + radius * cos(a),
 		newPos->y,

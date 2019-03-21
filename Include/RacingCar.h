@@ -17,7 +17,7 @@ public:
 	static const float MAX_SPD_FW;	// Maximum speed forward
 	static const float MAX_SPD_BW;	// Maximum speed backward
 	static const float ACCEL;		// Acceleration
-	static const float ROT_ANGLE;	// tiresAngle angle
+	static const float ROT_ANGLE;	// Rotation rate
 
 private:
 	Position *pos;			// Position

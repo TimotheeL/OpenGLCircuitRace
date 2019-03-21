@@ -28,11 +28,11 @@ bool keyStates[256];
 bool keySpecialStates[256];
 
 /* Racing Cars */
-RacingCar *rc = new RacingCar(4.0, 2.0, 2.0);
-RacingCar *rc2 = new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, -10.0); // This one doesn't move
+RacingCar *rc;
+RacingCar *rc2;
 
 /* A grid */
-Grid *grid = new Grid();
+Grid *grid;
 
 /* Init function */
 static void init(void) {
@@ -41,6 +41,10 @@ static void init(void) {
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
+
+	rc = new RacingCar(4.0, 2.0, 2.0);
+	rc2 = new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, -10.0); // This one doesn't move
+	grid = new Grid();
 }
 
 /* Scene function */
@@ -60,7 +64,7 @@ static void scene(void) {
 		rc2->draw();
 		grid->draw();
 
-		/* Draw hitboxes */
+		/* Draw bounding boxes */
 		rc->getBoundingBox().draw();
 		rc2->getBoundingBox().draw();
 
