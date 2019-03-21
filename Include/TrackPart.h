@@ -10,7 +10,7 @@
 
 class TrackPart {
 
-private:
+protected:
 	float width;
 
 public:
@@ -25,7 +25,10 @@ public:
 	float virtual getWidth(void);
 
 	/* Setters */
-	void setWidth(float width);
+	void virtual setWidth(float width);
+
+	/* Builder */
+	void virtual build(void);
 };
 
 #endif // TrackPart

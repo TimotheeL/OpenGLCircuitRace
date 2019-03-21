@@ -8,11 +8,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 
 #include "Tree.h"
+
+#include "StraightLine.h"
 
 /* Global variables */
 static int pMode = 1; 
@@ -31,7 +34,7 @@ static float colorTrunk[4] = {0.5, 0.2, 0.18, 1.0};
 static float colorLeaves[4] = {0.1, 0.5, 0.1, 1.0};
 
 
-Tree test = new Tree(0.0, 0.0, 0.5, 1.5, 2.0, 4.0, 3.0, 5.0, 2.0, 6.0);
+//Tree test = new Tree(0.0, 0.0, 0.5, 1.5, 2.0, 4.0, 3.0, 5.0, 2.0, 6.0);
 
 /* Init function */
 static void init(void) {
@@ -42,10 +45,16 @@ static void init(void) {
 	glEnable(GL_NORMALIZE);
 }
 
+/* Test functions */
+static void testNicolas(void) {
+	StraightLine myLine = new StraightLine(7.0, 10.0); 
+	myLine.build();
+}
+
 /* Scene function */
 static void scene(void) {
 	glPushMatrix();
-	test.build();
+	testNicolas();
 	glPopMatrix();
 }
 
@@ -80,9 +89,9 @@ static void reshape(int wx, int wy) {
 	glLoadIdentity();
 	double ratio = (double)wx / wy;
 	if (ratio > 1.0)
-		gluPerspective(80.0, ratio, 1.0, 20.0);
+		gluPerspective(60.0, ratio, 0.2, 100.0);
 	else
-		gluPerspective(80.0 / ratio, ratio, 1.0, 20.0);
+		gluPerspective(60.0 / ratio, ratio, 0.2, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
