@@ -5,12 +5,14 @@
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glut.h>
+
+#include "Tree.h"
 
 /* Global variables */
 static int pMode = 1; 
@@ -19,6 +21,17 @@ static int wTx = 600;
 static int wTy = 360;
 static int wPx = 50;
 static int wPy = 50;
+
+static double px = 0.0;
+static double py = 6.0;
+static double pz = 15.0;
+
+static double angle = 0.0;
+static float colorTrunk[4] = {0.5, 0.2, 0.18, 1.0};
+static float colorLeaves[4] = {0.1, 0.5, 0.1, 1.0};
+
+
+Tree test = new Tree(0.0, 0.0, 0.5, 1.5, 2.0, 4.0, 3.0, 5.0, 2.0, 6.0);
 
 /* Init function */
 static void init(void) {
@@ -32,14 +45,7 @@ static void init(void) {
 /* Scene function */
 static void scene(void) {
 	glPushMatrix();
-	glPushMatrix();
-	glScalef(2.0, 0.5, 1.0);
-	glutSolidCube(1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.0, 0.5, 0.0);
-	glutSolidCube(1.0);
-	glPopMatrix();
+	test.build();
 	glPopMatrix();
 }
 
@@ -55,7 +61,7 @@ static void display(void) {
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
-	gluLookAt(30.0, 20.0, -50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(px, py, pz, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	scene();
 	glPopMatrix();
 	glFlush();
@@ -73,16 +79,17 @@ static void reshape(int wx, int wy) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	double ratio = (double)wx / wy;
-	if (wx > wy)
-		glOrtho(-ratio, ratio, -1.0, 1.0, -10.0, 100.0);
+	if (ratio > 1.0)
+		gluPerspective(80.0, ratio, 1.0, 20.0);
 	else
-		glOrtho(-1.0, 1.0, -1.0 / ratio, 1.0 / ratio, -10.0, 100.0);
+		gluPerspective(80.0 / ratio, ratio, 1.0, 20.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
 
 /* Idle function */
 static void idle(void) {
+	angle += 2.0;
 	glutPostRedisplay();
 }
 
@@ -93,6 +100,8 @@ static void keyboard(unsigned char key, int x, int y) {
 			{ pMode = !pMode;
 			glutPostRedisplay(); }
 		break;
+		case 's':
+			break;
 		case 'f':
 		case 'F':
 			glutFullScreen();
@@ -105,6 +114,32 @@ static void keyboard(unsigned char key, int x, int y) {
 
 /* Special function*/
 static void special(int specialKey, int x, int y) {
+	switch (specialKey) {
+		case GLUT_KEY_UP:
+			py += 0.1;
+			glutPostRedisplay();
+			break;
+		case GLUT_KEY_DOWN:
+			py -= 0.1;
+			glutPostRedisplay();
+			break;
+		case GLUT_KEY_LEFT:
+			px -= 0.1;
+			glutPostRedisplay();
+			break;
+		case GLUT_KEY_RIGHT:
+			px += 0.1;
+			glutPostRedisplay();
+			break;
+		case GLUT_KEY_PAGE_UP:
+			pz -= 0.1;
+			glutPostRedisplay();
+			break;
+		case GLUT_KEY_PAGE_DOWN:
+			pz += 0.1;
+			glutPostRedisplay();
+			break;
+	}
 }
 
 /* Mouse function */

@@ -11,6 +11,8 @@
 class Tree {
 
 private:
+	float xPos;
+	float zPos;
 	float wTrunk;
 	float hTrunk;
 	float wLeaves;
@@ -19,17 +21,22 @@ private:
 public:
 
 	/* Constructors */
-	Tree(float wTrunkMin, float wTrunkMax, float hTrunkMin, float hTrunkMax, float wLeavesMin, float wLeavesMax, float hLeavesMin, float hLeavesMax);
-	Tree(float wTrunk, float hTrunk, float wLeaves, float hLeaves);
+	Tree(float xPos, float zPos, float wTrunkMin, float wTrunkMax, float hTrunkMin, float hTrunkMax, float wLeavesMin, float wLeavesMax, float hLeavesMin, float hLeavesMax);
+	Tree(float xPos, float zPos, float wTrunk, float hTrunk, float wLeaves, float hLeaves);
 	Tree(Tree *t1);
 
 	/* Destructor */
 	~Tree(void);
 
+	/* OpenGL code to draw the tree */
+	void build(void);
+
 	/* Print */
 	void print(void);
 
 	/* Getters */
+	float getXPos(void);
+	float getZPos(void);
 	float getWTrunk(void);
 	float getHTrunk(void);
 	float getWLeaves(void);
