@@ -28,11 +28,11 @@ bool keyStates[256];
 bool keySpecialStates[256];
 
 /* Racing Cars */
-RacingCar *rc = new RacingCar();
-RacingCar *rc2 = new RacingCar(); // This one doesn't move
+RacingCar *rc;
+RacingCar *rc2;
 
 /* A grid */
-Grid *grid = new Grid();
+Grid *grid;
 
 /* Init function */
 static void init(void) {
@@ -41,6 +41,10 @@ static void init(void) {
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
+
+	rc = new RacingCar(4.0, 2.0, 2.0);
+	rc2 = new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, -10.0); // This one doesn't move
+	grid = new Grid();
 }
 
 /* Scene function */
@@ -50,7 +54,7 @@ static void scene(void) {
 		/* Draw the camera locked on the racing car */
 		Position rcpos = rc->getPos();
 		gluLookAt(
-			0.0 + rcpos.x, 12.0 + rcpos.y, 7.0 + rcpos.z,
+			0.0 + rcpos.x, 8.0 + rcpos.y, 10.0 + rcpos.z,
 			rcpos.x, rcpos.y, rcpos.z,
 			0.0, 1.0, 0.0
 		);
@@ -59,6 +63,10 @@ static void scene(void) {
 		rc->draw();
 		rc2->draw();
 		grid->draw();
+
+		/* Draw bounding boxes */
+		rc->getBoundingBox().draw();
+		rc2->getBoundingBox().draw();
 
 	glPopMatrix();
 }

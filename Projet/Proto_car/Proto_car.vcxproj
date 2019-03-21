@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Grid.cpp" />
+    <ClCompile Include="..\..\Src\BoundingBox.cpp" />
     <ClCompile Include="..\..\Src\Position.cpp" />
     <ClCompile Include="..\..\Src\Proto_car.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -109,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\Grid.h" />
+    <ClInclude Include="..\..\Include\BoundingBox.h" />
     <ClInclude Include="..\..\Include\Position.h" />
     <ClInclude Include="..\..\Include\RacingCar.h" />
   </ItemGroup>

@@ -11,13 +11,15 @@
 class Position {
 
 public:
-	float x, y, z;
+	float x, y, z, angle;
 
 public:
 	/* Constructors */
 	Position(void);
 
-	Position(float x, float y, float z);
+	Position(float cx, float cy, float cz);
+
+	Position(float cx, float cy, float cz, float cangle);
 
 	Position(Position *p);
 

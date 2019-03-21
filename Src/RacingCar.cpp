@@ -23,20 +23,26 @@ const float RacingCar::ACCEL = 3.0;
 const float RacingCar::ROT_ANGLE = 2.0;
 
 /* Constructors */
-RacingCar::RacingCar(float cx, float cy, float cz) {
-	pos = new Position(cx, cy, cz);
-	tiresAngle = 0.0;
-	speed = 0.0;
+RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float cy, float cz) {
+	pos = new Position(cx, cy, cz, 0.0);
+	hitbox = new BoundingBox(clength, cwidth, cheight, pos);
+
 	handbrakeState = false;
 	dirForward = true;
+
+	length = clength;
+	width = cwidth;
+	height = cheight;
+	speed = 0.0;
 }
+
+RacingCar::RacingCar(float clength, float cwidth, float cheight):RacingCar(clength, cwidth, cheight, 0.0, 0.0, 0.0) { }
 
 RacingCar::RacingCar(void):RacingCar(0.0, 0.0, 0.0) { }
 
-
 RacingCar::RacingCar(RacingCar *rc) {
-	pos = rc->getPos();
-	tiresAngle = rc->getTiresAngle();
+	pos = new Position(rc->getPos());
+	hitbox = new BoundingBox(rc->getBoundingBox());
 	speed = rc->getSpeed();
 	handbrakeState = rc->getHandbrakeState();
 	dirForward = rc->getDirForward();
@@ -48,7 +54,8 @@ RacingCar::~RacingCar(void) { }
 /* Getters */
 Position RacingCar::getPos(void) { return pos; }
 
-float RacingCar::getTiresAngle(void) { return tiresAngle; }
+BoundingBox RacingCar::getBoundingBox(void) { return hitbox; }
+
 float RacingCar::getSpeed(void) { return speed; }
 
 bool RacingCar::getHandbrakeState(void) { return handbrakeState; }
@@ -56,17 +63,22 @@ bool RacingCar::getDirForward(void) { return dirForward; }
 
 /* Draw */
 void RacingCar::draw(void) {
+	const GLfloat blanc[] = { 1.0, 1.0, 1.0 };
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blanc);
+
 	glPushMatrix();
-		glTranslatef(pos.x, pos.y, pos.z);
-		glRotatef(tiresAngle, 0.0, -1.0, 0.0);
+		glTranslatef(pos->x, pos->y + height/4, pos->z);
+		glRotatef(pos->angle, 0.0, -1.0, 0.0);
 
 		glPushMatrix();
-			glScalef(2.0, 0.5, 1.0);
+			glScalef(length, height/2, width);
 			glutSolidCube(1.0);
 		glPopMatrix();
 	
 		glPushMatrix();
-			glTranslatef(-0.2, 0.5, 0.0);
+			glScalef(length*0.5, height/2, width);
+			glTranslatef(-0.2, height/2, 0.0);
 			glutSolidCube(1.0);
 		glPopMatrix();
 	glPopMatrix();
@@ -113,16 +125,16 @@ void RacingCar::handleInputs(bool *keyStates, bool *specialKeyStates) {
 void RacingCar::handleMovement(double deltaTime) {
 	// If the speed isn't at zero
 	if (speed != 0.0) {
-		float radangle = tiresAngle * PI / 180;
+		float radangle = pos->angle * PI / 180;
 
 		// Calculate new position
 		if (dirForward) {
-			pos.x += speed * deltaTime * cos(radangle);
-			pos.z += speed * deltaTime * sin(radangle);
+			pos->x += speed * deltaTime * cos(radangle);
+			pos->z += speed * deltaTime * sin(radangle);
 		}
 		else {
-			pos.x -= speed * deltaTime * cos(radangle);
-			pos.z -= speed * deltaTime * sin(radangle);
+			pos->x -= speed * deltaTime * cos(radangle);
+			pos->z -= speed * deltaTime * sin(radangle);
 		}
 		
 		/* Slow the car over the time, if the handbrake is on, 
@@ -133,6 +145,8 @@ void RacingCar::handleMovement(double deltaTime) {
 		else {
 			(speed > 0) ? speed -= 0.1 : speed = 0.0;
 		}
+
+		hitbox->update(pos);
 	}
 }
 
@@ -150,12 +164,14 @@ void RacingCar::backward(float distance) {
 
 /* Turn right */
 void RacingCar::turnRight(float degrees) {
-	tiresAngle += degrees;
+	pos->angle += degrees;
+	hitbox->update(pos);
 }
 
 /* Turn left */
 void RacingCar::turnLeft(float degrees) {
-	tiresAngle -= degrees;
+	pos->angle -= degrees;
+	hitbox->update(pos);
 }
 
 /* Use the handbrake */
@@ -166,8 +182,8 @@ void RacingCar::handbrake() {
 /* Reset car's properties */
 void RacingCar::reset() {
 	pos = new Position();
-	tiresAngle = 0.0;
 	speed = 0.0;
 	handbrakeState = false;
 	dirForward = true;
+	hitbox->update(pos);
 }

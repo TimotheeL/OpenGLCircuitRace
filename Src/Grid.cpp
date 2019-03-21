@@ -44,4 +44,6 @@ void Grid::draw(void) {
 	}
 	glEnd();
 	glPopMatrix();
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
