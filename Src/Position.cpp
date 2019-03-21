@@ -15,18 +15,22 @@
 #include <Position.h>
 
 /* Constructors */
-Position::Position(float cx, float cy, float cz) {
+Position::Position(float cx, float cy, float cz, float cangle) {
 	x = cx;
 	y = cy;
 	z = cz;
+	angle = cangle;
 }
 
-Position::Position(void):Position(0.0, 0.0, 0.0) { }
+Position::Position(float cx, float cy, float cz) :Position(cx, cy, cz, 0.0) { }
+
+Position::Position(void):Position(0.0, 0.0, 0.0, 0.0) { }
 
 Position::Position(Position *p) {
 	x = p->x;
 	y = p->y;
 	z = p->z;
+	angle = p->angle;
 }
 
 /* Destructor */

@@ -9,6 +9,7 @@
 #define RACINGCAR_H
 
 #include <Position.h>
+#include <BoundingBox.h>
 
 class RacingCar {
 
@@ -19,15 +20,19 @@ public:
 	static const float ROT_ANGLE;	// tiresAngle angle
 
 private:
-	Position pos;		// Position
-	float tiresAngle;	// Current tiresAngle
-	float speed;		// Current speed
+	Position *pos;			// Position
+	BoundingBox *hitbox;	// Hitbox
+
 	bool handbrakeState;	// Handbrake state
-	bool dirForward;	// Direction state
+	bool dirForward;		// Direction state
+
+	float speed, length, width, height;
 
 public:
 	/* Constructors */
-	RacingCar(float cx, float cy, float cz);
+	RacingCar(float clength, float cwidth, float cheight, float cx, float cy, float cz);
+
+	RacingCar(float clength, float cwidth, float cheight);
 
 	RacingCar(RacingCar *rc);
 
@@ -39,7 +44,8 @@ public:
 	/* Getters */
 	Position getPos(void);
 
-	float getTiresAngle(void);
+	BoundingBox getBoundingBox(void);
+
 	float getSpeed(void);
 
 	bool getHandbrakeState(void);
