@@ -6,11 +6,13 @@
 */
 
 #include <stdlib.h>
-#include <stdio.h>
+#include <stdio.h> 
 
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+
+#include "StraightLine.h"
 
 /* Global variables */
 static int pMode = 1; 
@@ -29,16 +31,17 @@ static void init(void) {
 	glEnable(GL_NORMALIZE);
 }
 
+/* Test functions */
+static void testNicolas(void) {
+	StraightLine myLine = new StraightLine(7.0, 10.0); 
+	myLine.build();
+}
+
 /* Scene function */
 static void scene(void) {
 	glPushMatrix();
 	glPushMatrix();
-	glScalef(2.0, 0.5, 1.0);
-	glutSolidCube(1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.0, 0.5, 0.0);
-	glutSolidCube(1.0);
+	testNicolas();
 	glPopMatrix();
 	glPopMatrix();
 }
@@ -55,7 +58,7 @@ static void display(void) {
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
-	gluLookAt(30.0, 20.0, -50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 20.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	scene();
 	glPopMatrix();
 	glFlush();
@@ -73,10 +76,10 @@ static void reshape(int wx, int wy) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	double ratio = (double)wx / wy;
-	if (wx > wy)
-		glOrtho(-ratio, ratio, -1.0, 1.0, -10.0, 100.0);
+	if (ratio > 1.0)
+		gluPerspective(60.0, ratio, 0.2, 100.0);
 	else
-		glOrtho(-1.0, 1.0, -1.0 / ratio, 1.0 / ratio, -10.0, 100.0);
+		gluPerspective(60.0 / ratio, ratio, 0.2, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }

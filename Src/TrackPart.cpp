@@ -7,7 +7,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 
 #include "TrackPart.h"
 
@@ -32,3 +31,6 @@ float TrackPart::getWidth(void) {
 void TrackPart::setWidth(float width) {
 	this->width = width;
 }
+
+// Builder
+void TrackPart::build(void) {}
