@@ -22,9 +22,9 @@ Position::Position(float cx, float cy, float cz, float cangle) {
 	angle = cangle;
 }
 
-Position::Position(float cx, float cy, float cz) :Position(cx, cy, cz, 0.0) { }
-
-Position::Position(void):Position(0.0, 0.0, 0.0, 0.0) { }
+Position::Position(float cx, float cy, float cz)
+	:Position(cx, cy, cz, 0.0)
+{}
 
 Position::Position(Position *p) {
 	x = p->x;
@@ -32,6 +32,10 @@ Position::Position(Position *p) {
 	z = p->z;
 	angle = p->angle;
 }
+
+Position::Position(void)
+	:Position(0.0, 0.0, 0.0)
+{}
 
 /* Destructor */
 Position::~Position(void) { }

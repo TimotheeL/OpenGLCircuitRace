@@ -10,8 +10,9 @@
 
 #include <Position.h>
 #include <BoundingBox.h>
+#include <Objects.h>
 
-class RacingCar {
+class RacingCar : public Objects {
 
 public:
 	static const float MAX_SPD_FW;	// Maximum speed forward
@@ -20,9 +21,6 @@ public:
 	static const float ROT_ANGLE;	// Rotation rate
 
 private:
-	Position *pos;			// Position
-	BoundingBox *hitbox;	// Hitbox
-
 	bool handbrakeState;	// Handbrake state
 	bool dirForward;		// Direction state
 
@@ -39,20 +37,16 @@ public:
 	RacingCar(void);
 
 	/* Destructor */
-	~RacingCar(void);
+	virtual ~RacingCar(void);
 
 	/* Getters */
-	Position getPos(void);
-
-	BoundingBox getBoundingBox(void);
-
 	float getSpeed(void);
 
 	bool getHandbrakeState(void);
 	bool getDirForward(void);
 	
 	/*Draw */
-	void draw(void);
+	virtual void draw(void);
 
 	/* Input handling */
 	void handleInputs(bool *keyStates, bool *specialKeyStates);

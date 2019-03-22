@@ -31,6 +31,8 @@ public:
 
 	BoundingBox(BoundingBox *b);
 
+	BoundingBox(void);
+
 	/* Destructor */
 	~BoundingBox(void);
 

@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
 
 #include <GL/glut.h>
 #include <GL/gl.h>
@@ -15,9 +16,11 @@
 #include <RacingCar.h>
 #include <Grid.h>
 #include <Position.h>
+#include <Objects.h>
 
 /* Global variables */
 static int pMode = 1;
+static bool drawBBox = false;
 
 const double dt = 1 / 60.0;	/* Framerate */
 double currentTime = 0.0;	/* Current time */
@@ -27,9 +30,11 @@ double accumulator = 0.0;	/* Time accumulator */
 bool keyStates[256];
 bool keySpecialStates[256];
 
-/* Racing Cars */
+/* Non-playable objects */
+std::vector<Objects*> listObjects;
+
+/* Player's racing car */
 RacingCar *rc;
-RacingCar *rc2;
 
 /* A grid */
 Grid *grid;
@@ -42,8 +47,17 @@ static void init(void) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 
+	/* Init player's racing Car */
 	rc = new RacingCar(4.0, 2.0, 2.0);
-	rc2 = new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, -10.0); // This one doesn't move
+
+	/* Init other objects */
+	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, -10.0));
+	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, 10.0));
+	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, -10.0));
+	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, 10.0));
+	listObjects.push_back(new Objects());
+
+	/* Init grid */
 	grid = new Grid();
 }
 
@@ -59,14 +73,23 @@ static void scene(void) {
 			0.0, 1.0, 0.0
 		);
 
-		/* Draw objects */
 		rc->draw();
-		rc2->draw();
+
+		/* Draw objects */
+		for (unsigned int i = 0; i < listObjects.size(); i++) {
+			listObjects[i]->draw();
+		}
+
 		grid->draw();
 
 		/* Draw bounding boxes */
-		rc->getBoundingBox().draw();
-		rc2->getBoundingBox().draw();
+		if (drawBBox) {
+			rc->getBoundingBox().draw();
+
+			for (unsigned int i = 0; i < listObjects.size(); i++) {
+				listObjects[i]->getBoundingBox().draw();
+			}
+		}
 
 	glPopMatrix();
 }
@@ -77,6 +100,8 @@ static void simulate(void) {
 	rc->handleInputs(keyStates, keySpecialStates);
 	/* Handle car's movement */
 	rc->handleMovement(dt);
+
+	// Check collision here
 }
 
 /* Display function */
@@ -153,6 +178,11 @@ static void keyboard(unsigned char key, int x, int y) {
 			break;
 		case 0x1B:
 			exit(0);
+			break;
+		case 'b':
+		case 'B':
+			drawBBox = !drawBBox;
+			glutPostRedisplay();
 			break;
 	}
 }

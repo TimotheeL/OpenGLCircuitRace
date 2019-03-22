@@ -17,6 +17,9 @@
 
 #define PI 3.14159265
 
+const GLfloat rouge[] = { 1.0, 0.0, 0.0 };
+const GLfloat blanc[] = { 1.0, 1.0, 1.0 };
+
 /*	BoundingBox points structure
 
 	bottom   top
@@ -45,8 +48,12 @@ BoundingBox::BoundingBox(BoundingBox *b) {
 	}
 }
 
+BoundingBox::BoundingBox(void)
+	:BoundingBox(5.0, 5.0, 5.0, new Position())
+{}
+
 /* Destructor */
-BoundingBox::~BoundingBox(void) { }
+BoundingBox::~BoundingBox(void) {}
 
 /* Update hitbox's points with a new position */
 void BoundingBox::update(Position *newPos) {
@@ -122,13 +129,12 @@ void BoundingBox::update(Position *newPos) {
 
 /* Draw the hitbox */
 void BoundingBox::draw(void) {
-	const GLfloat rouge[] = { 1.0, 0.0, 0.0 };
-
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, rouge);
 
 	glPushMatrix();
-		glBegin(GL_QUADS);	
+		glBegin(GL_QUADS);
+			glNormal3f(0.0, 1.0, 0.0);
 			// 0 1 2 3
 			for (int i = 0; i < 4; i++) {
 				glVertex3f(points[i].x, points[i].y, points[i].z);
@@ -166,4 +172,5 @@ void BoundingBox::draw(void) {
 	glPopMatrix();
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blanc);
 }

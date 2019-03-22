@@ -23,10 +23,9 @@ const float RacingCar::ACCEL = 3.0;
 const float RacingCar::ROT_ANGLE = 2.0;
 
 /* Constructors */
-RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float cy, float cz) {
-	pos = new Position(cx, cy, cz, 0.0);
-	hitbox = new BoundingBox(clength, cwidth, cheight, pos);
-
+RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float cy, float cz)
+	:Objects(clength, cwidth, cheight, cx, cy, cz)
+{
 	handbrakeState = false;
 	dirForward = true;
 
@@ -36,13 +35,17 @@ RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float
 	speed = 0.0;
 }
 
-RacingCar::RacingCar(float clength, float cwidth, float cheight):RacingCar(clength, cwidth, cheight, 0.0, 0.0, 0.0) { }
+RacingCar::RacingCar(float clength, float cwidth, float cheight)
+	:RacingCar(clength, cwidth, cheight, 0.0, 0.0, 0.0)
+{ }
 
-RacingCar::RacingCar(void):RacingCar(0.0, 0.0, 0.0) { }
+RacingCar::RacingCar(void)
+	:RacingCar(0.0, 0.0, 0.0)
+{ }
 
-RacingCar::RacingCar(RacingCar *rc) {
-	pos = new Position(rc->getPos());
-	hitbox = new BoundingBox(rc->getBoundingBox());
+RacingCar::RacingCar(RacingCar *rc)
+	:Objects(rc->getBoundingBox(), rc->getPos())
+{
 	speed = rc->getSpeed();
 	handbrakeState = rc->getHandbrakeState();
 	dirForward = rc->getDirForward();
@@ -52,10 +55,6 @@ RacingCar::RacingCar(RacingCar *rc) {
 RacingCar::~RacingCar(void) { }
 
 /* Getters */
-Position RacingCar::getPos(void) { return pos; }
-
-BoundingBox RacingCar::getBoundingBox(void) { return hitbox; }
-
 float RacingCar::getSpeed(void) { return speed; }
 
 bool RacingCar::getHandbrakeState(void) { return handbrakeState; }
@@ -68,8 +67,8 @@ void RacingCar::draw(void) {
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blanc);
 
 	glPushMatrix();
-		glTranslatef(pos->x, pos->y + height/4, pos->z);
-		glRotatef(pos->angle, 0.0, -1.0, 0.0);
+		glTranslatef(pos.x, pos.y + height/4, pos.z);
+		glRotatef(pos.angle, 0.0, -1.0, 0.0);
 
 		glPushMatrix();
 			glScalef(length, height/2, width);
@@ -125,16 +124,16 @@ void RacingCar::handleInputs(bool *keyStates, bool *specialKeyStates) {
 void RacingCar::handleMovement(double deltaTime) {
 	// If the speed isn't at zero
 	if (speed != 0.0) {
-		float radangle = pos->angle * PI / 180;
+		float radangle = pos.angle * PI / 180;
 
 		// Calculate new position
 		if (dirForward) {
-			pos->x += speed * deltaTime * cos(radangle);
-			pos->z += speed * deltaTime * sin(radangle);
+			pos.x += speed * deltaTime * cos(radangle);
+			pos.z += speed * deltaTime * sin(radangle);
 		}
 		else {
-			pos->x -= speed * deltaTime * cos(radangle);
-			pos->z -= speed * deltaTime * sin(radangle);
+			pos.x -= speed * deltaTime * cos(radangle);
+			pos.z -= speed * deltaTime * sin(radangle);
 		}
 		
 		/* Slow the car over the time, if the handbrake is on, 
@@ -146,7 +145,7 @@ void RacingCar::handleMovement(double deltaTime) {
 			(speed > 0) ? speed -= 0.1 : speed = 0.0;
 		}
 
-		hitbox->update(pos);
+		hitbox.update(&pos);
 	}
 }
 
@@ -164,14 +163,14 @@ void RacingCar::backward(float distance) {
 
 /* Turn right */
 void RacingCar::turnRight(float degrees) {
-	pos->angle += degrees;
-	hitbox->update(pos);
+	pos.angle += degrees;
+	hitbox.update(&pos);
 }
 
 /* Turn left */
 void RacingCar::turnLeft(float degrees) {
-	pos->angle -= degrees;
-	hitbox->update(pos);
+	pos.angle -= degrees;
+	hitbox.update(&pos);
 }
 
 /* Use the handbrake */
@@ -185,5 +184,5 @@ void RacingCar::reset() {
 	speed = 0.0;
 	handbrakeState = false;
 	dirForward = true;
-	hitbox->update(pos);
+	hitbox.update(&pos);
 }
