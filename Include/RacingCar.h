@@ -10,9 +10,9 @@
 
 #include <Position.h>
 #include <BoundingBox.h>
-#include <Objects.h>
+#include <Object.h>
 
-class RacingCar : public Objects {
+class RacingCar : public Object {
 
 public:
 	static const float MAX_SPD_FW;	// Maximum speed forward

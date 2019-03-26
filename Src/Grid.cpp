@@ -15,10 +15,10 @@
 #include <Grid.h>
 
 /* Constructor */
-Grid::Grid(void) { }
+Grid::Grid(void) {}
 
 /* Destructor */
-Grid::~Grid(void) { }
+Grid::~Grid(void) {}
 
 /* Draw */
 void Grid::draw(void) {

@@ -16,7 +16,7 @@
 #include <RacingCar.h>
 #include <Grid.h>
 #include <Position.h>
-#include <Objects.h>
+#include <Object.h>
 
 /* Global variables */
 static int pMode = 1;
@@ -31,7 +31,7 @@ bool keyStates[256];
 bool keySpecialStates[256];
 
 /* Non-playable objects */
-std::vector<Objects*> listObjects;
+std::vector<Object*> listObjects;
 
 /* Player's racing car */
 RacingCar *rc;
@@ -55,7 +55,7 @@ static void init(void) {
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, 10.0));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, -10.0));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, 10.0));
-	listObjects.push_back(new Objects());
+	listObjects.push_back(new Object(2.0, 10.0, 5.0));
 
 	/* Init grid */
 	grid = new Grid();
@@ -101,7 +101,7 @@ static void simulate(void) {
 	/* Handle car's movement */
 	rc->handleMovement(dt);
 
-	/* Collision checks */
+	/* Handle collisions */
 	for (unsigned int i = 0; i < listObjects.size(); i++) {
 		rc->collisionTest(listObjects[i]);
 	}

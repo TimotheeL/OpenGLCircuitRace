@@ -24,7 +24,7 @@ const float RacingCar::ROT_ANGLE = 2.0;
 
 /* Constructors */
 RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float cy, float cz)
-	:Objects(clength, cwidth, cheight, cx, cy, cz)
+	:Object(clength, cwidth, cheight, cx, cy, cz)
 {
 	handbrakeState = false;
 	dirForward = true;
@@ -37,14 +37,14 @@ RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float
 
 RacingCar::RacingCar(float clength, float cwidth, float cheight)
 	:RacingCar(clength, cwidth, cheight, 0.0, 0.0, 0.0)
-{ }
+{}
 
 RacingCar::RacingCar(void)
 	:RacingCar(0.0, 0.0, 0.0)
-{ }
+{}
 
 RacingCar::RacingCar(RacingCar *rc)
-	:Objects(rc->getBoundingBox(), rc->getPos())
+	:Object(rc->getBoundingBox(), rc->getPos())
 {
 	speed = rc->getSpeed();
 	handbrakeState = rc->getHandbrakeState();
@@ -52,7 +52,7 @@ RacingCar::RacingCar(RacingCar *rc)
 }
 
 /* Destructor */
-RacingCar::~RacingCar(void) { }
+RacingCar::~RacingCar(void) {}
 
 /* Getters */
 float RacingCar::getSpeed(void) { return speed; }

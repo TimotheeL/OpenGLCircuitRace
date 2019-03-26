@@ -62,8 +62,7 @@ void BoundingBox::update(Position *newPos) {
 	// Calculate the radius of the box
 	float radius = sqrt(width*width + length * length) / 2;
 	// Calculate alpha, an angle of the rect triangle in the box
-	float alpha;
-	width > length ? alpha = atan2(length, width) : alpha = atan2(width, length);
+	float alpha = atan2(width, length);
 	// Convert in rad
 	float radangle = newPos->angle * PI / 180;
 
