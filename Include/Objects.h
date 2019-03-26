@@ -34,6 +34,9 @@ public:
 
 	/* Draw */
 	virtual void draw();
+
+	/* Collision */
+	virtual void collisionTest(Objects *o);
 };
 
 #endif

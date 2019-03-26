@@ -57,73 +57,76 @@ BoundingBox::~BoundingBox(void) {}
 
 /* Update hitbox's points with a new position */
 void BoundingBox::update(Position *newPos) {
+	// TODO: probleme quand width > length
+
 	// Calculate the radius of the box
 	float radius = sqrt(width*width + length * length) / 2;
 	// Calculate alpha, an angle of the rect triangle in the box
-	float alpha = atan2(width, length);
+	float alpha;
+	width > length ? alpha = atan2(length, width) : alpha = atan2(width, length);
 	// Convert in rad
 	float radangle = newPos->angle * PI / 180;
 
-	float a = radangle + alpha; // Rotation angle for points +x +z (0,4)
-	float b = radangle - alpha;	// Rotation angle for points +x -z (1,5)
-	float c = b + 180;			// Rotation angle for points -x -z (2,6)
-	float d = a - 180;			// Rotation angle for points -x +z (3,7)
+	float ar = radangle + alpha; // Rotation angle for points +x +z (0,4)
+	float br = radangle - alpha;	// Rotation angle for points +x -z (1,5)
+	float dr = br + PI;			// Rotation angle for points -x -z (2,6)
+	float cr = ar - PI;			// Rotation angle for points -x +z (3,7)
 
 	// Update each points
 	points[0] = new Position(
-		newPos->x + radius * cos(a),
+		newPos->x + radius * cos(ar),
 		newPos->y,
-		newPos->z + radius * sin(a),
-		a
+		newPos->z + radius * sin(ar),
+		ar * 180 / PI
 	);
 
 	points[1] = new Position(
-		newPos->x + radius * cos(b),
+		newPos->x + radius * cos(br),
 		newPos->y,
-		newPos->z + radius * sin(b),
-		b
+		newPos->z + radius * sin(br),
+		br * 180 / PI
 	);
 
 	points[2] = new Position(
-		newPos->x + radius * cos(c),
+		newPos->x + radius * cos(cr),
 		newPos->y,
-		newPos->z + radius * sin(c),
-		c
+		newPos->z + radius * sin(cr),
+		cr * 180 / PI
 	);
 
 	points[3] = new Position(
-		newPos->x + radius * cos(d),
+		newPos->x + radius * cos(dr),
 		newPos->y,
-		newPos->z + radius * sin(d),
-		d
+		newPos->z + radius * sin(dr),
+		dr * 180 / PI
 	);
 
 	points[4] = new Position(
-		newPos->x + radius * cos(a),
+		newPos->x + radius * cos(ar),
 		newPos->y + height,
-		newPos->z + radius * sin(a),
-		a
+		newPos->z + radius * sin(ar),
+		ar * 180 / PI
 	);
 
 	points[5] = new Position(
-		newPos->x + radius * cos(b),
+		newPos->x + radius * cos(br),
 		newPos->y + height,
-		newPos->z + radius * sin(b),
-		b
+		newPos->z + radius * sin(br),
+		br * 180 / PI
 	);
 
 	points[6] = new Position(
-		newPos->x + radius * cos(b + 180),
+		newPos->x + radius * cos(cr),
 		newPos->y + height,
-		newPos->z + radius * sin(b + 180),
-		b + 180
+		newPos->z + radius * sin(cr),
+		cr * 180 / PI
 	);
 
 	points[7] = new Position(
-		newPos->x + radius * cos(a - 180),
+		newPos->x + radius * cos(dr),
 		newPos->y + height,
-		newPos->z + radius * sin(a - 180),
-		a - 180
+		newPos->z + radius * sin(dr),
+		dr * 180 / PI
 	);
 }
 

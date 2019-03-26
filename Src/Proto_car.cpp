@@ -101,7 +101,10 @@ static void simulate(void) {
 	/* Handle car's movement */
 	rc->handleMovement(dt);
 
-	// Check collision here
+	/* Collision checks */
+	for (unsigned int i = 0; i < listObjects.size(); i++) {
+		rc->collisionTest(listObjects[i]);
+	}
 }
 
 /* Display function */
