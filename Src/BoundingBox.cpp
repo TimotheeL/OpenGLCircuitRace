@@ -17,7 +17,6 @@
 
 #define PI 3.14159265
 
-const GLfloat rouge[] = { 1.0, 0.0, 0.0 };
 const GLfloat blanc[] = { 1.0, 1.0, 1.0 };
 
 /*	BoundingBox points structure
@@ -32,17 +31,21 @@ const GLfloat blanc[] = { 1.0, 1.0, 1.0 };
 
 /* Constructors */
 BoundingBox::BoundingBox(float objLength, float objWidth, float objHeight, Position *objCenter) {
-	length = objLength;		// Set length to object length
-	width = objWidth;		// Set width to object width
-	height = objHeight;		// Set height to object height
-	update(objCenter);		// Update the position of the box with the object position
+	length = objLength;			// Set length to object length
+	width = objWidth;			// Set width to object width
+	height = objHeight;			// Set height to object height
+	update(objCenter);			// Update the position of the box with the object position
+	
+	color[0] = 1.0; color[1] = 0.0; color[2] = 0.0;
 }
 
 BoundingBox::BoundingBox(BoundingBox *b) {
 	length = b->length;
 	width = b->width;
 	height = b->height;
-	
+
+	color[0] = 1.0; color[1] = 0.0; color[2] = 0.0;
+
 	for (int i = 0; i < 8; i++) {
 		points[i] = new Position(b->points[i]);
 	}
@@ -55,84 +58,90 @@ BoundingBox::BoundingBox(void)
 /* Destructor */
 BoundingBox::~BoundingBox(void) {}
 
+/* Setters */
+void BoundingBox::setColor(float r, float g, float b) {
+	color[0] = r;
+	color[1] = g;
+	color[2] = b;
+}
+
 /* Update hitbox's points with a new position */
 void BoundingBox::update(Position *newPos) {
-	// TODO: probleme quand width > length
-
 	// Calculate the radius of the box
-	float radius = sqrt(width*width + length * length) / 2;
+	float radius = sqrtf(width * width + length * length) / 2;
 	// Calculate alpha, an angle of the rect triangle in the box
 	float alpha = atan2(width, length);
 	// Convert in rad
 	float radangle = newPos->angle * PI / 180;
 
-	float ar = radangle + alpha; // Rotation angle for points +x +z (0,4)
+	float ar = radangle + alpha;	// Rotation angle for points +x +z (0,4)
 	float br = radangle - alpha;	// Rotation angle for points +x -z (1,5)
-	float dr = br + PI;			// Rotation angle for points -x -z (2,6)
-	float cr = ar - PI;			// Rotation angle for points -x +z (3,7)
+	float dr = br + PI;				// Rotation angle for points -x -z (2,6)
+	float cr = ar - PI;				// Rotation angle for points -x +z (3,7)
+	float pi180 = 180 / PI;
 
 	// Update each points
 	points[0] = new Position(
 		newPos->x + radius * cos(ar),
 		newPos->y,
 		newPos->z + radius * sin(ar),
-		ar * 180 / PI
+		ar * pi180
 	);
 
 	points[1] = new Position(
 		newPos->x + radius * cos(br),
 		newPos->y,
 		newPos->z + radius * sin(br),
-		br * 180 / PI
+		br * pi180
 	);
 
 	points[2] = new Position(
 		newPos->x + radius * cos(cr),
 		newPos->y,
 		newPos->z + radius * sin(cr),
-		cr * 180 / PI
+		cr * pi180
 	);
 
 	points[3] = new Position(
 		newPos->x + radius * cos(dr),
 		newPos->y,
 		newPos->z + radius * sin(dr),
-		dr * 180 / PI
+		dr * pi180
 	);
 
 	points[4] = new Position(
 		newPos->x + radius * cos(ar),
 		newPos->y + height,
 		newPos->z + radius * sin(ar),
-		ar * 180 / PI
+		ar * pi180
 	);
 
 	points[5] = new Position(
 		newPos->x + radius * cos(br),
 		newPos->y + height,
 		newPos->z + radius * sin(br),
-		br * 180 / PI
+		br * pi180
 	);
 
 	points[6] = new Position(
 		newPos->x + radius * cos(cr),
 		newPos->y + height,
 		newPos->z + radius * sin(cr),
-		cr * 180 / PI
+		cr * pi180
 	);
 
 	points[7] = new Position(
 		newPos->x + radius * cos(dr),
 		newPos->y + height,
 		newPos->z + radius * sin(dr),
-		dr * 180 / PI
+		dr * pi180
 	);
 }
 
 /* Draw the hitbox */
 void BoundingBox::draw(void) {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, rouge);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
 
 	glPushMatrix();
 		glBegin(GL_QUADS);

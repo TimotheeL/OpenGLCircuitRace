@@ -24,7 +24,7 @@ private:
 	bool handbrakeState;	// Handbrake state
 	bool dirForward;		// Direction state
 
-	float speed, length, width, height;
+	float speed;			// Speed
 
 public:
 	/* Constructors */

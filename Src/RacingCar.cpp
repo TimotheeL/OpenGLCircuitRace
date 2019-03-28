@@ -28,10 +28,6 @@ RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float
 {
 	handbrakeState = false;
 	dirForward = true;
-
-	length = clength;
-	width = cwidth;
-	height = cheight;
 	speed = 0.0;
 }
 
@@ -44,7 +40,7 @@ RacingCar::RacingCar(void)
 {}
 
 RacingCar::RacingCar(RacingCar *rc)
-	:Object(rc->getBoundingBox(), rc->getPos())
+	:Object(rc)
 {
 	speed = rc->getSpeed();
 	handbrakeState = rc->getHandbrakeState();
@@ -152,12 +148,14 @@ void RacingCar::handleMovement(double deltaTime) {
 /* Forward */
 void RacingCar::forward(float distance) {
 	dirForward = true;
+	handbrakeState = false;
 	(speed < MAX_SPD_FW) ? speed += distance : speed = MAX_SPD_FW;
 }
 
 /* Backward */
 void RacingCar::backward(float distance) {
 	dirForward = false;
+	handbrakeState = false;
 	(speed < MAX_SPD_BW) ? speed += distance : speed = MAX_SPD_BW;
 }
 

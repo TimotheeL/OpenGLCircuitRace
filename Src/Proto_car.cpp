@@ -55,7 +55,8 @@ static void init(void) {
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, 10.0));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, -10.0));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, 10.0));
-	listObjects.push_back(new Object(2.0, 10.0, 5.0));
+	listObjects.push_back(new Object(2.0, 8.0, 5.0));
+	listObjects.push_back(new Object(8.0, 2.0, 5.0));
 
 	/* Init grid */
 	grid = new Grid();
@@ -96,6 +97,12 @@ static void scene(void) {
 
 /* Input handling and physic simulation function */
 static void simulate(void) {
+	/* Reset colliding states */
+	rc->resetIsColliding();
+	for (unsigned int i = 0; i < listObjects.size(); i++) {
+		listObjects[i]->resetIsColliding();
+	}
+
 	/* Handle inputs for the car */
 	rc->handleInputs(keyStates, keySpecialStates);
 	/* Handle car's movement */
@@ -103,7 +110,7 @@ static void simulate(void) {
 
 	/* Handle collisions */
 	for (unsigned int i = 0; i < listObjects.size(); i++) {
-		rc->collisionTest(listObjects[i]);
+		rc->collisionTestSAT(listObjects[i]);
 	}
 }
 

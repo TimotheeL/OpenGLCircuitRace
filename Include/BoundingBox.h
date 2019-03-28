@@ -14,6 +14,7 @@ class BoundingBox {
 public:
 	float length, width, height;
 	Position points[8];
+	GLfloat color[3];
 
 	/*	BoundingBox points structure
 
@@ -35,6 +36,9 @@ public:
 
 	/* Destructor */
 	~BoundingBox(void);
+
+	/* Setter */
+	void setColor(float r, float g, float b);
 
 	/* Update hitbox's points with a new position */
 	void update(Position *newPos);
