@@ -71,6 +71,9 @@ public:
 
 	/* Reset car's properties */
 	void reset();
+
+	/* Collision handling */
+	virtual void collision(Object *o);
 };
 
 #endif
