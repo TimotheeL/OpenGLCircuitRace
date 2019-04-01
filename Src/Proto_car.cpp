@@ -55,8 +55,8 @@ static void init(void) {
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, 10.0));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, -10.0));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, 10.0));
-	listObjects.push_back(new Object(2.0, 8.0, 5.0));
-	listObjects.push_back(new Object(8.0, 2.0, 5.0));
+	//listObjects.push_back(new Object(2.0, 8.0, 5.0));
+	//listObjects.push_back(new Object(8.0, 2.0, 5.0));
 
 	/* Init grid */
 	grid = new Grid();
@@ -110,7 +110,7 @@ static void simulate(void) {
 
 	/* Handle collisions */
 	for (unsigned int i = 0; i < listObjects.size(); i++) {
-		rc->collisionTestSAT(listObjects[i]);
+		rc->collision(listObjects[i]);
 	}
 }
 

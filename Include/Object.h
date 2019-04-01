@@ -1,5 +1,5 @@
 /*
-	Racing game project - Objects class
+	Racing game project - Object class
 
 	2019
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
@@ -10,6 +10,35 @@
 
 #include <BoundingBox.h>
 
+/*-- Classes written to be synctactically comprehensive --*/
+
+/* Axis : a class representing an axis for the SAT */
+class Axis {
+public:
+	float x;
+	float z;
+};
+
+/* Projection : a projection of coordinates on an axis */
+class Projection {
+public:
+	float min;
+	float max;
+};
+
+/* MTV : a Minimum Translation Vector */
+class MTV {
+public:
+	Axis axis;
+	float overlap;
+public:
+	MTV(void);
+	~MTV(void);
+};
+
+/*------------------------------
+	Object Class
+--------------------------------*/
 class Object {
 protected:
 	BoundingBox hitbox;
@@ -48,19 +77,25 @@ public:
 	/* Draw */
 	virtual void draw();
 
-	/* Collision test between this object and another object
-	 * using the Separating Axis Theorem (SAT)
+	/* Collision handling */
+	virtual void collision(Object *o);
+
+	/* Collision test between this object and another object using the Separating Axis Theorem (SAT)
+	 * Returns a Minimum Translation Vector
 	 * Y VALUES AREN'T TESTED
 	 * Implemented thanks to : http://www.dyn4j.org/2010/01/sat/
 	 */
-	virtual void collisionTestSAT(Object *o);
+	MTV *collisionTestSAT(Object *o);
 
 private:
 	/* Get the 4 axes of a bounding box for the SAT */
-	void getAxesSAT(float axes1[4][2], BoundingBox *hitbox);
+	void getAxesSAT(Axis axes[4], BoundingBox *hitbox);
 
 	/* Get the projections for the SAT */
-	void projectObjectSAT(float axis[2], BoundingBox *hitbox, float minMax[2]);
+	void projectObjectSAT(Axis axis, BoundingBox *hitbox, Projection *projection);
+
+	/* Get the overlap between two projections */
+	float getOverlap(Projection *projection, Projection *oprojection);
 };
 
 #endif

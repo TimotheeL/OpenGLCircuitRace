@@ -184,3 +184,16 @@ void RacingCar::reset() {
 	dirForward = true;
 	hitbox.update(&pos);
 }
+
+/* Collision handling */
+void RacingCar::collision(Object *o) {
+	MTV *mtv = collisionTestSAT(o);
+
+	if (mtv != NULL) {
+		pos.x += -mtv->axis.x * mtv->overlap;
+		pos.z += mtv->axis.z * mtv->overlap;
+
+		speed = 0.0;
+		hitbox.update(&pos);
+	}
+}
