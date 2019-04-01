@@ -8,6 +8,7 @@
 #ifndef ____TURN____
 #define ____TURN____
 
+#include "Position.h"
 #include "TrackPart.h"
 
 class Turn : public TrackPart {
@@ -15,12 +16,12 @@ class Turn : public TrackPart {
 protected:
 	float softness;
 	float angle;
-	char direction;
+	bool direction; // true : left, false : right
 
 public:
 	/* Constructors */
 	Turn(void);
-	Turn(float width, float softness, float angle, char direction);
+	Turn(float width, float softness, float angle, bool direction, Position pos);
 	Turn(Turn *p1);
 
 	/* Destructor */
@@ -29,12 +30,12 @@ public:
 	/* Getters */
 	float getSoftness(void);
 	float getAngle(void);
-	char getDirection(void);
+	bool getDirection(void);
 
 	/* Setters */
 	void setSoftness(float softness);
 	void setAngle(float angle);
-	void setDirection(char direction);
+	void setDirection(bool direction);
 
 	/* Drawer */
 	void draw(void);

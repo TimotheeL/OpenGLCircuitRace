@@ -16,17 +16,17 @@
 Turn::Turn(void):TrackPart() {
 	this->softness = 7.0;
 	this->angle = 90.0;
-	this->direction = 'l';
+	this->direction = true;
 }
 
-// 4-arguments constructor
-Turn::Turn(float width, float softness, float angle, char direction) {
+// 5-arguments constructor
+Turn::Turn(float width, float softness, float angle, bool direction, Position pos) {
 	this->width = width;
 	this->softness = softness;
 	this->angle = angle;
 	this->direction = direction;
+	this->pos = pos;
 }
-
 
 // Copy constructor
 Turn::Turn(Turn *p1):TrackPart(p1) {
@@ -34,6 +34,7 @@ Turn::Turn(Turn *p1):TrackPart(p1) {
 	this->softness = softness;
 	this->angle = angle;
 	this->direction = direction;
+	this->pos = pos;
 }
 
 // Destructor
@@ -46,7 +47,7 @@ float Turn::getSoftness(void) {
 float Turn::getAngle(void) {
 	return angle;
 }
-char Turn::getDirection(void) {
+bool Turn::getDirection(void) {
 	return direction;
 }
 
@@ -57,7 +58,7 @@ void Turn::setSoftness(float softness) {
 void Turn::setAngle(float angle) {
 	this->angle = angle;
 }
-void Turn::setDirection(char direction) {
+void Turn::setDirection(bool direction) {
 	this->direction = direction;
 }
 
@@ -67,47 +68,37 @@ void Turn::setDirection(char direction) {
 
 // Drawer
 void Turn::draw(void) {
-	int ns = 40;
-	//glColor3f(0.5, 0.5, 0.5);
-	//glBegin(GL_QUAD_STRIP);
-	//glNormal3f(0.0F, 1.0F, 0.0F);
-	glBegin(GL_QUAD_STRIP);
-	for (int i = 0; i <= ns; i++) {
-		float rp = (float)i / ns;
-		float ar = 2.0*3.1415926535897932384626433832795 / (360.0 / angle);
-		float a = ar*rp;
-		float cs = cos(a);
-		float sn = -sin(a);
+	glPushMatrix();
+		glRotatef(pos.angle, 0.0, 1.0, 0.0);
+		int ns = 40;
+		glColor3f(0.5, 0.5, 0.5);
+		glNormal3f(0.0F, 1.0F, 0.0F);
 
-		float xin, zin, xout, zout;
-		(direction == 'l' ? xin = softness * cs - softness - width / 2 : xin = softness * -cs + softness + width / 2);
-		//xin = softness * cs - softness - width / 2;
-		zin = softness * sn;
-		(direction == 'l' ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * - cs + softness + width / 2));
-		//xout = ((softness + width) * cs - softness - width / 2);
-		zout = (softness + width) * sn;
+		glBegin(GL_QUAD_STRIP);
+		float rp, ar, a, cs, sn, xin = 0.0, xout = 0.0, zin = 0.0, zout = 0.0;
+		Position vin, vout;
+		for (int i = 0; i <= ns; i++) {
+			rp = (i == 0 ? (float)i / ns + 0.00001 : (float)i / ns);
+			ar = 2.0*3.1415926535897932384626433832795 / (360.0 / angle);
+			a = ar*rp;
+			cs = cos(a);
+			sn = -sin(a);
 
+			(direction == true ? xin = softness * cs - softness - width / 2 : xin = softness * - cs + softness + width / 2);
+			zin = softness * sn;
+			(direction == true ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * - cs + softness + width / 2));
+			zout = (softness + width) * sn;
 
-		glVertex3f(xin, 0.0, zin);
-		glVertex3f(xout, 0.0, zout);
-	}
-	/* for (int i = 0; i <= 20; i++) {
-		float rp = (float)i / 20;
-		float ar = 2.0*M_PI / (360.0 / angle);
-		float a = ar * rp;
-		float cs = cos(a);
-		float sn = -sin(a);
+			glVertex3f(xin + pos.x, pos.y, zin + pos.z);
+			vin = rotate(xin, 0.0, zin);
+			vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;
+			vertices.push_back(vin);
 
-		float xin, zin, xout, zout;
-		//(direction == 'l' ? xin = softness * cs - softness - width / 2 : xin = softness * cs + softness + width / 2);
-		xin = softness * cs - softness - width / 2;
-		zin = softness * sn;
-		//(direction == 'l' ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * cs + softness + width / 2));
-		xout = ((softness + width) * cs - softness - width / 2);
-		zout = (softness + width) * sn;
-
-		glVertex3f(xin, 0.0, zin);
-		glVertex3f(xout, 0.0, zout);
-	} */
-	glEnd();
+			glVertex3f(xout + pos.x, pos.y, zout + pos.z);
+			vout = rotate(xout, 0.0, zout);
+			vout.x += pos.x; vout.y += pos.y; vout.z += pos.z;
+			vertices.push_back(vout);
+		}
+		glEnd();
+	glPopMatrix();
 }

@@ -8,10 +8,20 @@
 #ifndef ____TRACKPART____
 #define ____TRACKPART____
 
+#include "Position.h"
+#include <vector>
+using namespace std;
+
 class TrackPart {
+
+private:
+	float radians(float angle);
 
 protected:
 	float width;
+	Position pos;
+	std::vector<Position> vertices;
+	Position rotate(float x, float y, float z);
 
 public:
 	/* Constructors */
@@ -23,6 +33,8 @@ public:
 
 	/* Getters */
 	float virtual getWidth(void);
+	Position virtual getPosition(void);
+	std::vector<Position> getVertices(void);
 
 	/* Setters */
 	void virtual setWidth(float width);

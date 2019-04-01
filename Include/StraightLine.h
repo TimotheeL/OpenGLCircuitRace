@@ -8,6 +8,7 @@
 #ifndef ____STRAIGHTLINE____
 #define ____STRAIGHTLINE____
 
+#include "Position.h"
 #include "TrackPart.h"
 
 class StraightLine : public TrackPart {
@@ -18,7 +19,7 @@ protected:
 public:
 	/* Constructors */
 	StraightLine(void);
-	StraightLine(float width, float length);
+	StraightLine(float width, float length, Position pos);
 	StraightLine(StraightLine *p1);
 
 	/* Destructor */

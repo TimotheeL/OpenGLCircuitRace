@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h> 
+#include <vector>
 
 #include <GL/glut.h>
 #include <GL/gl.h>
@@ -16,6 +17,8 @@
 #include "Turn.h"
 #include "StraightLine.h"
 
+using namespace std;
+
 /* Global variables */
 static int pMode = 1; 
 
@@ -23,6 +26,9 @@ static int wTx = 600;
 static int wTy = 360;
 static int wPx = 50;
 static int wPy = 50;
+
+std::vector<StraightLine> lines;
+std::vector<Turn> turns;
 
 /* Init function */
 static void init(void) {
@@ -35,14 +41,20 @@ static void init(void) {
 
 /* Test functions */
 static void testNicolas(void) {
-	StraightLine myLine1 = new StraightLine(7.0, 10.0);
-	myLine1.draw();
-	Turn myTurn1 = new Turn(); 
-	myTurn1.setWidth(7.0);
-	myTurn1.setSoftness(10.0);
-	myTurn1.setDirection('l');
-	myTurn1.setAngle(45.0);
-	myTurn1.draw();
+	lines.push_back(new StraightLine(7.0, 12.0, new Position()));
+	turns.push_back(new Turn(5.0, 10.0, 45.0, true, new Position(0.0, 0.0, -6.0)));
+	turns[0].setAngle(45.0);
+	turns[0].setSoftness(12.0);
+	turns[0].setDirection(false);
+	printf("%s ", (turns[0].getDirection() ? "main true" : "main false"));
+	printf("%f %f %f %f %f %f\n", turns[0].getWidth(), turns[0].getSoftness(), turns[0].getAngle(), turns[0].getPosition().x, turns[0].getPosition().y, turns[0].getPosition().z);
+
+	/*for (unsigned int i = 0; i < lines.size(); i++) {
+		lines[i].draw();
+	}*/
+	for (unsigned int i = 0; i < turns.size(); i++) {
+		turns[i].draw();
+	}
 }
 
 /* Scene function */
