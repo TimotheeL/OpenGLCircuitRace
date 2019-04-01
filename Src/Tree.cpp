@@ -80,19 +80,19 @@ void Tree::draw(void) {
 	float colorLeaves[4] = { 0.1, 0.5, 0.1, 1.0 };
 
 	glPushMatrix();
-	glTranslatef((GLfloat)xPos, 0.0, (GLfloat)zPos);
-	glPushMatrix();
-	glTranslatef(0.0, hTrunk / 2, 0.0);
-	glScalef(wTrunk, hTrunk, wTrunk);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrunk);
-	glutSolidCube(1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.0, hTrunk + hLeaves / 2, 0.0);
-	glScalef(wLeaves, hLeaves, wLeaves);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
-	glutSolidCube(1.0);
-	glPopMatrix();
+		glTranslatef((GLfloat)xPos, 0.0, (GLfloat)zPos);
+		glPushMatrix();
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrunk);
+			glTranslatef(0.0, hTrunk / 2, 0.0);
+			glScalef(wTrunk, hTrunk, wTrunk);
+			glutSolidCube(1.0);
+		glPopMatrix();
+		glPushMatrix();
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
+			glTranslatef(0.0, hTrunk + hLeaves / 2, 0.0);
+			glScalef(wLeaves, hLeaves, wLeaves);
+			glutSolidCube(1.0);
+		glPopMatrix();
 	glPopMatrix();
 }
 

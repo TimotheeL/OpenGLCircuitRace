@@ -62,23 +62,24 @@ int Patch::getNbTrees(void) {
 
 // Draw a patch
 void Patch::draw(void) {
-	float colorLeaves[4] = { 0.1, 0.5, 0.1, 1.0 };
+	float colorLeaves[4] = { 0.1, 0.4, 0.1, 1.0 };
+
 	glPushMatrix();
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
-	glBegin(GL_QUADS);
-	glVertex3f(xPos, 0.0, zPos);
-	glVertex3f(xPos + size, 0.0, zPos);
-	glVertex3f(xPos + size, 0.0, zPos - size);
-	glVertex3f(xPos, 0.0, zPos - size);
-	glNormal3f(0.0F, 1.0F, 0.0F);
-	glEnd();
-	glPopMatrix();
-	glPushMatrix();
-	for (int i = 0; i < nbTrees; i++) {
-		trees[i].draw();
-	}
-	glPopMatrix();
+		glPushMatrix();
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
+			glBegin(GL_QUADS);
+				glNormal3f(0.0F, 1.0F, 0.0F);
+				glVertex3f(xPos, 0.0, zPos);
+				glVertex3f(xPos + size, 0.0, zPos);
+				glVertex3f(xPos + size, 0.0, zPos - size);
+				glVertex3f(xPos, 0.0, zPos - size);
+		glEnd();
+		glPopMatrix();
+		glPushMatrix();
+			for (int i = 0; i < nbTrees; i++) {
+				trees[i].draw();
+			}
+		glPopMatrix();
 	glPopMatrix();
 }
 
