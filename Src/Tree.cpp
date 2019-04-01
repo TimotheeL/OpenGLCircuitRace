@@ -16,7 +16,7 @@
 
 #include "Tree.h"
 
-// Regular constructor with 4 parameters
+// Constructor
 Tree::Tree(float xPos, float zPos, float wTrunk, float hTrunk, float wLeaves, float hLeaves) {
 	this->xPos = xPos;
 	this->zPos = zPos;
@@ -38,6 +38,8 @@ Tree::Tree(float xPos, float zPos, float wTrunkMin, float wTrunkMax, float hTrun
 
 // Copy constructor
 Tree::Tree(Tree *t1) {
+	this->xPos = t1->getXPos();
+	this->zPos = t1->getZPos();
 	this->wTrunk = t1->getWTrunk();
 	this->hTrunk = t1->getHTrunk();
 	this->wLeaves = t1->getWLeaves();
@@ -73,24 +75,24 @@ float Tree::getHLeaves(void) {
 }
 
 // OpenGL code to draw the tree
-void Tree::build(void) {
+void Tree::draw(void) {
 	float colorTrunk[4] = { 0.5, 0.2, 0.18, 1.0 };
 	float colorLeaves[4] = { 0.1, 0.5, 0.1, 1.0 };
 
 	glPushMatrix();
-	glTranslatef((GLfloat)xPos, 0.0, (GLfloat)zPos);
-	glPushMatrix();
-	glTranslatef(0.0, hTrunk / 2, 0.0);
-	glScalef(wTrunk, hTrunk, wTrunk);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrunk);
-	glutSolidCube(1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.0, hTrunk + hLeaves / 2, 0.0);
-	glScalef(wLeaves, hLeaves, wLeaves);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
-	glutSolidCube(1.0);
-	glPopMatrix();
+		glTranslatef((GLfloat)xPos, 0.0, (GLfloat)zPos);
+		glPushMatrix();
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrunk);
+			glTranslatef(0.0, hTrunk / 2, 0.0);
+			glScalef(wTrunk, hTrunk, wTrunk);
+			glutSolidCube(1.0);
+		glPopMatrix();
+		glPushMatrix();
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
+			glTranslatef(0.0, hTrunk + hLeaves / 2, 0.0);
+			glScalef(wLeaves, hLeaves, wLeaves);
+			glutSolidCube(1.0);
+		glPopMatrix();
 	glPopMatrix();
 }
 

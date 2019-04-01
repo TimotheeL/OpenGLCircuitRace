@@ -14,13 +14,17 @@
 #include <GL/glu.h>
 #include <math.h>
 
+#include "Patch.h"
 #include "Turn.h"
 #include "StraightLine.h"
+#include "Tree.h"
 
 using namespace std;
 
 /* Global variables */
 static int pMode = 1; 
+
+Patch patch = new Patch(-16.0, 16.0, 32.0, 5);
 
 static int wTx = 600;
 static int wTy = 360;
@@ -61,7 +65,8 @@ static void testNicolas(void) {
 static void scene(void) {
 	glPushMatrix();
 	glPushMatrix();
-	testNicolas();
+	patch.draw();
+	//testNicolas();
 	/* glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= 20; i++) {
 		float rp = (float)i / 20;
@@ -96,7 +101,7 @@ static void display(void) {
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
-	gluLookAt(0.0, 20.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 40.0, 40.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	scene();
 	glPopMatrix();
 	glFlush();
