@@ -29,7 +29,7 @@ public:
 	~Tree(void);
 
 	/* OpenGL code to draw the tree */
-	void build(void);
+	void draw(void);
 
 	/* Print */
 	void print(void);

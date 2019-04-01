@@ -16,7 +16,7 @@
 
 #include "Tree.h"
 
-// Regular constructor with 4 parameters
+// Constructor
 Tree::Tree(float xPos, float zPos, float wTrunk, float hTrunk, float wLeaves, float hLeaves) {
 	this->xPos = xPos;
 	this->zPos = zPos;
@@ -38,6 +38,8 @@ Tree::Tree(float xPos, float zPos, float wTrunkMin, float wTrunkMax, float hTrun
 
 // Copy constructor
 Tree::Tree(Tree *t1) {
+	this->xPos = t1->getXPos();
+	this->zPos = t1->getZPos();
 	this->wTrunk = t1->getWTrunk();
 	this->hTrunk = t1->getHTrunk();
 	this->wLeaves = t1->getWLeaves();
@@ -73,7 +75,7 @@ float Tree::getHLeaves(void) {
 }
 
 // OpenGL code to draw the tree
-void Tree::build(void) {
+void Tree::draw(void) {
 	float colorTrunk[4] = { 0.5, 0.2, 0.18, 1.0 };
 	float colorLeaves[4] = { 0.1, 0.5, 0.1, 1.0 };
 
