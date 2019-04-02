@@ -41,20 +41,14 @@ static void init(void) {
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
+	testNicolas();
 }
 
 /* Test functions */
 static void testNicolas(void) {
 	lines.push_back(new StraightLine(7.0, 6.0, new Position()));
 	turns.push_back(new Turn(7.0, 10.0, 45.0, true, new Position(0.0, 0.0, -6.0, 0.0)));
-	turns.push_back(new Turn(7.0, 30.0, 60.0, false, new Position(-4.0, 0.0, -17.0, 45.0)));
-
-	for (unsigned int i = 0; i < lines.size(); i++) {
-		lines[i].draw();
-	}
-	for (unsigned int i = 0; i < turns.size(); i++) {
-		turns[i].draw();
-	}
+	turns.push_back(new Turn(7.0, 30.0, 60.0, false, new Position(-4.2, 0.0, -17.0, 45.0)));
 }
 
 /* Scene function */
@@ -62,7 +56,12 @@ static void scene(void) {
 	glPushMatrix();
 	glPushMatrix();
 	//patch.draw();
-	testNicolas();
+	for (unsigned int i = 0; i < lines.size(); i++) {
+		lines[i].draw();
+	}
+	for (unsigned int i = 0; i < turns.size(); i++) {
+		turns[i].draw();
+	}
 	/* glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= 20; i++) {
 		float rp = (float)i / 20;
