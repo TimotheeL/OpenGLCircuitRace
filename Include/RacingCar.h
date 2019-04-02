@@ -5,8 +5,8 @@
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
 
-#ifndef RACINGCAR_H
-#define RACINGCAR_H
+#ifndef ____RACINGCAR____
+#define ____RACINGCAR____
 
 #include <Position.h>
 #include <BoundingBox.h>

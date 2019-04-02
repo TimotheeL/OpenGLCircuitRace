@@ -15,7 +15,9 @@
 
 #include <BoundingBox.h>
 
-#define PI 3.14159265
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795
+#endif
 
 const GLfloat blanc[] = { 1.0, 1.0, 1.0 };
 
@@ -72,13 +74,13 @@ void BoundingBox::update(Position *newPos) {
 	// Calculate alpha, an angle of the rect triangle in the box
 	float alpha = atan2(width, length);
 	// Convert in rad
-	float radangle = newPos->angle * PI / 180;
+	float radangle = newPos->angle * M_PI / 180;
 
 	float ar = radangle + alpha;	// Rotation angle for points +x +z (0,4)
 	float br = radangle - alpha;	// Rotation angle for points +x -z (1,5)
-	float dr = br + PI;				// Rotation angle for points -x -z (2,6)
-	float cr = ar - PI;				// Rotation angle for points -x +z (3,7)
-	float pi180 = 180 / PI;
+	float dr = br + M_PI;				// Rotation angle for points -x -z (2,6)
+	float cr = ar - M_PI;				// Rotation angle for points -x +z (3,7)
+	float pi180 = 180 / M_PI;
 
 	// Update each points
 	points[0] = new Position(

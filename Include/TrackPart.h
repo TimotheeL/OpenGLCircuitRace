@@ -8,11 +8,14 @@
 #ifndef ____TRACKPART____
 #define ____TRACKPART____
 
-#include "Position.h"
 #include <vector>
+
+#include <Position.h>
+#include <Object.h>
+
 using namespace std;
 
-class TrackPart {
+class TrackPart : public Object {
 
 private:
 	float radians(float angle);

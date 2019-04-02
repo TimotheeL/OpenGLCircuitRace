@@ -5,8 +5,8 @@
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
 
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef ____OBJECT____
+#define ____OBJECT____
 
 #include <BoundingBox.h>
 

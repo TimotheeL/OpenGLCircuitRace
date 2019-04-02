@@ -14,12 +14,14 @@
 // Regular constructor
 StraightLine::StraightLine(void):
 	TrackPart(),
-	length(7.0) {}
+	length(7.0)
+{}
 
 // 3-arguments constructor
 StraightLine::StraightLine(float width, float length, Position pos):
 	TrackPart(width, pos),
-	length(length) {}
+	length(length)
+{}
 
 // Copy constructor
 StraightLine::StraightLine(StraightLine *p1):
