@@ -73,7 +73,7 @@ void Patch::draw(void) {
 				glVertex3f(xPos + size, 0.0, zPos);
 				glVertex3f(xPos + size, 0.0, zPos - size);
 				glVertex3f(xPos, 0.0, zPos - size);
-		glEnd();
+			glEnd();
 		glPopMatrix();
 		glPushMatrix();
 			for (int i = 0; i < nbTrees; i++) {

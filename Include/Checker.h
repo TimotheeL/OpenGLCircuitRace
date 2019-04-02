@@ -1,8 +1,8 @@
 /*
-Racing game project - Checker class
-Represents a checker pattern (start line)
-2019
-Nicolas Bouchard, Timothée Guy, Timothée Laurent
+	Racing game project - Checker class
+	Represents a checker pattern (Used for the start line)
+	2019
+	Nicolas Bouchard, Timothée Guy, Timothée Laurent
 */
 
 #ifndef ____CHECKER____
@@ -11,12 +11,17 @@ Nicolas Bouchard, Timothée Guy, Timothée Laurent
 class Checker {
 
 private:
+	float xPos;
+	float zPos;
+	float squareSize;
+	int width;
+	int height;
 
 public:
 
 	/* Constructors */
-	Checker();
-	Checker(Checker *p1);
+	Checker(float xPos, float zPos, float squareSize, int width, int height);
+	Checker(Checker *c1);
 
 	/* Destructor */
 	~Checker(void);
@@ -28,6 +33,11 @@ public:
 	//void print(void);
 
 	/* Getters */
+	float Checker::getXPos(void);
+	float Checker::getZPos(void);
+	float Checker::getSize(void);
+	int Checker::getWidth(void);
+	int Checker::getHeight(void);
 };
 
 #endif // Checker
