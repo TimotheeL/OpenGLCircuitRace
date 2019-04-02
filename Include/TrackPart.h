@@ -25,6 +25,7 @@ protected:
 	Position pos;
 	std::vector<Position> vertices;
 	Position rotate(float x, float y, float z);
+	void virtual computeVertices(void);
 
 public:
 	/* Constructors */

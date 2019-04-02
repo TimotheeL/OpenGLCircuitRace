@@ -15,6 +15,7 @@ class StraightLine : public TrackPart {
 
 protected:
 	float length;
+	void computeVertices(void);
 
 public:
 	/* Constructors */

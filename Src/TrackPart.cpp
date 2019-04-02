@@ -60,6 +60,8 @@ void TrackPart::setWidth(float width) {
 float TrackPart::radians(float angle) {
 	return (angle * M_PI) / 180.0;
 }
+void TrackPart::computeVertices(void) {}
+
 // Rotate util function
 Position TrackPart::rotate(float x, float y, float z) {
 	float rx = cos(radians(pos.angle)) * x + sin(radians(pos.angle)) * z;

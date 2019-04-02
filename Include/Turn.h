@@ -17,6 +17,7 @@ protected:
 	float softness;
 	float angle;
 	bool direction; // true : left, false : right
+	void computeVertices(void);
 
 public:
 	/* Constructors */

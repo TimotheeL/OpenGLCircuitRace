@@ -34,6 +34,11 @@ static int wPy = 50;
 std::vector<StraightLine> lines;
 std::vector<Turn> turns;
 
+/* Besançon Racing Track modelizing function */
+static void BRT(void) {
+	
+}
+
 /* Init function */
 static void init(void) {
 	glEnable(GL_LIGHTING);
@@ -41,14 +46,7 @@ static void init(void) {
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
-	testNicolas();
-}
-
-/* Test functions */
-static void testNicolas(void) {
-	lines.push_back(new StraightLine(7.0, 6.0, new Position()));
-	turns.push_back(new Turn(7.0, 10.0, 45.0, true, new Position(0.0, 0.0, -6.0, 0.0)));
-	turns.push_back(new Turn(7.0, 30.0, 60.0, false, new Position(-4.2, 0.0, -17.0, 45.0)));
+	BRT();
 }
 
 /* Scene function */
