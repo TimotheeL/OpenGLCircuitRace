@@ -12,23 +12,19 @@
 #include <GL/glu.h>
 
 // Regular constructor
-StraightLine::StraightLine(void):TrackPart() {
-	this->length = 7.0;
-}
+StraightLine::StraightLine(void):
+	TrackPart(),
+	length(7.0) {}
 
 // 3-arguments constructor
-StraightLine::StraightLine(float width, float length, Position pos):TrackPart() {
-	this->width = width;
-	this->length = length;
-	this->pos = pos;
-}
+StraightLine::StraightLine(float width, float length, Position pos):
+	TrackPart(width, pos),
+	length(length) {}
 
 // Copy constructor
-StraightLine::StraightLine(StraightLine *p1):TrackPart(p1) {
-	this->width = p1->getWidth();
-	this->length = p1->getLength();
-	this->pos = p1->getPosition();
-}
+StraightLine::StraightLine(StraightLine *p1):
+	TrackPart(p1->getWidth(), p1->getPosition()),
+	length(p1->getLength()) {}
 
 // Destructor
 StraightLine::~StraightLine(void) {}

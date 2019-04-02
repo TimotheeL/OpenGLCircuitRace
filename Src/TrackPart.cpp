@@ -15,18 +15,19 @@
 #endif
 
 // Regular constructor
-TrackPart::TrackPart(void) {
-	this->width = 7.0;
-	this->pos = new Position();
-}
+TrackPart::TrackPart(void):
+	width(7.0),
+	pos(new Position()) {}
+
+// 2-arguments constructor
+TrackPart::TrackPart(float width, Position pos):
+	width(width),
+	pos(pos) {}
 
 // Copy constructor
-TrackPart::TrackPart(TrackPart *p1) {
-	this->width = p1->getWidth();
-}
-Position TrackPart::getPosition(void) {
-	return pos;
-}
+TrackPart::TrackPart(TrackPart *p1):
+	width(p1->getWidth()),
+	pos(p1->getPosition()) {}
 
 // Destructor
 TrackPart::~TrackPart(void) {}
@@ -37,6 +38,9 @@ float TrackPart::getWidth(void) {
 }
 std::vector<Position> TrackPart::getVertices(void) {
 	return vertices;
+}
+Position TrackPart::getPosition(void) {
+	return pos;
 }
 
 // Setters

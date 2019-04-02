@@ -105,6 +105,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Src\Object.cpp" />
+    <ClCompile Include="..\..\Src\Patch.cpp" />
     <ClCompile Include="..\..\Src\Position.cpp" />
     <ClCompile Include="..\..\Src\StraightLine.cpp" />
     <ClCompile Include="..\..\Src\TrackPart.cpp" />
@@ -114,6 +115,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Include\BoundingBox.h" />
     <ClInclude Include="..\..\Include\Object.h" />
+    <ClInclude Include="..\..\Include\Patch.h" />
     <ClInclude Include="..\..\Include\Position.h" />
     <ClInclude Include="..\..\Include\StraightLine.h" />
     <ClInclude Include="..\..\Include\TrackPart.h" />

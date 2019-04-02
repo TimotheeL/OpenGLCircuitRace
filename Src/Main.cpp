@@ -45,17 +45,13 @@ static void init(void) {
 
 /* Test functions */
 static void testNicolas(void) {
-	lines.push_back(new StraightLine(7.0, 12.0, new Position()));
-	turns.push_back(new Turn(5.0, 10.0, 45.0, true, new Position(0.0, 0.0, -6.0)));
-	turns[0].setAngle(45.0);
-	turns[0].setSoftness(12.0);
-	turns[0].setDirection(false);
-	printf("%s ", (turns[0].getDirection() ? "main true" : "main false"));
-	printf("%f %f %f %f %f %f\n", turns[0].getWidth(), turns[0].getSoftness(), turns[0].getAngle(), turns[0].getPosition().x, turns[0].getPosition().y, turns[0].getPosition().z);
+	lines.push_back(new StraightLine(7.0, 6.0, new Position()));
+	turns.push_back(new Turn(7.0, 10.0, 45.0, true, new Position(0.0, 0.0, -6.0, 0.0)));
+	turns.push_back(new Turn(7.0, 30.0, 60.0, false, new Position(-4.0, 0.0, -17.0, 45.0)));
 
-	/*for (unsigned int i = 0; i < lines.size(); i++) {
+	for (unsigned int i = 0; i < lines.size(); i++) {
 		lines[i].draw();
-	}*/
+	}
 	for (unsigned int i = 0; i < turns.size(); i++) {
 		turns[i].draw();
 	}
@@ -65,8 +61,8 @@ static void testNicolas(void) {
 static void scene(void) {
 	glPushMatrix();
 	glPushMatrix();
-	patch.draw();
-	//testNicolas();
+	//patch.draw();
+	testNicolas();
 	/* glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= 20; i++) {
 		float rp = (float)i / 20;
@@ -101,7 +97,7 @@ static void display(void) {
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
-	gluLookAt(0.0, 40.0, 40.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 200.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	scene();
 	glPopMatrix();
 	glFlush();
@@ -120,9 +116,9 @@ static void reshape(int wx, int wy) {
 	glLoadIdentity();
 	double ratio = (double)wx / wy;
 	if (ratio > 1.0)
-		gluPerspective(60.0, ratio, 0.2, 200.0);
+		gluPerspective(60.0, ratio, 0.2, 400.0);
 	else
-		gluPerspective(60.0 / ratio, ratio, 0.2, 200.0);
+		gluPerspective(60.0 / ratio, ratio, 0.2, 400.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }

@@ -13,29 +13,25 @@
 #include <math.h>
 
 // Regular constructor
-Turn::Turn(void):TrackPart() {
-	this->softness = 7.0;
-	this->angle = 90.0;
-	this->direction = true;
-}
+Turn::Turn(void) :
+	TrackPart(),
+	softness(7.0),
+	angle(90.0),
+	direction(true) {}
 
 // 5-arguments constructor
-Turn::Turn(float width, float softness, float angle, bool direction, Position pos) {
-	this->width = width;
-	this->softness = softness;
-	this->angle = angle;
-	this->direction = direction;
-	this->pos = pos;
-}
+Turn::Turn(float width, float softness, float angle, bool direction, Position pos):
+	TrackPart(width, pos),
+	softness(softness),
+	angle(angle),
+	direction(direction) {}
 
 // Copy constructor
-Turn::Turn(Turn *p1):TrackPart(p1) {
-	this->width = width;
-	this->softness = softness;
-	this->angle = angle;
-	this->direction = direction;
-	this->pos = pos;
-}
+Turn::Turn(Turn *p1):
+	TrackPart(p1->width, p1->pos),
+	softness(p1->softness),
+	angle(p1->angle),
+	direction(p1->direction) {}
 
 // Destructor
 Turn::~Turn(void) {}
@@ -69,6 +65,7 @@ void Turn::setDirection(bool direction) {
 // Drawer
 void Turn::draw(void) {
 	glPushMatrix();
+		glTranslatef(pos.x, pos.y, pos.z);
 		glRotatef(pos.angle, 0.0, 1.0, 0.0);
 		int ns = 40;
 		glColor3f(0.5, 0.5, 0.5);
@@ -89,12 +86,12 @@ void Turn::draw(void) {
 			(direction == true ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * - cs + softness + width / 2));
 			zout = (softness + width) * sn;
 
-			glVertex3f(xin + pos.x, pos.y, zin + pos.z);
+			glVertex3f(xin, 0.0, zin);
 			vin = rotate(xin, 0.0, zin);
 			vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;
 			vertices.push_back(vin);
 
-			glVertex3f(xout + pos.x, pos.y, zout + pos.z);
+			glVertex3f(xout, 0.0, zout);
 			vout = rotate(xout, 0.0, zout);
 			vout.x += pos.x; vout.y += pos.y; vout.z += pos.z;
 			vertices.push_back(vout);

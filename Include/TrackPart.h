@@ -26,6 +26,7 @@ protected:
 public:
 	/* Constructors */
 	TrackPart(void);
+	TrackPart(float width, Position pos);
 	TrackPart(TrackPart *p1);
 
 	/* Destructor */
