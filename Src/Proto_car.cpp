@@ -17,6 +17,8 @@
 #include <Grid.h>
 #include <Position.h>
 #include <Object.h>
+#include <Turn.h>
+#include <StraightLine.h>
 
 /* Global variables */
 static int pMode = 1;
@@ -51,10 +53,10 @@ static void init(void) {
 	rc = new RacingCar(4.0, 2.0, 2.0);
 
 	/* Init other objects */
-	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, -10.0));
-	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, 10.0, 0.0, 10.0));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, -10.0));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, 10.0));
+	listObjects.push_back(new Turn(7.0, 20.0, 40.0, true, new Position(10.0, 0.0, 0.0)));
+	listObjects.push_back(new StraightLine(7.0, 20.0, new Position(20.0, 0.0, 0.0)));
 	//listObjects.push_back(new Object(2.0, 8.0, 5.0));
 	//listObjects.push_back(new Object(8.0, 2.0, 5.0));
 

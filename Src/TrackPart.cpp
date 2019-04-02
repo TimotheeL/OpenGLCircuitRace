@@ -17,17 +17,26 @@
 // Regular constructor
 TrackPart::TrackPart(void):
 	width(7.0),
-	pos(new Position()) {}
+	pos(new Position())
+{
+	hitbox.update(&pos);
+}
 
 // 2-arguments constructor
 TrackPart::TrackPart(float width, Position pos):
 	width(width),
-	pos(pos) {}
+	pos(pos)
+{
+	hitbox.update(&this->pos);
+}
 
 // Copy constructor
 TrackPart::TrackPart(TrackPart *p1):
 	width(p1->getWidth()),
-	pos(p1->getPosition()) {}
+	pos(p1->getPosition()) 
+{
+	hitbox.update(&pos);
+}
 
 // Destructor
 TrackPart::~TrackPart(void) {}

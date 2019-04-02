@@ -5,8 +5,8 @@
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
 
-#ifndef GRID_H
-#define GRID_H
+#ifndef ____GRID____
+#define ____GRID____
 
 class Grid {
 

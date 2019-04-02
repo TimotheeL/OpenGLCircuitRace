@@ -5,8 +5,8 @@
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
 
-#ifndef POSITION_H
-#define POSITION_H
+#ifndef ____POSITION____
+#define ____POSITION____
 
 class Position {
 

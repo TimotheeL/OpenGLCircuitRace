@@ -5,8 +5,8 @@
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
 
-#ifndef BOUNDINGBOX_H
-#define BOUNDINGBOX_H
+#ifndef ____BOUNDINGBOX____
+#define ____BOUNDINGBOX____
 
 #include <Position.h>
 
@@ -14,7 +14,7 @@ class BoundingBox {
 public:
 	float length, width, height;
 	Position points[8];
-	GLfloat color[3];
+	float color[3];
 
 	/*	BoundingBox points structure
 
