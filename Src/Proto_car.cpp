@@ -20,6 +20,8 @@
 #include <Turn.h>
 #include <StraightLine.h>
 
+using namespace std;
+
 /* Global variables */
 static int pMode = 1;
 static bool drawBBox = false;
@@ -33,7 +35,10 @@ bool keyStates[256];
 bool keySpecialStates[256];
 
 /* Non-playable objects */
-std::vector<Object*> listObjects;
+vector<Object*> listObjects;
+
+/* The track */
+vector<TrackPart*> listTrackParts;
 
 /* Player's racing car */
 RacingCar *rc;
@@ -53,12 +58,12 @@ static void init(void) {
 	rc = new RacingCar(4.0, 2.0, 2.0);
 
 	/* Init other objects */
-	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, -10.0));
-	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, -10.0, 0.0, 10.0));
-	listObjects.push_back(new Turn(7.0, 20.0, 40.0, true, new Position(10.0, 0.0, 0.0)));
-	listObjects.push_back(new StraightLine(7.0, 20.0, new Position(20.0, 0.0, 0.0)));
-	//listObjects.push_back(new Object(2.0, 8.0, 5.0));
-	//listObjects.push_back(new Object(8.0, 2.0, 5.0));
+	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, new Position(-10.0, 0.0, -10.0)));
+	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, new Position(-10.0, 0.0, 10.0)));
+	
+	/* Init track */
+	listTrackParts.push_back(new Turn(7.0, 20.0, 40.0, true, new Position(10.0, 0.0, 0.0)));
+	listTrackParts.push_back(new StraightLine(7.0, 20.0, new Position(30.0, 0.0, 0.0, 20.0)));
 
 	/* Init grid */
 	grid = new Grid();
@@ -68,31 +73,41 @@ static void init(void) {
 static void scene(void) {
 	glPushMatrix();
 
-		/* Draw the camera locked on the racing car */
-		Position rcpos = rc->getPos();
-		gluLookAt(
-			0.0 + rcpos.x, 8.0 + rcpos.y, 10.0 + rcpos.z,
-			rcpos.x, rcpos.y, rcpos.z,
-			0.0, 1.0, 0.0
-		);
+	/* Draw the camera locked on the racing car */
+	Position rcpos = rc->getPos();
+	gluLookAt(
+		0.0 + rcpos.x, 8.0 + rcpos.y, 10.0 + rcpos.z,
+		rcpos.x, rcpos.y, rcpos.z,
+		0.0, 1.0, 0.0
+	);
 
-		rc->draw();
+	rc->draw();
 
-		/* Draw objects */
+	/* Draw objects */
+	for (unsigned int i = 0; i < listObjects.size(); i++) {
+		listObjects[i]->draw();
+	}
+
+	/* Draw track */
+	for (unsigned int i = 0; i < listTrackParts.size(); i++) {
+		listTrackParts[i]->draw();
+	}
+
+	grid->draw();
+
+	/* Draw bounding boxes */
+	if (drawBBox) {
+		rc->drawBoundingBoxes();
+		// Other objects
 		for (unsigned int i = 0; i < listObjects.size(); i++) {
-			listObjects[i]->draw();
+			listObjects[i]->drawBoundingBoxes();
 		}
 
-		grid->draw();
-
-		/* Draw bounding boxes */
-		if (drawBBox) {
-			rc->getBoundingBox().draw();
-
-			for (unsigned int i = 0; i < listObjects.size(); i++) {
-				listObjects[i]->getBoundingBox().draw();
-			}
+		// Track
+		for (unsigned int i = 0; i < listTrackParts.size(); i++) {
+			listTrackParts[i]->drawBoundingBoxes();
 		}
+	}
 
 	glPopMatrix();
 }
@@ -105,12 +120,20 @@ static void simulate(void) {
 		listObjects[i]->resetIsColliding();
 	}
 
+	for (unsigned int i = 0; i < listTrackParts.size(); i++) {
+		listTrackParts[i]->resetIsColliding();
+	}
+
 	/* Handle inputs for the car */
 	rc->handleInputs(keyStates, keySpecialStates);
 	/* Handle car's movement */
 	rc->handleMovement(dt);
 
 	/* Handle collisions */
+	for (unsigned int i = 0; i < listTrackParts.size(); i++) {
+		rc->collision(listTrackParts[i]);
+	}
+
 	for (unsigned int i = 0; i < listObjects.size(); i++) {
 		rc->collision(listObjects[i]);
 	}
@@ -179,23 +202,23 @@ static void keyboard(unsigned char key, int x, int y) {
 	keyStates[key] = true;
 
 	switch (key) {
-		case 'p':
-		case 'P':
-			pMode = !pMode;
-			glutPostRedisplay();
-			break;
-		case 'f':
-		case 'F':
-			glutFullScreen();
-			break;
-		case 0x1B:
-			exit(0);
-			break;
-		case 'b':
-		case 'B':
-			drawBBox = !drawBBox;
-			glutPostRedisplay();
-			break;
+	case 'p':
+	case 'P':
+		pMode = !pMode;
+		glutPostRedisplay();
+		break;
+	case 'f':
+	case 'F':
+		glutFullScreen();
+		break;
+	case 0x1B:
+		exit(0);
+		break;
+	case 'b':
+	case 'B':
+		drawBBox = !drawBBox;
+		glutPostRedisplay();
+		break;
 	}
 }
 

@@ -11,6 +11,7 @@
 #include <Position.h>
 #include <BoundingBox.h>
 #include <Object.h>
+#include <TrackPart.h>
 
 class RacingCar : public Object {
 
@@ -28,7 +29,7 @@ private:
 
 public:
 	/* Constructors */
-	RacingCar(float clength, float cwidth, float cheight, float cx, float cy, float cz);
+	RacingCar(float clength, float cwidth, float cheight, Position *pos);
 
 	RacingCar(float clength, float cwidth, float cheight);
 
@@ -74,6 +75,7 @@ public:
 
 	/* Collision handling */
 	virtual void collision(Object *o);
+	virtual void collision(TrackPart *tp);
 };
 
 #endif

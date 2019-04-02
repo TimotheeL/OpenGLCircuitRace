@@ -8,13 +8,15 @@
 #ifndef ____BOUNDINGBOX____
 #define ____BOUNDINGBOX____
 
+#include <GL/gl.h>
+
 #include <Position.h>
 
 class BoundingBox {
 public:
 	float length, width, height;
 	Position points[8];
-	float color[3];
+	GLfloat color[3];
 
 	/*	BoundingBox points structure
 

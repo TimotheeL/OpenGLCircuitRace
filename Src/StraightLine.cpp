@@ -17,6 +17,7 @@ StraightLine::StraightLine(void):
 	length(7.0)
 {
 	computeVertices();
+	generateBoundingBoxes();
 }
 
 // 3-arguments constructor
@@ -25,6 +26,7 @@ StraightLine::StraightLine(float width, float length, Position pos):
 	length(length)
 {
 	computeVertices();
+	generateBoundingBoxes();
 }
 
 // Copy constructor
@@ -33,6 +35,7 @@ StraightLine::StraightLine(StraightLine *p1):
 	length(p1->getLength()) 
 {
 	computeVertices();
+	generateBoundingBoxes();
 }
 
 // Destructor
@@ -65,6 +68,18 @@ void StraightLine::computeVertices(void) {
 	Position v4 = rotate(-width / 2.0, 0.0, -length);
 	v4.x += pos.x; v4.y += pos.y; v4.z += pos.z;
 	vertices.push_back(v4);
+}
+
+/* Bounding boxes generator */
+void StraightLine::generateBoundingBoxes(void) {
+	Position right = rotate((width / 2.0) + 1.0, 0.0, -length / 2.0);
+	right.x += pos.x; right.y += pos.y; right.z += pos.z;
+
+	Position left = rotate((-width / 2.0) - 1.0, 0.0, -length / 2.0);
+	left.x += pos.x; left.y += pos.y; left.z += pos.z;
+
+	sideboxes.push_back(new Object(2.0, length, 2.0, new Position(right)));
+	sideboxes.push_back(new Object(2.0, length, 2.0, new Position(left)));
 }
 
 // Drawer
