@@ -14,9 +14,10 @@
 #include <GL/glu.h>
 #include <math.h>
 
+#include "Checker.h"
 #include "Patch.h"
-#include "Turn.h"
 #include "StraightLine.h"
+#include "Turn.h"
 #include "Tree.h"
 
 using namespace std;
@@ -25,18 +26,31 @@ using namespace std;
 static int pMode = 1; 
 
 Patch patch = new Patch(-16.0, 16.0, 32.0, 5);
+Checker checker = new Checker(0.0, 0.0, 10.0, 3, 4);
 
-static int wTx = 600;
-static int wTy = 360;
+static int wTx = 800;
+static int wTy = 600;
 static int wPx = 50;
 static int wPy = 50;
+
+static float eye_x = 0.0;
+static float eye_y = 180;
+static float eye_z = 1.0;
 
 std::vector<StraightLine> lines;
 std::vector<Turn> turns;
 
 /* Besançon Racing Track modelizing function */
 static void BRT(void) {
-	
+	lines.push_back(new StraightLine(7.0, 200.0, new Position(100.0, 0.0, 80.0, 90.0)));
+	turns.push_back(new Turn(7.0, 13.0, 192.0, false, new Position(-100.0, 0.0, 80.0, 90.0)));
+	lines.push_back(new StraightLine(7.0, 22.0, new Position(-96.8, 0.0, 47.3, 258.0)));
+	turns.push_back(new Turn(7.0, 6.0, 170.0, true, new Position(-75.5, 0.0, 51.8, 258.0)));
+	lines.push_back(new StraightLine(7.0, 42.0, new Position(-69.9 , 0.0, 33.7, 68.0)));
+	turns.push_back(new Turn(7.0, 10.0, 115.0, false, new Position(-106.5, 0.0, 19.0, 68.0)));
+	lines.push_back(new StraightLine(7.0, 20.0, new Position(-111.0, 0.0, -3.0, 313.0)));
+	turns.push_back(new Turn(7.0, 5.0, 90.0, false, new Position(-97.0, 0.0, -16.0, 313.0)));
+	lines.push_back(new StraightLine(7.0, 45.0, new Position(-85.1, 0.0, -15.7, 223.0)));
 }
 
 /* Init function */
@@ -51,7 +65,8 @@ static void init(void) {
 
 /* Scene function */
 static void scene(void) {
-	glPushMatrix();
+	checker.draw();
+	/*glPushMatrix();
 	glPushMatrix();
 	//patch.draw();
 	for (unsigned int i = 0; i < lines.size(); i++) {
@@ -59,7 +74,7 @@ static void scene(void) {
 	}
 	for (unsigned int i = 0; i < turns.size(); i++) {
 		turns[i].draw();
-	}
+	}*/
 	/* glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= 20; i++) {
 		float rp = (float)i / 20;
@@ -94,7 +109,7 @@ static void display(void) {
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
-	gluLookAt(0.0, 200.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	scene();
 	glPopMatrix();
 	glFlush();
@@ -138,6 +153,12 @@ static void keyboard(unsigned char key, int x, int y) {
 			break;
 		case 0x1B:
 			exit(0);
+			break;
+		case 'p':
+			eye_y += 10.0;
+			break;
+		case 'm':
+			eye_y -= 10.0;
 			break;
 		}
 }
