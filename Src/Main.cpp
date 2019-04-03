@@ -25,18 +25,17 @@ using namespace std;
 /* Global variables */
 static int pMode = 1; 
 
-Patch patch = new Patch(-16.0, 16.0, 32.0, 5);
-Checker checker = new Checker(0.0, 0.0, 10.0, 3, 4);
-
 static int wTx = 800;
 static int wTy = 600;
 static int wPx = 50;
 static int wPy = 50;
 
-static float eye_x = 0.0;
-static float eye_y = 180;
-static float eye_z = 1.0;
+static float eye_x = 0.0; // 0.0
+static float eye_y = 180.0; // 180.0
+static float eye_z = 1.0; // 1.0
 
+Patch patch = new Patch(-16.0, 16.0, 32.0, 5);
+Checker checker = new Checker(80.0, 83.0, 0.5, 4, 14);
 std::vector<StraightLine> lines;
 std::vector<Turn> turns;
 
@@ -71,16 +70,18 @@ static void init(void) {
 
 /* Scene function */
 static void scene(void) {
+	float colorTrack[4] = {0.3, 0.3, 0.3, 1.0};
 	checker.draw();
-	/*glPushMatrix();
 	glPushMatrix();
-	//patch.draw();
+	glPushMatrix();
+	patch.draw();
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
 	for (unsigned int i = 0; i < lines.size(); i++) {
 		lines[i].draw();
 	}
 	for (unsigned int i = 0; i < turns.size(); i++) {
 		turns[i].draw();
-	}*/
+	}
 	/* glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= 20; i++) {
 		float rp = (float)i / 20;
@@ -166,11 +167,24 @@ static void keyboard(unsigned char key, int x, int y) {
 		case 'm':
 			eye_y -= 10.0;
 			break;
-		}
+	}
 }
 
 /* Special function*/
 static void special(int specialKey, int x, int y) {
+	switch (specialKey) {
+		case GLUT_KEY_UP:
+			eye_z -= 2.0;
+			break;
+		case GLUT_KEY_DOWN:
+			eye_z += 2.0;
+			break;
+		case GLUT_KEY_LEFT:
+			eye_x -= 2.0;
+			break;
+		case GLUT_KEY_RIGHT:
+			eye_x += 2.0;
+	}
 }
 
 /* Mouse function */
