@@ -34,7 +34,7 @@ static float eye_x = 0.0; // 0.0
 static float eye_y = 180.0; // 180.0
 static float eye_z = 1.0; // 1.0
 
-Patch patch = new Patch(-16.0, 16.0, 32.0, 5);
+Patch patch = new Patch(80.0, 83.0, 32.0, 1);
 Checker checker = new Checker(80.0, 83.0, 0.5, 4, 14);
 std::vector<StraightLine> lines;
 std::vector<Turn> turns;

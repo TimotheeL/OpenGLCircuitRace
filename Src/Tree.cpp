@@ -80,7 +80,7 @@ void Tree::draw(void) {
 	float colorLeaves[4] = { 0.1, 0.5, 0.1, 1.0 };
 
 	glPushMatrix();
-		glTranslatef((GLfloat)xPos, 0.0, (GLfloat)zPos);
+		glTranslatef((GLfloat)xPos, -0.1, (GLfloat)zPos);
 		glPushMatrix();
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrunk);
 			glTranslatef(0.0, hTrunk / 2, 0.0);
