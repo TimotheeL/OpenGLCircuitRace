@@ -52,7 +52,7 @@ protected:
 
 public:
 	/* Constructors */
-	Object(float length, float width, float height, float x, float y, float z);
+	Object(float length, float width, float height, Position *pos);
 
 	Object(float length, float width, float height);
 
@@ -72,10 +72,12 @@ public:
 	bool getIsColliding(void);
 
 	/* Setters */
-	void resetIsColliding(void);
+	virtual void resetIsColliding(void);
 
 	/* Draw */
 	virtual void draw();
+
+	virtual void drawBoundingBoxes();
 
 	/* Collision handling */
 	virtual void collision(Object *o);

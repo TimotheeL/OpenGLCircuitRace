@@ -23,9 +23,17 @@ private:
 protected:
 	float width;
 	Position pos;
-	std::vector<Position> vertices;
+
+	vector<Position> vertices;
+	vector<Object> sideboxes;
+
 	Position rotate(float x, float y, float z);
-	void virtual computeVertices(void);
+
+	/* Compute vertices */
+	virtual void computeVertices(void);
+
+	/* Basic bounding boxes generator for a track part */
+	virtual void generateBoundingBoxes(void);
 
 public:
 	/* Constructors */
@@ -39,13 +47,19 @@ public:
 	/* Getters */
 	float virtual getWidth(void);
 	Position virtual getPosition(void);
-	std::vector<Position> getVertices(void);
+	vector<Position> getVertices(void);
+	vector<Object> *getSideboxes(void);
 
 	/* Setters */
 	void virtual setWidth(float width);
 
 	/* Drawer */
 	void virtual draw(void);
+
+	void virtual drawBoundingBoxes(void);
+
+	/* Basic IsColliding resetter for a track part */
+	void virtual resetIsColliding(void);
 };
 
 #endif // TrackPart

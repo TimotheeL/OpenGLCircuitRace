@@ -15,7 +15,12 @@ class StraightLine : public TrackPart {
 
 protected:
 	float length;
-	void computeVertices(void);
+
+	/* Compute vertices */
+	virtual void computeVertices(void);
+
+	/* Bounding boxes generator */
+	virtual void generateBoundingBoxes(void);
 
 public:
 	/* Constructors */

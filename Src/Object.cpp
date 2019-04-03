@@ -21,6 +21,7 @@
 /* MTV : Constructor */
 MTV::MTV(void) {
 	overlap = FLT_MAX;
+	axis = Axis();
 }
 
 /* MTV : Destructor */
@@ -32,8 +33,8 @@ MTV::~MTV(void) {}
 --------------------------------*/
 
 /* Constructors */
-Object::Object(float length, float width, float height, float x, float y, float z) {
-	pos = new Position(x, y, z);
+Object::Object(float length, float width, float height, Position *posi) {
+	pos = new Position(posi);
 	hitbox = new BoundingBox(length, width, height, &pos);
 	this->length = length;
 	this->width = width;
@@ -42,7 +43,7 @@ Object::Object(float length, float width, float height, float x, float y, float 
 }
 
 Object::Object(float length, float width, float height)
-	:Object(length, width, height, 0.0, 0.0, 0.0)
+	:Object(length, width, height, new Position(0.0, 0.0, 0.0))
 {}
 
 Object::Object(Object *o)
@@ -56,7 +57,7 @@ Object::Object(Object *o)
 }
 
 Object::Object(void)
-	:Object(5.0, 5.0, 5.0, 0.0, 0.0, 0.0)
+	:Object(5.0, 5.0, 5.0, new Position(0.0, 0.0, 0.0))
 {}
 
 /* Destructor */
@@ -94,6 +95,10 @@ void Object::resetIsColliding(void) {
 
 /* Draw */
 void Object::draw(void) {
+	hitbox.draw();
+}
+
+void Object::drawBoundingBoxes(void) {
 	hitbox.draw();
 }
 
@@ -160,6 +165,11 @@ MTV *Object::collisionTestSAT(Object *o) {
 				o->hitbox.setColor(1.0, 0.0, 0.0);
 			}
 
+			/* Free memory */
+			delete(projection);
+			delete(oprojection);
+			delete(mtv);
+
 			return NULL;
 		}
 		else if (over < mtv->overlap) {
@@ -189,6 +199,11 @@ MTV *Object::collisionTestSAT(Object *o) {
 			if (!o->isColliding) {
 				o->hitbox.setColor(1.0, 0.0, 0.0);
 			}
+
+			/* Free memory */
+			delete(projection);
+			delete(oprojection);
+			delete(mtv);
 			
 			return NULL;
 		}
@@ -211,6 +226,10 @@ MTV *Object::collisionTestSAT(Object *o) {
 		o->isColliding = true;
 		o->hitbox.setColor(0.0, 1.0, 0.0);
 	}
+
+	/* Free memory */
+	delete(projection);
+	delete(oprojection);
 
 	/* Return the MTV */
 	return mtv;

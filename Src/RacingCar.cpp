@@ -23,8 +23,8 @@ const float RacingCar::ACCEL = 3.0;
 const float RacingCar::ROT_ANGLE = 2.0;
 
 /* Constructors */
-RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float cy, float cz)
-	:Object(clength, cwidth, cheight, cx, cy, cz)
+RacingCar::RacingCar(float clength, float cwidth, float cheight, Position *pos)
+	:Object(clength, cwidth, cheight, pos)
 {
 	handbrakeState = false;
 	dirForward = true;
@@ -32,7 +32,7 @@ RacingCar::RacingCar(float clength, float cwidth, float cheight, float cx, float
 }
 
 RacingCar::RacingCar(float clength, float cwidth, float cheight)
-	:RacingCar(clength, cwidth, cheight, 0.0, 0.0, 0.0)
+	:RacingCar(clength, cwidth, cheight, new Position(0.0, 0.0, 0.0))
 {}
 
 RacingCar::RacingCar(void)
@@ -195,5 +195,24 @@ void RacingCar::collision(Object *o) {
 
 		speed = 0.0;
 		hitbox.update(&pos);
+	}
+
+	delete(mtv);
+}
+
+void RacingCar::collision(TrackPart *tp) {
+	vector<Object> *boxes = tp->getSideboxes();
+	for (unsigned int i = 0; i < boxes->size(); i++) {
+		MTV *mtv = collisionTestSAT(&boxes->at(i));
+
+		if (mtv != NULL) {
+			pos.x += -mtv->axis.x * mtv->overlap;
+			pos.z += mtv->axis.z * mtv->overlap;
+
+			speed = 0.0;
+			hitbox.update(&pos);
+		}
+
+		delete(mtv);
 	}
 }

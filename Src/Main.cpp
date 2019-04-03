@@ -14,9 +14,10 @@
 #include <GL/glu.h>
 #include <math.h>
 
+#include "Checker.h"
 #include "Patch.h"
-#include "Turn.h"
 #include "StraightLine.h"
+#include "Turn.h"
 #include "Tree.h"
 
 using namespace std;
@@ -25,6 +26,7 @@ using namespace std;
 static int pMode = 1; 
 
 Patch patch = new Patch(-16.0, 16.0, 32.0, 5);
+Checker checker = new Checker(0.0, 0.0, 10.0, 3, 4);
 
 static int wTx = 800;
 static int wTy = 600;
@@ -32,7 +34,7 @@ static int wPx = 50;
 static int wPy = 50;
 
 static float eye_x = 0.0;
-static float eye_y = 180.0;
+static float eye_y = 180;
 static float eye_z = 1.0;
 
 std::vector<StraightLine> lines;
@@ -69,7 +71,8 @@ static void init(void) {
 
 /* Scene function */
 static void scene(void) {
-	glPushMatrix();
+	checker.draw();
+	/*glPushMatrix();
 	glPushMatrix();
 	//patch.draw();
 	for (unsigned int i = 0; i < lines.size(); i++) {
@@ -77,7 +80,7 @@ static void scene(void) {
 	}
 	for (unsigned int i = 0; i < turns.size(); i++) {
 		turns[i].draw();
-	}
+	}*/
 	/* glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= 20; i++) {
 		float rp = (float)i / 20;

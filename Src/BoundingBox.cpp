@@ -36,6 +36,12 @@ BoundingBox::BoundingBox(float objLength, float objWidth, float objHeight, Posit
 	length = objLength;			// Set length to object length
 	width = objWidth;			// Set width to object width
 	height = objHeight;			// Set height to object height
+
+	// Allocate memory for each point
+	for (int i = 0; i < 8; i++) {
+		points[i] = new Position();
+	}
+
 	update(objCenter);			// Update the position of the box with the object position
 	
 	color[0] = 1.0; color[1] = 0.0; color[2] = 0.0;
@@ -83,61 +89,45 @@ void BoundingBox::update(Position *newPos) {
 	float pi180 = 180 / M_PI;
 
 	// Update each points
-	points[0] = new Position(
-		newPos->x + radius * cos(ar),
-		newPos->y,
-		newPos->z + radius * sin(ar),
-		ar * pi180
-	);
+	points[0].x = newPos->x + radius * cos(ar);
+	points[0].y = newPos->y;
+	points[0].z = newPos->z + radius * sin(ar);
+	points[0].angle = ar * pi180;
 
-	points[1] = new Position(
-		newPos->x + radius * cos(br),
-		newPos->y,
-		newPos->z + radius * sin(br),
-		br * pi180
-	);
+	points[1].x = newPos->x + radius * cos(br);
+	points[1].y = newPos->y;
+	points[1].z = newPos->z + radius * sin(br);
+	points[1].angle = br * pi180;
 
-	points[2] = new Position(
-		newPos->x + radius * cos(cr),
-		newPos->y,
-		newPos->z + radius * sin(cr),
-		cr * pi180
-	);
+	points[2].x = newPos->x + radius * cos(cr);
+	points[2].y = newPos->y;
+	points[2].z = newPos->z + radius * sin(cr);
+	points[2].angle = cr * pi180;
 
-	points[3] = new Position(
-		newPos->x + radius * cos(dr),
-		newPos->y,
-		newPos->z + radius * sin(dr),
-		dr * pi180
-	);
+	points[3].x = newPos->x + radius * cos(dr);
+	points[3].y = newPos->y;
+	points[3].z = newPos->z + radius * sin(dr);
+	points[3].angle = dr * pi180;
 
-	points[4] = new Position(
-		newPos->x + radius * cos(ar),
-		newPos->y + height,
-		newPos->z + radius * sin(ar),
-		ar * pi180
-	);
+	points[4].x = newPos->x + radius * cos(ar);
+	points[4].y = newPos->y + height;
+	points[4].z = newPos->z + radius * sin(ar);
+	points[4].angle = ar * pi180;
 
-	points[5] = new Position(
-		newPos->x + radius * cos(br),
-		newPos->y + height,
-		newPos->z + radius * sin(br),
-		br * pi180
-	);
+	points[5].x = newPos->x + radius * cos(br);
+	points[5].y = newPos->y + height;
+	points[5].z = newPos->z + radius * sin(br);
+	points[5].angle = br * pi180;
 
-	points[6] = new Position(
-		newPos->x + radius * cos(cr),
-		newPos->y + height,
-		newPos->z + radius * sin(cr),
-		cr * pi180
-	);
+	points[6].x = newPos->x + radius * cos(cr);
+	points[6].y = newPos->y + height;
+	points[6].z = newPos->z + radius * sin(cr);
+	points[6].angle = cr * pi180;
 
-	points[7] = new Position(
-		newPos->x + radius * cos(dr),
-		newPos->y + height,
-		newPos->z + radius * sin(dr),
-		dr * pi180
-	);
+	points[7].x = newPos->x + radius * cos(dr);
+	points[7].y = newPos->y + height;
+	points[7].z = newPos->z + radius * sin(dr);
+	points[7].angle = dr * pi180;
 }
 
 /* Draw the hitbox */
