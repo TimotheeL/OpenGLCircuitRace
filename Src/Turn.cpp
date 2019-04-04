@@ -90,9 +90,9 @@ void Turn::computeVertices(void) {
 		cs = cos(a);
 		sn = -sin(a);
 
-		(direction == true ? xin = softness * cs - softness - width / 2 : xin = softness * -cs + softness + width / 2);
+		(direction ? xin = softness * cs - softness - width / 2 : xin = softness * -cs + softness + width / 2);
 		zin = softness * sn;
-		(direction == true ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * -cs + softness + width / 2));
+		(direction ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * -cs + softness + width / 2));
 		zout = (softness + width) * sn;
 
 		vin = rotate(xin, 0.0, zin);
@@ -107,18 +107,32 @@ void Turn::computeVertices(void) {
 
 // Drawer
 void Turn::draw(void) {
+	float colorTrack[4] = { 0.3, 0.3, 0.3, 1.0 };
 	glPushMatrix();
 		glColor3f(0.5, 0.5, 0.5);
 		glTranslatef(pos.x, pos.y, pos.z);
 		//glRotatef(pos.angle, 0.0, 1.0, 0.0);
 		glPushMatrix();
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
 			glBegin(GL_QUAD_STRIP);
 				glNormal3f(0.0F, 1.0F, 0.0F);
-
 				for (unsigned int i = 0; i < vertices.size(); i++) {
 					glVertex3f(vertices[i].x - pos.x, vertices[i].y - pos.y, vertices[i].z - pos.z);
 				}
 			glEnd();
+		glPopMatrix();
+		glPushMatrix();
+			for (unsigned int i = 0; i < vertices.size(); i++) {
+				if (i % 2 != 0) {
+					glPushMatrix();
+						float white[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+						float red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+						glMaterialfv(GL_FRONT, GL_DIFFUSE, i % 3 == 0 ? white : red);
+						glTranslatef(vertices[i].x - pos.x, vertices[i].y - pos.y, vertices[i].z - pos.z);
+						glutSolidCube(1.0f);
+					glPopMatrix();
+				}
+			}
 		glPopMatrix();
 	glPopMatrix();
 }

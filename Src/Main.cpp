@@ -34,13 +34,20 @@ static float eye_x = 0.0; // 0.0
 static float eye_y = 180.0; // 180.0
 static float eye_z = 1.0; // 1.0
 
-Patch patch = new Patch(80.0, 83.0, 32.0, 1);
+std::vector<Patch> patches;
 Checker checker = new Checker(80.0, 83.0, 0.5, 4, 14);
 std::vector<StraightLine> lines;
 std::vector<Turn> turns;
 
 /* Besançon Racing Track modelizing function */
 static void BRT(void) {
+	for (int i = -16; i < 16; i++) {
+		for (int j = -16; j < 16; j++) {
+			int nbTrees = 0;
+			//nbTrees = abs(i * j) / 16 + abs(i + j) / 4; // comment this line to remove all trees
+			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
+		}
+	}
 	lines.push_back(new StraightLine(7.0, 200.0, new Position(100.0, 0.0, 80.0, 90.0)));
 	turns.push_back(new Turn(7.0, 13.0, 192.0, false, new Position(-100.0, 0.0, 80.0, 90.0)));
 	lines.push_back(new StraightLine(7.0, 22.0, new Position(-96.8, 0.0, 47.3, 258.0)));
@@ -60,6 +67,7 @@ static void BRT(void) {
 
 /* Init function */
 static void init(void) {
+	glClearColor(0.1F, 0.4F, 0.9F, 1.0F);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glDepthFunc(GL_LESS);
@@ -70,37 +78,39 @@ static void init(void) {
 
 /* Scene function */
 static void scene(void) {
-	float colorTrack[4] = {0.3, 0.3, 0.3, 1.0};
 	checker.draw();
 	glPushMatrix();
-	glPushMatrix();
-	patch.draw();
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
-	for (unsigned int i = 0; i < lines.size(); i++) {
-		lines[i].draw();
-	}
-	for (unsigned int i = 0; i < turns.size(); i++) {
-		turns[i].draw();
-	}
-	/* glBegin(GL_QUAD_STRIP);
-	for (int i = 0; i <= 20; i++) {
-		float rp = (float)i / 20;
-		float ar = 2.0*3.1415926535897932384626433832795 / (360.0 / 90.0);
-		float a = ar*rp;
-		float cs = cos(a);
-		float sn = -sin(a);
-		float x = 7.0 * cs;
-		float z = 7.0 * sn;
+		glPushMatrix();
+			for (unsigned int i = 0; i < patches.size(); i++) {
+				patches[i].draw();
+			}
+		glPopMatrix();
+		glPushMatrix();
+			for (unsigned int i = 0; i < turns.size(); i++) {
+				turns[i].draw();
+			}
+			for (unsigned int i = 0; i < lines.size(); i++) {
+				lines[i].draw();
+			}
+		glPopMatrix();
+		/* glBegin(GL_QUAD_STRIP);
+		for (int i = 0; i <= 20; i++) {
+			float rp = (float)i / 20;
+			float ar = 2.0*3.1415926535897932384626433832795 / (360.0 / 90.0);
+			float a = ar*rp;
+			float cs = cos(a);
+			float sn = -sin(a);
+			float x = 7.0 * cs;
+			float z = 7.0 * sn;
 
-		float xin = 7.0 * cs - 7.0 - 7.0 / 2;
-		float zin = 7.0 * sn;
-		float xout = ((7.0 + 7.0) * cs - 7.0 - 7.0 / 2);
-		float zout = (7.0 + 7.0) * sn;
-		glVertex3f(xin, 0.0, zin);
-		glVertex3f(xout, 0.0, zout);
-	}
-	glEnd(); */
-	glPopMatrix();
+			float xin = 7.0 * cs - 7.0 - 7.0 / 2;
+			float zin = 7.0 * sn;
+			float xout = ((7.0 + 7.0) * cs - 7.0 - 7.0 / 2);
+			float zout = (7.0 + 7.0) * sn;
+			glVertex3f(xin, 0.0, zin);
+			glVertex3f(xout, 0.0, zout);
+		}
+		glEnd(); */
 	glPopMatrix();
 }
 
@@ -116,7 +126,7 @@ static void display(void) {
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
-	gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(eye_x, eye_y, eye_z, 80.0, 0.0, 90.0, 0.0, 1.0, 0.0);
 	scene();
 	glPopMatrix();
 	glFlush();
