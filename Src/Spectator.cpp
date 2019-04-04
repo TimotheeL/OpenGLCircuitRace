@@ -31,7 +31,7 @@ Spectator::Spectator(float xPos, float yPos, float zPos, float color[3], bool ju
 
 Spectator::Spectator(float xPos, float yPos, float zPos, float red, float green, float blue, bool jumping) {
 	this->xPos = xPos;
-	this->zPos = zPos;
+	this->yPos = yPos;
 	this->zPos = zPos;
 	this->currYPos = yPos;
 	this->jumping = jumping;
@@ -87,15 +87,18 @@ void Spectator::setJumping(void) {
 }
 
 void Spectator::move(void) {
-	if (jumping || currYPos > yPos) {
-		if (currYPos >= yPos + 0.8) {
+	if (jumping) {
+		if (currYPos > yPos + 1.0) {
 			goingUp = false;
-		}
-
-		if (currYPos <= 0.00) {
+		} else if (currYPos < yPos) {
 			goingUp = true;
+			printf("I'm true");
 		}
-		currYPos += goingUp ? 0.05 : -0.05;
+		if (goingUp) {
+			currYPos += 0.05;
+		} else {
+			currYPos -= 0.05;
+		}
 	}
 }
 

@@ -49,6 +49,7 @@ Checker checker;
 vector<Patch> patches;
 vector<StraightLine> lines;
 vector<Turn> turns;
+Spectator bob;
 
 /* Player's racing car */
 RacingCar rc;
@@ -90,6 +91,7 @@ static void init(void) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 
+	bob = new Spectator(80.0, 0.0, 83.0, 0.0, 0.0, 1.0, true);
 	/* Init circuit */
 	BRT();
 
@@ -106,7 +108,7 @@ static void scene(void) {
 
 		checker.draw();
 		rc.draw();
-
+		bob.draw();
 		glPushMatrix();
 			for (unsigned int i = 0; i < patches.size(); i++) {
 				patches[i].draw();
@@ -164,6 +166,7 @@ static void simulate(void) {
 	for (unsigned int i = 0; i < turns.size(); i++) {
 		turns[i].resetIsColliding();
 	}
+	bob.move();
 
 	/* Handle inputs for the car */
 	//rc->handleInputs(keyStates, keySpecialStates);
