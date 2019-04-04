@@ -108,6 +108,7 @@
     <ClCompile Include="..\..\Src\Object.cpp" />
     <ClCompile Include="..\..\Src\Patch.cpp" />
     <ClCompile Include="..\..\Src\Position.cpp" />
+    <ClCompile Include="..\..\Src\RacingCar.cpp" />
     <ClCompile Include="..\..\Src\StraightLine.cpp" />
     <ClCompile Include="..\..\Src\TrackPart.cpp" />
     <ClCompile Include="..\..\Src\Tree.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="..\..\Include\Object.h" />
     <ClInclude Include="..\..\Include\Patch.h" />
     <ClInclude Include="..\..\Include\Position.h" />
+    <ClInclude Include="..\..\Include\RacingCar.h" />
     <ClInclude Include="..\..\Include\StraightLine.h" />
     <ClInclude Include="..\..\Include\TrackPart.h" />
     <ClInclude Include="..\..\Include\Tree.h" />

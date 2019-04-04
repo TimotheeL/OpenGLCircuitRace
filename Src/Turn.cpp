@@ -96,12 +96,34 @@ void Turn::computeVertices(void) {
 		zout = (softness + width) * sn;
 
 		vin = rotate(xin, 0.0, zin);
-		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;
+		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z; vin.angle -= a * 180 / M_PI;
 		vertices.push_back(vin);
 
 		vout = rotate(xout, 0.0, zout);
-		vout.x += pos.x; vout.y += pos.y; vout.z += pos.z;
+		vout.x += pos.x; vout.y += pos.y; vout.z += pos.z; vout.angle -= a * 180 / M_PI;
 		vertices.push_back(vout);
+	}
+}
+
+/* Bounding boxes generator */
+void Turn::generateBoundingBoxes(void) {
+	for (unsigned int i = 0; i < vertices.size() - 2; i++) {
+		// Compute middle point
+		float x = (vertices[i].x + vertices[i + 2].x) / 2;
+		float y = (vertices[i].y + vertices[i + 2].y) / 2;
+		float z = (vertices[i].z + vertices[i + 2].z) / 2;
+		float angle = (vertices[i].angle + vertices[i + 2].angle) / 2;
+
+		// Compute length
+		float length = sqrt(
+			powf(vertices[i + 2].x - vertices[i].x, 2)
+			+ powf(vertices[i + 2].z - vertices[i].z, 2)
+		);
+
+		// Create the bounding box
+		sideboxes.push_back(
+			new Object(0.1, length, 2.0, new Position(x, y, z, angle))
+		);
 	}
 }
 
@@ -111,7 +133,6 @@ void Turn::draw(void) {
 	glPushMatrix();
 		glColor3f(0.5, 0.5, 0.5);
 		glTranslatef(pos.x, pos.y, pos.z);
-		//glRotatef(pos.angle, 0.0, 1.0, 0.0);
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
 			glBegin(GL_QUAD_STRIP);
@@ -135,11 +156,4 @@ void Turn::draw(void) {
 			}
 		glPopMatrix();
 	glPopMatrix();
-}
-
-/* Bounding boxes generator */
-void Turn::generateBoundingBoxes(void) {
-	for (unsigned int i = 0; i < vertices.size(); i++) {
-		sideboxes.push_back(new Object(1.0, 1.0, 1.0, &vertices[i]));
-	}
 }
