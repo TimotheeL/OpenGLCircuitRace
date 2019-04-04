@@ -26,16 +26,6 @@ Tree::Tree(float xPos, float zPos, float wTrunk, float hTrunk, float wLeaves, fl
 	this->hLeaves = hLeaves;
 }
 
-// Constructor generating random tree from given parameters
-Tree::Tree(float xPos, float zPos, float wTrunkMin, float wTrunkMax, float hTrunkMin, float hTrunkMax, float wLeavesMin, float wLeavesMax, float hLeavesMin, float hLeavesMax) {
-	this->xPos = xPos;
-	this->zPos = zPos;
-	this->wTrunk = wTrunkMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (wTrunkMax - wTrunkMin)));
-	this->hTrunk = hTrunkMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (hTrunkMax - hTrunkMin)));
-	this->wLeaves = wLeavesMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (wLeavesMax - wLeavesMin)));
-	this->hLeaves = hLeavesMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (hLeavesMax - hLeavesMin)));
-}
-
 // Copy constructor
 Tree::Tree(Tree *t1) {
 	this->xPos = t1->getXPos();
@@ -45,6 +35,10 @@ Tree::Tree(Tree *t1) {
 	this->wLeaves = t1->getWLeaves();
 	this->hLeaves = t1->getHLeaves();
 }
+
+Tree::Tree(void)
+	:Tree(0.0, 0.0, 0.5, 1.0, 1.5, 3.0)
+{}
 
 // Destructor
 Tree::~Tree(void) {}
@@ -80,7 +74,7 @@ void Tree::draw(void) {
 	float colorLeaves[4] = { 0.1, 0.5, 0.1, 1.0 };
 
 	glPushMatrix();
-		glTranslatef((GLfloat)xPos, 0.0, (GLfloat)zPos);
+		glTranslatef((GLfloat)xPos, -0.1, (GLfloat)zPos);
 		glPushMatrix();
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrunk);
 			glTranslatef(0.0, hTrunk / 2, 0.0);

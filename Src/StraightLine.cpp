@@ -72,22 +72,23 @@ void StraightLine::computeVertices(void) {
 
 /* Bounding boxes generator */
 void StraightLine::generateBoundingBoxes(void) {
-	Position right = rotate((width / 2.0) + 1.0, 0.0, -length / 2.0);
+	Position right = rotate((width / 2.0) + 0.05, 0.0, -length / 2.0);
 	right.x += pos.x; right.y += pos.y; right.z += pos.z;
 
-	Position left = rotate((-width / 2.0) - 1.0, 0.0, -length / 2.0);
+	Position left = rotate((-width / 2.0) - 0.05, 0.0, -length / 2.0);
 	left.x += pos.x; left.y += pos.y; left.z += pos.z;
 
-	sideboxes.push_back(new Object(2.0, length, 2.0, new Position(right)));
-	sideboxes.push_back(new Object(2.0, length, 2.0, new Position(left)));
+	sideboxes.push_back(new Object(0.1, length, 2.0, new Position(right)));
+	sideboxes.push_back(new Object(0.1, length, 2.0, new Position(left)));
 }
 
 // Drawer
 void StraightLine::draw(void) {
+	float colorTrack[4] = { 0.3, 0.3, 0.3, 1.0 };
 	glPushMatrix();
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
 		glColor3f(0.5, 0.5, 0.5);
 		glTranslatef(pos.x, pos.y, pos.z);
-		//glRotatef(pos.angle, 0.0, 1.0, 0.0);
 		glPushMatrix();
 			glBegin(GL_QUADS);
 				glNormal3f(0.0F, 1.0F, 0.0F);

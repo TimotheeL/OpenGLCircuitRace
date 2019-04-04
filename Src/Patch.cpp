@@ -44,6 +44,10 @@ Patch::Patch(Patch *p1) {
 	this->trees = p1->trees;
 }
 
+Patch::Patch(void)
+	:Patch(0.0, 0.0, 32.0, 3)
+{}
+
 // Destructor
 Patch::~Patch(void) {}
 
@@ -69,10 +73,10 @@ void Patch::draw(void) {
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
 			glBegin(GL_QUADS);
 				glNormal3f(0.0F, 1.0F, 0.0F);
-				glVertex3f(xPos, 0.0, zPos);
-				glVertex3f(xPos + size, 0.0, zPos);
-				glVertex3f(xPos + size, 0.0, zPos - size);
-				glVertex3f(xPos, 0.0, zPos - size);
+				glVertex3f(xPos, -0.01, zPos);
+				glVertex3f(xPos + size, -0.01, zPos);
+				glVertex3f(xPos + size, -0.01, zPos - size);
+				glVertex3f(xPos, -0.01, zPos - size);
 			glEnd();
 		glPopMatrix();
 		glPushMatrix();

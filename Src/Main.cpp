@@ -16,29 +16,42 @@
 
 #include "Checker.h"
 #include "Patch.h"
+#include "Spectator.h"
 #include "StraightLine.h"
 #include "Turn.h"
 #include "Tree.h"
+#include "RacingCar.h"
 
 using namespace std;
 
 /* Global variables */
 static int pMode = 1; 
+static bool drawBBox = false;
 
-Patch patch = new Patch(-16.0, 16.0, 32.0, 5);
-Checker checker = new Checker(0.0, 0.0, 10.0, 3, 4);
+const double dt = 1 / 60.0;	/* Framerate */
+double currentTime = 0.0;	/* Current time */
+double accumulator = 0.0;	/* Time accumulator */
+
+/* Boolean arrays of keyboard keys states */
+bool keyStates[256];
+bool keySpecialStates[256];
 
 static int wTx = 800;
 static int wTy = 600;
 static int wPx = 50;
 static int wPy = 50;
 
-static float eye_x = 0.0;
-static float eye_y = 180;
-static float eye_z = 1.0;
+static float eye_x = 80.0; // 0.0
+static float eye_y = 30.0; // 180.0
+static float eye_z = 86.0; // 1.0
 
-std::vector<StraightLine> lines;
-std::vector<Turn> turns;
+Checker checker;
+vector<Patch> patches;
+vector<StraightLine> lines;
+vector<Turn> turns;
+
+/* Player's racing car */
+RacingCar rc;
 
 /* Besançon Racing Track modelizing function */
 static void BRT(void) {
@@ -57,50 +70,114 @@ static void BRT(void) {
 	turns.push_back(new Turn(7.0, 8.0, 180.0, true, new Position(19.0, 0.0, 49.5, 270.0)));
 	lines.push_back(new StraightLine(7.0, 28.0, new Position(19.0, 0.0, 26.5, 90.0)));
 	turns.push_back(new Turn(7.0, 2.0, 47.0, false, new Position(-9.0, 0.0, 26.5, 90.0)));
+	
+	for (int i = -16; i < 16; i++) {
+		for (int j = -16; j < 16; j++) {
+			int nbTrees = 0;
+			if (i < -11 || i > 8 || j < -11 || j > 8)
+				nbTrees = abs(i * j) / 32 + abs(i + j) / 4;
+			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
+		}
+	}
 }
 
 /* Init function */
 static void init(void) {
+	glClearColor(0.1F, 0.4F, 0.9F, 1.0F);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
+
+	/* Init circuit */
 	BRT();
+
+	/* Init player's racing Car */
+	rc = RacingCar(4.0, 2.0, 2.0, new Position(80.0, 0.0, 78.0));
+
+	checker = Checker();
 }
 
 /* Scene function */
 static void scene(void) {
-	//checker.draw();
 	glPushMatrix();
-	glPushMatrix();
-	//patch.draw();
-	for (unsigned int i = 0; i < lines.size(); i++) {
-		lines[i].draw();
-	}
-	for (unsigned int i = 0; i < turns.size(); i++) {
-		turns[i].draw();
-	}
-	/* glBegin(GL_QUAD_STRIP);
-	for (int i = 0; i <= 20; i++) {
-		float rp = (float)i / 20;
-		float ar = 2.0*3.1415926535897932384626433832795 / (360.0 / 90.0);
-		float a = ar*rp;
-		float cs = cos(a);
-		float sn = -sin(a);
-		float x = 7.0 * cs;
-		float z = 7.0 * sn;
+		gluLookAt(eye_x, eye_y, eye_z, 80.0, 0.0, 90.0, 0.0, 1.0, 0.0);
 
-		float xin = 7.0 * cs - 7.0 - 7.0 / 2;
-		float zin = 7.0 * sn;
-		float xout = ((7.0 + 7.0) * cs - 7.0 - 7.0 / 2);
-		float zout = (7.0 + 7.0) * sn;
-		glVertex3f(xin, 0.0, zin);
-		glVertex3f(xout, 0.0, zout);
+		checker.draw();
+		rc.draw();
+
+		glPushMatrix();
+			for (unsigned int i = 0; i < patches.size(); i++) {
+				patches[i].draw();
+			}
+			for (unsigned int i = 0; i < turns.size(); i++) {
+				turns[i].draw();
+			}
+			for (unsigned int i = 0; i < lines.size(); i++) {
+				lines[i].draw();
+			}
+		glPopMatrix();
+		/* glBegin(GL_QUAD_STRIP);
+		for (int i = 0; i <= 20; i++) {
+			float rp = (float)i / 20;
+			float ar = 2.0*3.1415926535897932384626433832795 / (360.0 / 90.0);
+			float a = ar*rp;
+			float cs = cos(a);
+			float sn = -sin(a);
+			float x = 7.0 * cs;
+			float z = 7.0 * sn;
+
+			float xin = 7.0 * cs - 7.0 - 7.0 / 2;
+			float zin = 7.0 * sn;
+			float xout = ((7.0 + 7.0) * cs - 7.0 - 7.0 / 2);
+			float zout = (7.0 + 7.0) * sn;
+			glVertex3f(xin, 0.0, zin);
+			glVertex3f(xout, 0.0, zout);
+		}
+		glEnd(); */
+
+		/* Draw bounding boxes */
+		if (drawBBox) {
+			rc.drawBoundingBoxes();
+			// Other objects
+			for (unsigned int i = 0; i < lines.size(); i++) {
+				lines[i].drawBoundingBoxes();
+			}
+
+			// Track
+			for (unsigned int i = 0; i < turns.size(); i++) {
+				turns[i].drawBoundingBoxes();
+			}
+		}
+	glPopMatrix();
+}
+
+/* Input handling and physic simulation function */
+static void simulate(void) {
+	/* Reset colliding states */
+	//rc->resetIsColliding();
+	for (unsigned int i = 0; i < lines.size(); i++) {
+		lines[i].resetIsColliding();
 	}
-	glEnd(); */
-	glPopMatrix();
-	glPopMatrix();
+
+	for (unsigned int i = 0; i < turns.size(); i++) {
+		turns[i].resetIsColliding();
+	}
+
+	/* Handle inputs for the car */
+	//rc->handleInputs(keyStates, keySpecialStates);
+	/* Handle car's movement */
+	//rc->handleMovement(dt);
+
+	/* Handle collisions */
+	/*for (unsigned int i = 0; i < listTrackParts.size(); i++) {
+		rc->collision(listTrackParts[i]);
+	}
+
+	for (unsigned int i = 0; i < listObjects.size(); i++) {
+		rc->collision(listObjects[i]);
+	}*/
 }
 
 /* Display function */
@@ -113,16 +190,35 @@ static void display(void) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDisable(GL_LIGHTING);
 	}
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glPushMatrix();
-	gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
+	/* Get time and calculate frame time in seconds */
+	double newTime = glutGet(GLUT_ELAPSED_TIME);
+	double frameTime = (newTime - currentTime) / 1000;
+	currentTime = newTime;
+
+	/* Synchronize simulation framerate and real framerate :
+			- accumulate frametime
+			- if the accumulator is superior than the wanted framerate
+			do the sim and substract the framerate
+	*/
+	accumulator += frameTime;
+	while (accumulator >= dt)
+	{
+		simulate();
+		accumulator -= dt;
+	}
+
 	scene();
-	glPopMatrix();
+
 	glFlush();
 	glutSwapBuffers();
+
 	int error = glGetError();
-	if (error != GL_NO_ERROR)
+	if (error != GL_NO_ERROR) {
 		printf("Attention erreur %d\n", error);
+	}
 }
 
 /* Reshape function */
@@ -132,11 +228,14 @@ static void reshape(int wx, int wy) {
 	glViewport(0, 0, wx, wy);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+
 	double ratio = (double)wx / wy;
+
 	if (ratio > 1.0)
-		gluPerspective(60.0, ratio, 0.2, 400.0);
+		gluPerspective(60.0, ratio, 0.2, 1000.0);
 	else
-		gluPerspective(60.0 / ratio, ratio, 0.2, 400.0);
+		gluPerspective(60.0 / ratio, ratio, 0.2, 1000.0);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -148,6 +247,8 @@ static void idle(void) {
 
 /* Keyboard function */
 static void keyboard(unsigned char key, int x, int y) {
+	keyStates[key] = true;
+
 	switch (key) {
 		case ' ':
 			{ pMode = !pMode;
@@ -161,16 +262,48 @@ static void keyboard(unsigned char key, int x, int y) {
 			exit(0);
 			break;
 		case 'p':
+		case 'P':
 			eye_y += 10.0;
 			break;
 		case 'm':
+		case 'M':
 			eye_y -= 10.0;
 			break;
-		}
+		case 'b':
+		case 'B':
+			drawBBox = !drawBBox;
+			glutPostRedisplay();
+			break;
+	}
+}
+
+/* Key released function */
+static void keyboardUp(unsigned char key, int x, int y) {
+	keyStates[key] = false;
 }
 
 /* Special function*/
 static void special(int specialKey, int x, int y) {
+	keySpecialStates[specialKey] = true;
+
+	switch (specialKey) {
+		case GLUT_KEY_UP:
+			eye_z -= 2.0;
+			break;
+		case GLUT_KEY_DOWN:
+			eye_z += 2.0;
+			break;
+		case GLUT_KEY_LEFT:
+			eye_x -= 2.0;
+			break;
+		case GLUT_KEY_RIGHT:
+			eye_x += 2.0;
+	}
+}
+
+/* Special key released function */
+static void specialUp(int specialKey, int x, int y) {
+	keySpecialStates[specialKey] = false;
 }
 
 /* Mouse function */
@@ -202,7 +335,9 @@ int main(int argc, char **argv) {
 	glutCreateWindow("Circuit");
 	init();
 	glutKeyboardFunc(keyboard);
+	glutKeyboardUpFunc(keyboardUp);
 	glutSpecialFunc(special);
+	glutSpecialUpFunc(specialUp);
 	glutMouseFunc(mouse);
 	glutMotionFunc(mouseMotion);
 	glutPassiveMotionFunc(passiveMouseMotion);

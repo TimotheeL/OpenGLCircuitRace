@@ -161,12 +161,18 @@ void RacingCar::backward(float distance) {
 
 /* Turn right */
 void RacingCar::turnRight(float degrees) {
+	if (pos.angle >= 180) {
+		pos.angle = -180 + (pos.angle - 180);
+	}
 	pos.angle += degrees;
 	hitbox.update(&pos);
 }
 
 /* Turn left */
 void RacingCar::turnLeft(float degrees) {
+	if (pos.angle <= -180) {
+		pos.angle = 180 - (pos.angle + 180);
+	}
 	pos.angle -= degrees;
 	hitbox.update(&pos);
 }
@@ -190,7 +196,7 @@ void RacingCar::collision(Object *o) {
 	MTV *mtv = collisionTestSAT(o);
 
 	if (mtv != NULL) {
-		pos.x += -mtv->axis.x * mtv->overlap;
+		pos.x += mtv->axis.x * mtv->overlap;
 		pos.z += mtv->axis.z * mtv->overlap;
 
 		speed = 0.0;
@@ -205,11 +211,28 @@ void RacingCar::collision(TrackPart *tp) {
 	for (unsigned int i = 0; i < boxes->size(); i++) {
 		MTV *mtv = collisionTestSAT(&boxes->at(i));
 
+		// If there's a collision
 		if (mtv != NULL) {
-			pos.x += -mtv->axis.x * mtv->overlap;
+			// Adjust the position of the car
+			pos.x += mtv->axis.x * mtv->overlap;
 			pos.z += mtv->axis.z * mtv->overlap;
 
+			// Adjust the angle
+			if ((pos.angle > 0 && pos.angle < 90)
+				|| (pos.angle > -180 && pos.angle < -90)) 
+			{
+				turnRight(1.0);
+			}
+			else if ((pos.angle > 90 && pos.angle < 180)
+				|| (pos.angle > -90 && pos.angle < 0))
+			{
+				turnLeft(1.0);
+			}
+
+			// Adjust speed
 			speed = 0.0;
+
+			// Adjust hitbox
 			hitbox.update(&pos);
 		}
 

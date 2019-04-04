@@ -32,6 +32,10 @@ Checker::Checker(Checker *c1) {
 	this->height = c1->height;
 }
 
+Checker::Checker(void)
+	:Checker(80.0, 83.0, 0.5, 4, 14)
+{}
+
 // Destructor
 Checker::~Checker(void) {}
 
@@ -64,10 +68,10 @@ void Checker::draw(void) {
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
 					if (j % 2 == 0 && i % 2 == 0 || j % 2 == 1 && i % 2 == 1) {
-						glVertex3f(xPos + j * squareSize, 0.0, zPos - i * squareSize);
-						glVertex3f(xPos + j * squareSize + squareSize, 0.0, zPos - i * squareSize);
-						glVertex3f(xPos + j * squareSize + squareSize, 0.0, zPos - i * squareSize + squareSize);
-						glVertex3f(xPos + j * squareSize, 0.0, zPos - i * squareSize + squareSize);
+						glVertex3f(xPos + j * squareSize, 0.01, zPos - i * squareSize);
+						glVertex3f(xPos + j * squareSize + squareSize, 0.01, zPos - i * squareSize);
+						glVertex3f(xPos + j * squareSize + squareSize, 0.01, zPos - i * squareSize + squareSize);
+						glVertex3f(xPos + j * squareSize, 0.01, zPos - i * squareSize + squareSize);
 					}
 				}
 			}
