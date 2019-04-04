@@ -23,6 +23,7 @@ public:
 	/* Constructors */
 	Tree(float xPos, float zPos, float wTrunk, float hTrunk, float wLeaves, float hLeaves);
 	Tree(Tree *t1);
+	Tree(void);
 
 	/* Destructor */
 	~Tree(void);

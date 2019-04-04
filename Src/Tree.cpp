@@ -36,6 +36,10 @@ Tree::Tree(Tree *t1) {
 	this->hLeaves = t1->getHLeaves();
 }
 
+Tree::Tree(void)
+	:Tree(0.0, 0.0, 0.5, 1.0, 1.5, 3.0)
+{}
+
 // Destructor
 Tree::~Tree(void) {}
 

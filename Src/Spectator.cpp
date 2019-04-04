@@ -53,6 +53,10 @@ Spectator::Spectator(Spectator *s1) {
 	}
 }
 
+Spectator::Spectator(void)
+	:Spectator(0.0, 0.0, 0.0, 1.0, 1.0, 1.0, false)
+{}
+
 // Destructor
 Spectator::~Spectator(void) {}
 
@@ -84,7 +88,7 @@ void Spectator::setJumping(void) {
 
 void Spectator::move(void) {
 	if (jumping || currYPos > yPos) {
-		if (currYPos >= yPos + 0.3) {
+		if (currYPos >= yPos + 0.8) {
 			goingUp = false;
 		}
 

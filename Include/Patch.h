@@ -27,6 +27,7 @@ public:
 	/* Constructors */
 	Patch(float xPos, float zPos, float size, int nbTrees);
 	Patch(Patch *p1);
+	Patch(void);
 
 	/* Destructor */
 	~Patch(void);

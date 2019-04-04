@@ -44,6 +44,10 @@ Patch::Patch(Patch *p1) {
 	this->trees = p1->trees;
 }
 
+Patch::Patch(void)
+	:Patch(0.0, 0.0, 32.0, 3)
+{}
+
 // Destructor
 Patch::~Patch(void) {}
 

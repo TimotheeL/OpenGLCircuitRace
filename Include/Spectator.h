@@ -25,6 +25,7 @@ public:
 	Spectator(float xPos, float yPos, float zPos, float color[3], bool jumping);
 	Spectator(float xPos, float yPos, float zPos, float red, float green, float blue, bool jumping);
 	Spectator(Spectator *s1);
+	Spectator(void);
 
 	/* Destructor */
 	~Spectator(void);

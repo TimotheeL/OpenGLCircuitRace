@@ -22,6 +22,7 @@ public:
 	/* Constructors */
 	Checker(float xPos, float zPos, float squareSize, int width, int height);
 	Checker(Checker *c1);
+	Checker(void);
 
 	/* Destructor */
 	~Checker(void);

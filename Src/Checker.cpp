@@ -32,6 +32,10 @@ Checker::Checker(Checker *c1) {
 	this->height = c1->height;
 }
 
+Checker::Checker(void)
+	:Checker(80.0, 83.0, 0.5, 4, 14)
+{}
+
 // Destructor
 Checker::~Checker(void) {}
 
