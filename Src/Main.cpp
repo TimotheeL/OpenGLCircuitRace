@@ -71,8 +71,8 @@ static void init(void) {
 
 /* Scene function */
 static void scene(void) {
-	checker.draw();
-	/*glPushMatrix();
+	//checker.draw();
+	glPushMatrix();
 	glPushMatrix();
 	//patch.draw();
 	for (unsigned int i = 0; i < lines.size(); i++) {
@@ -80,7 +80,7 @@ static void scene(void) {
 	}
 	for (unsigned int i = 0; i < turns.size(); i++) {
 		turns[i].draw();
-	}*/
+	}
 	/* glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= 20; i++) {
 		float rp = (float)i / 20;
