@@ -66,3 +66,12 @@ void BRT::draw(void) {
 		lines[i].draw();
 	}
 }
+
+void BRT::drawBoundingBoxes(void) {
+	for (unsigned int i = 0; i < turns.size(); i++) {
+		turns[i].drawBoundingBoxes();
+	}
+	for (unsigned int i = 0; i < lines.size(); i++) {
+		lines[i].drawBoundingBoxes();
+	}
+}

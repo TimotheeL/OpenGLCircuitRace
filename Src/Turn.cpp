@@ -114,6 +114,10 @@ void Turn::generateBoundingBoxes(void) {
 		float z = (vertices[i].z + vertices[i + 2].z) / 2;
 		float angle = (vertices[i].angle + vertices[i + 2].angle) / 2;
 
+		if (!direction) {
+			angle = -angle;
+		}
+
 		// Compute length
 		float length = sqrt(
 			powf(vertices[i + 2].x - vertices[i].x, 2)
@@ -122,7 +126,7 @@ void Turn::generateBoundingBoxes(void) {
 
 		// Create the bounding box
 		sideboxes.push_back(
-			new Object(0.1, length, 2.0, new Position(x, y, z, angle))
+			new Object(0.2, length, 2.0, new Position(x, y, z, angle))
 		);
 	}
 }

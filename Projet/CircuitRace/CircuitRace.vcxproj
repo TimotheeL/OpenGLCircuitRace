@@ -100,8 +100,8 @@
     <Library Include="..\..\Lib\glut32.ms.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Include\BRT.cpp" />
     <ClCompile Include="..\..\Src\BoundingBox.cpp" />
+    <ClCompile Include="..\..\Src\BRT.cpp" />
     <ClCompile Include="..\..\Src\Checker.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
