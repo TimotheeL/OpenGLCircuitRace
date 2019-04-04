@@ -190,7 +190,7 @@ void RacingCar::collision(Object *o) {
 	MTV *mtv = collisionTestSAT(o);
 
 	if (mtv != NULL) {
-		pos.x += -mtv->axis.x * mtv->overlap;
+		pos.x += mtv->axis.x * mtv->overlap;
 		pos.z += mtv->axis.z * mtv->overlap;
 
 		speed = 0.0;
@@ -206,7 +206,7 @@ void RacingCar::collision(TrackPart *tp) {
 		MTV *mtv = collisionTestSAT(&boxes->at(i));
 
 		if (mtv != NULL) {
-			pos.x += -mtv->axis.x * mtv->overlap;
+			pos.x += mtv->axis.x * mtv->overlap;
 			pos.z += mtv->axis.z * mtv->overlap;
 
 			speed = 0.0;

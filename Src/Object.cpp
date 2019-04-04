@@ -107,7 +107,7 @@ void Object::collision(Object *o) {
 	MTV *mtv = collisionTestSAT(o);
 
 	if (mtv != NULL) {
-		pos.x += -mtv->axis.x * mtv->overlap;
+		pos.x += mtv->axis.x * mtv->overlap;
 		pos.z += mtv->axis.z * mtv->overlap;
 
 		hitbox.update(&pos);
@@ -139,6 +139,7 @@ MTV *Object::collisionTestSAT(Object *o) {
 	 * if there's a collision
 	 */
 	MTV *mtv = new MTV();
+	float overlap = 0.0;
 
 	/* Get the axes */
 	getAxesSAT(axes, &hitbox);
@@ -150,10 +151,10 @@ MTV *Object::collisionTestSAT(Object *o) {
 		projectObjectSAT(axes[i], &hitbox, projection);
 		projectObjectSAT(axes[i], &o->hitbox, oprojection);
 
-		float over = getOverlap(projection, oprojection);
+		bool over = getOverlap(&overlap, projection, oprojection);
 
 		/* Check projections overlapping */
-		if (over < 0) {
+		if (!over) {
 			/* If there's no overlap, there's no collision, return nothing
 			 * Change the color if there's no collision at all
 			 */
@@ -172,8 +173,8 @@ MTV *Object::collisionTestSAT(Object *o) {
 
 			return NULL;
 		}
-		else if (over < mtv->overlap) {
-			mtv->overlap = over;
+		else if (overlap < mtv->overlap) {
+			mtv->overlap = overlap;
 			mtv->axis = axes[i];
 		}
 	}
@@ -185,10 +186,10 @@ MTV *Object::collisionTestSAT(Object *o) {
 		projectObjectSAT(oaxes[i], &o->hitbox, oprojection);
 
 		/* Calculate overlap */
-		float over = getOverlap(projection, oprojection);
+		bool over = getOverlap(&overlap, projection, oprojection);
 
 		/* Check projections overlapping */
-		if (over < 0) {
+		if (!over) {
 			/* If there's no overlap, there's no collision, return nothing
 			 * Change the color if there's no collision at all
 			 */
@@ -207,8 +208,8 @@ MTV *Object::collisionTestSAT(Object *o) {
 			
 			return NULL;
 		}
-		else if (over < mtv->overlap) {
-			mtv->overlap = over;
+		else if (overlap < mtv->overlap) {
+			mtv->overlap = overlap;
 			mtv->axis = axes[i];
 		}
 	}
@@ -231,26 +232,43 @@ MTV *Object::collisionTestSAT(Object *o) {
 	delete(projection);
 	delete(oprojection);
 
+	/* If the mtv and the dir of the object points in 
+	 * the same direction, reverse the mtv
+	 */
+	Axis dir = Axis();
+	dir.x = o->pos.x - pos.x;
+	dir.z = o->pos.z - pos.z;
+
+	float p = dir.x * mtv->axis.x + dir.z * mtv->axis.z;
+	if (p > 0) {
+		mtv->axis.x *= -1;
+		mtv->axis.z *= -1;
+	}
+
 	/* Return the MTV */
 	return mtv;
 }
 
 /* Get the overlap between two projections */
-float Object::getOverlap(Projection *projection, Projection *oprojection) {
+bool Object::getOverlap(float *overlap, Projection *projection, Projection *oprojection) {
 	if (projection->min >= oprojection->min && projection->min <= oprojection->max) {
-		return abs(oprojection->max - projection->min);
+		*overlap = abs(oprojection->max - projection->min);
+		return true;
 	}
 	else if (projection->max >= oprojection->min && projection->max <= oprojection->max) {
-		return abs(oprojection->min - projection->max);
+		*overlap = abs(oprojection->min - projection->max);
+		return true;
 	}
 	else if (oprojection->min >= projection->min && oprojection->min <= projection->max) {
-		return abs(projection->max - oprojection->min);
+		*overlap = abs(projection->max - oprojection->min);
+		return true;
 	}
 	else if (oprojection->max >= projection->min && oprojection->max <= projection->max) {
-		return abs(projection->min - oprojection->max);
+		*overlap = abs(projection->min - oprojection->max);
+		return true;
 	}
 
-	return -1;
+	return false;
 }
 
 /* Get the 4 axes of a bounding box for the SAT */
@@ -282,6 +300,7 @@ void Object::projectObjectSAT(Axis axis, BoundingBox *hitbox, Projection *projec
 	
 	/* Get the min and the max by looping through all points */
 	for (int j = 1; j < 4; j++) {
+		/* Dot product */
 		float p = axis.x * hitbox->points[j].x + axis.z * hitbox->points[j].z;
 
 		if (p < projection->min) {

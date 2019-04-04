@@ -97,7 +97,7 @@ private:
 	void projectObjectSAT(Axis axis, BoundingBox *hitbox, Projection *projection);
 
 	/* Get the overlap between two projections */
-	float getOverlap(Projection *projection, Projection *oprojection);
+	bool getOverlap(float *overlap, Projection *projection, Projection *oprojection);
 };
 
 #endif
