@@ -21,7 +21,6 @@ private:
 public:
 
 	/* Constructors */
-	Tree(float xPos, float zPos, float wTrunkMin, float wTrunkMax, float hTrunkMin, float hTrunkMax, float wLeavesMin, float wLeavesMax, float hLeavesMin, float hLeavesMax);
 	Tree(float xPos, float zPos, float wTrunk, float hTrunk, float wLeaves, float hLeaves);
 	Tree(Tree *t1);
 

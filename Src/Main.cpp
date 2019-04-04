@@ -16,6 +16,7 @@
 
 #include "Checker.h"
 #include "Patch.h"
+#include "Spectator.h"
 #include "StraightLine.h"
 #include "Turn.h"
 #include "Tree.h"
@@ -30,24 +31,18 @@ static int wTy = 600;
 static int wPx = 50;
 static int wPy = 50;
 
-static float eye_x = 0.0; // 0.0
-static float eye_y = 180.0; // 180.0
-static float eye_z = 1.0; // 1.0
+static float eye_x = 80.0; // 0.0
+static float eye_y = 30.0; // 180.0
+static float eye_z = 86.0; // 1.0
 
 std::vector<Patch> patches;
 Checker checker = new Checker(80.0, 83.0, 0.5, 4, 14);
 std::vector<StraightLine> lines;
 std::vector<Turn> turns;
+Spectator testSpectator = new Spectator(80.0, 0.0, 83.0, 1.0, 0.0, 0.0, true);
 
 /* Besançon Racing Track modelizing function */
 static void BRT(void) {
-	for (int i = -16; i < 16; i++) {
-		for (int j = -16; j < 16; j++) {
-			int nbTrees = 0;
-			//nbTrees = abs(i * j) / 16 + abs(i + j) / 4; // comment this line to remove all trees
-			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
-		}
-	}
 	lines.push_back(new StraightLine(7.0, 200.0, new Position(100.0, 0.0, 80.0, 90.0)));
 	turns.push_back(new Turn(7.0, 13.0, 192.0, false, new Position(-100.0, 0.0, 80.0, 90.0)));
 	lines.push_back(new StraightLine(7.0, 22.0, new Position(-96.8, 0.0, 47.3, 258.0)));
@@ -63,6 +58,15 @@ static void BRT(void) {
 	turns.push_back(new Turn(7.0, 8.0, 180.0, true, new Position(19.0, 0.0, 49.5, 270.0)));
 	lines.push_back(new StraightLine(7.0, 28.0, new Position(19.0, 0.0, 26.5, 90.0)));
 	turns.push_back(new Turn(7.0, 2.0, 47.0, false, new Position(-9.0, 0.0, 26.5, 90.0)));
+	
+	for (int i = -16; i < 16; i++) {
+		for (int j = -16; j < 16; j++) {
+			int nbTrees = 0;
+			if (i < -11 || i > 8 || j < -11 || j > 8)
+				nbTrees = abs(i * j) / 32 + abs(i + j) / 4;
+			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
+		}
+	}
 }
 
 /* Init function */
@@ -79,13 +83,12 @@ static void init(void) {
 /* Scene function */
 static void scene(void) {
 	checker.draw();
+	testSpectator.draw();
 	glPushMatrix();
 		glPushMatrix();
 			for (unsigned int i = 0; i < patches.size(); i++) {
 				patches[i].draw();
 			}
-		glPopMatrix();
-		glPushMatrix();
 			for (unsigned int i = 0; i < turns.size(); i++) {
 				turns[i].draw();
 			}
@@ -145,15 +148,16 @@ static void reshape(int wx, int wy) {
 	glLoadIdentity();
 	double ratio = (double)wx / wy;
 	if (ratio > 1.0)
-		gluPerspective(60.0, ratio, 0.2, 400.0);
+		gluPerspective(60.0, ratio, 0.2, 1000.0);
 	else
-		gluPerspective(60.0 / ratio, ratio, 0.2, 400.0);
+		gluPerspective(60.0 / ratio, ratio, 0.2, 1000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
 
 /* Idle function */
 static void idle(void) {
+	testSpectator.move();
 	glutPostRedisplay();
 }
 

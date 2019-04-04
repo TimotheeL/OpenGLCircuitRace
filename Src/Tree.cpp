@@ -26,16 +26,6 @@ Tree::Tree(float xPos, float zPos, float wTrunk, float hTrunk, float wLeaves, fl
 	this->hLeaves = hLeaves;
 }
 
-// Constructor generating random tree from given parameters
-Tree::Tree(float xPos, float zPos, float wTrunkMin, float wTrunkMax, float hTrunkMin, float hTrunkMax, float wLeavesMin, float wLeavesMax, float hLeavesMin, float hLeavesMax) {
-	this->xPos = xPos;
-	this->zPos = zPos;
-	this->wTrunk = wTrunkMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (wTrunkMax - wTrunkMin)));
-	this->hTrunk = hTrunkMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (hTrunkMax - hTrunkMin)));
-	this->wLeaves = wLeavesMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (wLeavesMax - wLeavesMin)));
-	this->hLeaves = hLeavesMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (hLeavesMax - hLeavesMin)));
-}
-
 // Copy constructor
 Tree::Tree(Tree *t1) {
 	this->xPos = t1->getXPos();
