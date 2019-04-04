@@ -80,7 +80,7 @@ void Turn::setDirection(bool direction) {
 
 // compute vertices to draw and compute collisions
 void Turn::computeVertices(void) {
-	int ns = 40;
+	int ns = 10 + (int) (angle / 6) * (softness / 5);
 	float rp, ar, a, cs, sn, xin = 0.0, xout = 0.0, zin = 0.0, zout = 0.0;
 	Position vin, vout;
 	for (int i = 0; i <= ns; i++) {

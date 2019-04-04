@@ -100,6 +100,8 @@
     <Library Include="..\..\Lib\glut32.ms.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Include\BRT.cpp" />
+    <ClCompile Include="..\..\Src\Bleachers.cpp" />
     <ClCompile Include="..\..\Src\BoundingBox.cpp" />
     <ClCompile Include="..\..\Src\Checker.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp">
@@ -116,7 +118,9 @@
     <ClCompile Include="..\..\Src\Turn.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Include\Bleachers.h" />
     <ClInclude Include="..\..\Include\BoundingBox.h" />
+    <ClInclude Include="..\..\Include\BRT.h" />
     <ClInclude Include="..\..\Include\Checker.h" />
     <ClInclude Include="..\..\Include\Object.h" />
     <ClInclude Include="..\..\Include\Patch.h" />

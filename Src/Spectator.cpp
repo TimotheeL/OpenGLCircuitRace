@@ -92,7 +92,6 @@ void Spectator::move(void) {
 			goingUp = false;
 		} else if (currYPos < yPos) {
 			goingUp = true;
-			printf("I'm true");
 		}
 		if (goingUp) {
 			currYPos += 0.05;
