@@ -54,7 +54,7 @@
     <ClCompile Include="..\..\Src\RacingCar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Include\BRT.cpp">
+    <ClCompile Include="..\..\Src\BRT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Bleachers.cpp">

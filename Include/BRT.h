@@ -35,6 +35,7 @@ public:
 
 	/* drawer */
 	void draw(void);
+	void drawBoundingBoxes(void);
 };
 
 #endif // BRT

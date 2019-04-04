@@ -79,6 +79,7 @@ static void scene(void) {
 		
 		gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
+		/* Draw */
 		glPushMatrix();
 			brt.draw();
 			rc.draw();
@@ -89,15 +90,7 @@ static void scene(void) {
 		/* Draw bounding boxes */
 		if (drawBBox) {
 			rc.drawBoundingBoxes();
-			// Other objects
-			/*for (unsigned int i = 0; i < brt.getLines().size(); i++) {
-				brt.getLines()[i].drawBoundingBoxes();
-			}
-
-			// Track
-			for (unsigned int i = 0; i < brt.getTurns().size(); i++) {
-				brt.getTurns()[i].drawBoundingBoxes();
-			}*/
+			brt.drawBoundingBoxes();
 		}
 	glPopMatrix();
 }
