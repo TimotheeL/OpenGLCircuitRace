@@ -66,7 +66,6 @@ static void init(void) {
 
 	/* Init circuit */
 	brt = BRT();
-	bleachers = Bleachers(0.0, 0.0, 100, 20, 0.0, 0.2);
 	/* Init player's racing Car */
 	rc = RacingCar(4.0, 2.0, 2.0, new Position(80.0, 0.0, 78.0));
 }
@@ -97,7 +96,6 @@ static void scene(void) {
 
 /* Input handling and physic simulation function */
 static void simulate(void) {
-	bleachers.update();
 	/* Reset colliding states */
 	//rc->resetIsColliding();
 	/*for (unsigned int i = 0; i < brt.getLines().size(); i++) {

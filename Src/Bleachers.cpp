@@ -35,10 +35,10 @@ Bleachers::Bleachers(float xPos, float zPos, int width, int depth, float angle, 
 		for (int j = 0; j < depth; j++) {
 			float p = ((double)rand() / (RAND_MAX));
 			if (p < filling) {
-				float specX = (zPos * j - centerZ) * sin(rad) + (xPos * i - centerX) * cos(rad);
-				float specZ = (zPos * j - centerZ) * cos(rad) - (xPos * i - centerX) * sin(rad);
-				specX = xPos + i + 0.5;
-				specZ = zPos - j - 1;
+				float specX = (zPos - j - 1 - centerZ) * sin(rad) + (xPos + i + 0.5 - centerX) * cos(rad);
+				float specZ = (zPos - j - 1 - centerZ) * cos(rad) - (xPos + i + 0.5 - centerX) * sin(rad);
+				specX += centerX;
+				specZ += centerZ;
 				spectators.push_back(new Spectator(specX, j * 0.5 + 0.5, specZ, ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), false));
 			}
 		}
@@ -110,17 +110,21 @@ void Bleachers::draw(void) {
 	int i = 0; 
 	int j = 0;
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorBleachers);
-		for (int i = 0; i < depth; i++) {
-			glPushMatrix();
-				glTranslatef(xPos + (float)(width / 2), i * 0.25 + 0.25, zPos - i - 1.0);
-				glRotatef(angle, 0.0, 1.0, 0.0);
-				glScalef((float)width, 0.5 * i + 0.5, 1.0);
-				glutSolidCube(1.0);
-			glPopMatrix();
-		}
+		glPushMatrix();
+			glTranslatef(xPos + width / 2, 0.0, zPos - depth / 2);
+			glRotatef(angle, 0.0, 1.0, 0.0);
+			for (int i = 0; i < depth; i++) {
+				glPushMatrix();
+					glTranslatef(0.0, i * 0.25 + 0.25, depth / 2 - i - 1.0);
+					glScalef((float)width, 0.5 * i + 0.5, 1.0);
+					glutSolidCube(1.0);
+				glPopMatrix();
+			}
+		glPopMatrix();
 		for (unsigned int i = 0; i < spectators.size(); i++) {
 			spectators[i].draw();
 		}
+		
 	glPopMatrix();
 }
 
