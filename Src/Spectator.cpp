@@ -87,17 +87,13 @@ void Spectator::setJumping(void) {
 }
 
 void Spectator::move(void) {
-	if (jumping) {
+	if (jumping || currYPos > yPos) {
 		if (currYPos > yPos + 1.0) {
 			goingUp = false;
 		} else if (currYPos < yPos) {
 			goingUp = true;
 		}
-		if (goingUp) {
-			currYPos += 0.05;
-		} else {
-			currYPos -= 0.05;
-		}
+		currYPos += goingUp ? 0.05 : -0.05;
 	}
 }
 

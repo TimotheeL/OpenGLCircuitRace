@@ -66,7 +66,7 @@ static void init(void) {
 
 	/* Init circuit */
 	brt = BRT();
-	bleachers = Bleachers(0.0, 0.0, 10, 3, 0.0, 0.0);
+	bleachers = Bleachers(0.0, 0.0, 100, 20, 0.0, 0.2);
 	/* Init player's racing Car */
 	rc = RacingCar(4.0, 2.0, 2.0, new Position(80.0, 0.0, 78.0));
 }

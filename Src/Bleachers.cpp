@@ -33,10 +33,13 @@ Bleachers::Bleachers(float xPos, float zPos, int width, int depth, float angle, 
 
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < depth; j++) {
-			if (static_cast <float> (rand()) < filling) {
+			float p = ((double)rand() / (RAND_MAX));
+			if (p < filling) {
 				float specX = (zPos * j - centerZ) * sin(rad) + (xPos * i - centerX) * cos(rad);
 				float specZ = (zPos * j - centerZ) * cos(rad) - (xPos * i - centerX) * sin(rad);
-				spectators.push_back(new Spectator(specX, j * 0.5 + 0.5, specZ, static_cast <float> (rand()), static_cast <float> (rand()), static_cast <float> (rand()), static_cast <float> (rand()) < 0.5));
+				specX = xPos + i + 0.5;
+				specZ = zPos - j - 1;
+				spectators.push_back(new Spectator(specX, j * 0.5 + 0.5, specZ, ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), false));
 			}
 		}
 	}
@@ -90,11 +93,13 @@ std::vector<Spectator> Bleachers::getSpectators(void) {
 
 // Update spectators on a patch
 void Bleachers::update(void) {
+	int p = (rand() % static_cast<int>(spectators.size() * 20));
+	if (p < spectators.size()) {
+		printf("%d", p);
+		spectators[p].setJumping();
+	}
 	for (unsigned int i = 0; i < spectators.size(); i++) {
 		spectators[i].move();
-		if (static_cast <float> (rand()) < 0.2) {
-			spectators[i].setJumping();
-		}
 	}
 }
 
@@ -107,7 +112,7 @@ void Bleachers::draw(void) {
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorBleachers);
 		for (int i = 0; i < depth; i++) {
 			glPushMatrix();
-				glTranslatef(xPos + (float)(width / 2), i * 0.25 + 0.25, zPos - i * 0.5 - 0.5f);
+				glTranslatef(xPos + (float)(width / 2), i * 0.25 + 0.25, zPos - i - 1.0);
 				glRotatef(angle, 0.0, 1.0, 0.0);
 				glScalef((float)width, 0.5 * i + 0.5, 1.0);
 				glutSolidCube(1.0);
