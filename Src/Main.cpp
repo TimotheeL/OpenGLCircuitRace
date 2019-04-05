@@ -42,7 +42,6 @@ Checker checker;
 vector<Patch> patches;
 vector<StraightLine> lines;
 vector<Turn> turns;
-Bleachers bleachers;
 
 static float eye_x = 0.0; // 0.0
 static float eye_y = 180.0; // 180.0
@@ -83,7 +82,6 @@ static void scene(void) {
 			brt.draw();
 			rc.draw();
 			checker.draw();
-			bleachers.draw();
 		glPopMatrix();
 
 		/* Draw bounding boxes */
@@ -96,6 +94,7 @@ static void scene(void) {
 
 /* Input handling and physic simulation function */
 static void simulate(void) {
+	brt.update();
 	/* Reset colliding states */
 	//rc->resetIsColliding();
 	/*for (unsigned int i = 0; i < brt.getLines().size(); i++) {

@@ -43,6 +43,9 @@ BRT::BRT(void) {
 	}
 
 	checker = new Checker();
+
+	bleachers.push_back(new Bleachers(-20.0, 100.0, 50, 10, 180.0, 0.5));
+	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.5));
 }
 
 // getters
@@ -51,6 +54,13 @@ vector<StraightLine> BRT::getLines(void) {
 }
 vector<Turn> BRT::getTurns(void) {
 	return turns;
+}
+
+// Update
+void BRT::update(void) {
+	for (unsigned int i = 0; i < bleachers.size(); i++) {
+		bleachers[i].update();
+	}
 }
 
 // drawer
@@ -64,6 +74,9 @@ void BRT::draw(void) {
 	}
 	for (unsigned int i = 0; i < lines.size(); i++) {
 		lines[i].draw();
+	}
+	for (unsigned int i = 0; i < bleachers.size(); i++) {
+		bleachers[i].draw();
 	}
 }
 

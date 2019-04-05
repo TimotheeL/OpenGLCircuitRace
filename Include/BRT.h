@@ -10,6 +10,7 @@
 
 #include <vector>
 
+#include "Bleachers.h"
 #include "Checker.h"
 #include "Patch.h"
 #include "StraightLine.h"
@@ -24,6 +25,7 @@ protected:
 	vector<Patch> patches;
 	vector<StraightLine> lines;
 	vector<Turn> turns;
+	vector<Bleachers> bleachers;
 
 public:
 	/* Constructors */
@@ -32,6 +34,9 @@ public:
 	/* getters */
 	vector<StraightLine> getLines(void);
 	vector<Turn> getTurns(void);
+
+	/* update */
+	void update(void);
 
 	/* drawer */
 	void draw(void);
