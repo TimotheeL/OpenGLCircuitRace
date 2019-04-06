@@ -70,6 +70,13 @@ BRT::BRT(void) {
 	bleachers.push_back(new Bleachers(-20.0, 100.0, 50, 10, 180.0, 0.1));
 	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.1));
 	bleachers.push_back(new Bleachers(-50.0, -43.0, 50, 10, -47.0, 0.1));
+
+	patches.push_back(new Patch(0.0, -32.0, 16.0, 0, 5));
+	patches.push_back(new Patch(16.0, -16.0, 16.0, 0, 5));
+	patches.push_back(new Patch(-88.0, -93.0, 8.0, 0, 3));
+	patches.push_back(new Patch(112.0, 80, 16.0, 0, 5));
+	patches.push_back(new Patch(100.0, 88, 8.0, 0, 3));
+
 	for (int i = -80; i < 100; i += 20) {
 		trees.push_back(new Tree((float)i, 70.0, 0.5, 3.0, 2.0, 4.0));
 	}
@@ -107,6 +114,9 @@ void BRT::update(void) {
 	}
 	for (unsigned int i = 0; i < spectators.size(); i++) {
 		spectators[i].move();
+	}
+	for (unsigned int i = 0; i < patches.size(); i++) {
+		patches[i].update();
 	}
 }
 

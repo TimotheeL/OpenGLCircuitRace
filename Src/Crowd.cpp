@@ -39,12 +39,14 @@ std::vector<Spectator> Crowd::getSpectators(void) {
 
 // Update spectators
 void Crowd::update(void) {
-	int p = (rand() % static_cast<int>(spectators.size() * 100));
-	if (p < spectators.size()) {
-		spectators[p].setJumping();
-	}
-	for (unsigned int i = 0; i < spectators.size(); i++) {
-		spectators[i].move();
+	if (spectators.size() > 0) {
+		int p = (rand() % static_cast<int>(spectators.size() * 100));
+		if (p < spectators.size()) {
+			spectators[p].setJumping();
+		}
+		for (unsigned int i = 0; i < spectators.size(); i++) {
+			spectators[i].move();
+		}
 	}
 }
 
