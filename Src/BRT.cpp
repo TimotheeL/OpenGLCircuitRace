@@ -33,28 +33,28 @@ BRT::BRT(void) {
 	lines.push_back(new StraightLine(7.0, 100.0, new Position(-13.0, 0.0, 24.8, 43.0)));
 	turns.push_back(new Turn(7.0, 10.0, 80.0, true, new Position(-81.1, 0.0, -48.4, 43.0)));
 
-	for (int i = -16; i < 16; i++) {
-		for (int j = -16; j < 16; j++) {
+	for (int i = -11; i < 9; i++) {
+		for (int j = -11; j < 9; j++) {
 			int nbTrees = 0;
 			if (i < -10 || i > 7 || j < -10 || j > 7)
 				nbTrees = abs(i * j) / 32 + abs(i + j) / 4;
 			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
 
-			// TEMPORARY GRID OF SPECTATORS
+			/* TEMPORARY GRID OF SPECTATORS
 			if (i == 0 && j == 0) {
 				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 1.0, 1.0, 1.0, false));
 			} else if (i % 2 == 0 && j % 2 == 0) {
 				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 1.0, 0.0, 0.0, false));
 			} else {
 				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 0.0, 0.0, 1.0, false));
-			}
+			}*/
 		}
 	}
 
 	checker = new Checker();
-	bleachers.push_back(new Bleachers(-80.0, 100.0, 50, 10, 180.0, 0.5));
-	bleachers.push_back(new Bleachers(-20.0, 100.0, 50, 10, 180.0, 0.5));
-	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.5));
+	bleachers.push_back(new Bleachers(-80.0, 100.0, 50, 10, 180.0, 0.2));
+	bleachers.push_back(new Bleachers(-20.0, 100.0, 50, 10, 180.0, 0.2));
+	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.2));
 	for (int i = -80; i < 100; i += 20) {
 		trees.push_back(new Tree((float)i, 70.0, 0.5, 3.0, 2.0, 4.0));
 	}

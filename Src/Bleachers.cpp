@@ -93,7 +93,7 @@ std::vector<Spectator> Bleachers::getSpectators(void) {
 
 // Update spectators on a patch
 void Bleachers::update(void) {
-	int p = (rand() % static_cast<int>(spectators.size() * 20));
+	int p = (rand() % static_cast<int>(spectators.size() * 100));
 	if (p < spectators.size()) {
 		spectators[p].setJumping();
 	}
