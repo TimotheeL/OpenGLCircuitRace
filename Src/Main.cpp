@@ -25,7 +25,7 @@ using namespace std;
 static int pMode = 1; 
 static bool drawBBox = false;
 
-const double dt = 1 / 60.0;	/* Framerate */
+const double dt = 1 / 60.0;	/* Simulation framerate */
 double currentTime = 0.0;	/* Current time */
 double accumulator = 0.0;	/* Time accumulator */
 

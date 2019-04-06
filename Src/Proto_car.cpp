@@ -26,7 +26,7 @@ using namespace std;
 static int pMode = 1;
 static bool drawBBox = false;
 
-const double dt = 1 / 60.0;	/* Framerate */
+const double dt = 1 / 60.0;	/* Simulation framerate */
 double currentTime = 0.0;	/* Current time */
 double accumulator = 0.0;	/* Time accumulator */
 
@@ -62,7 +62,7 @@ static void init(void) {
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, new Position(-10.0, 0.0, 10.0)));
 	
 	/* Init track */
-	listTrackParts.push_back(new Turn(7.0, 20.0, 45.0, true, new Position(10.0, 0.0, 0.0)));
+	listTrackParts.push_back(new Turn(7.0, 10.0, 180.0, false, new Position(0.0, 0.0, 0.0, 180)));
 	listTrackParts.push_back(new StraightLine(7.0, 20.0, new Position(30.0, 0.0, 10.0, 0.0)));
 
 	/* Init grid */

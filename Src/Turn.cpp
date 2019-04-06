@@ -24,7 +24,7 @@ Turn::Turn(void):
 	direction(true) 
 {
 	computeVertices();
-	generateBoundingBoxes();
+	generateBoundingBoxes(0.5);
 }
 
 // 5-arguments constructor
@@ -35,7 +35,7 @@ Turn::Turn(float width, float softness, float angle, bool direction, Position po
 	direction(direction) 
 {
 	computeVertices();
-	generateBoundingBoxes();
+	generateBoundingBoxes(0.5);
 }
 
 // Copy constructor
@@ -46,7 +46,7 @@ Turn::Turn(Turn *p1):
 	direction(p1->direction)
 {
 	computeVertices();
-	generateBoundingBoxes();
+	generateBoundingBoxes(0.5);
 }
 
 // Destructor
@@ -83,20 +83,23 @@ void Turn::computeVertices(void) {
 	int ns = 10 + (int) (angle / 6) * (softness / 5);
 	float rp, ar, a, cs, sn, xin = 0.0, xout = 0.0, zin = 0.0, zout = 0.0;
 	Position vin, vout;
+
+	ar = 2.0 * M_PI / (360.0 / angle);
+
 	for (int i = 0; i <= ns; i++) {
 		rp = (i == 0 ? (float)i / ns + 0.00001 : (float)i / ns);
-		ar = 2.0 * M_PI / (360.0 / angle);
 		a = ar * rp;
 		cs = cos(a);
 		sn = -sin(a);
 
 		(direction ? xin = softness * cs - softness - width / 2 : xin = softness * -cs + softness + width / 2);
 		zin = softness * sn;
+
 		(direction ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * -cs + softness + width / 2));
 		zout = (softness + width) * sn;
 
 		vin = rotate(xin, 0.0, zin);
-		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z; vin.angle -= a * 180 / M_PI;
+		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;vin.angle -= a * 180 / M_PI;
 		vertices.push_back(vin);
 
 		vout = rotate(xout, 0.0, zout);
@@ -106,16 +109,28 @@ void Turn::computeVertices(void) {
 }
 
 /* Bounding boxes generator */
-void Turn::generateBoundingBoxes(void) {
+void Turn::generateBoundingBoxes(float offset) {
 	for (unsigned int i = 0; i < vertices.size() - 2; i++) {
 		// Compute middle point
 		float x = (vertices[i].x + vertices[i + 2].x) / 2;
 		float y = (vertices[i].y + vertices[i + 2].y) / 2;
 		float z = (vertices[i].z + vertices[i + 2].z) / 2;
-		float angle = (vertices[i].angle + vertices[i + 2].angle) / 2;
+		float a = (vertices[i].angle + vertices[i + 2].angle) / 2;
 
+		// Correct the angle if the direction is false
 		if (!direction) {
-			angle = -angle;
+			a += (pos.angle * 2);
+		}
+		
+		// Shift point with the offset
+		float rad = a / 180 * M_PI;			
+		if (i % 2) {
+			(direction ? x += cos(rad) * offset : x += -(cos(rad) * offset));
+			z += sin(rad) * offset;
+		}
+		else {
+			(direction ? x += cos(rad) * -offset : x += -(cos(rad) * -offset));
+			z += sin(rad) * -offset;
 		}
 
 		// Compute length
@@ -124,9 +139,12 @@ void Turn::generateBoundingBoxes(void) {
 			+ powf(vertices[i + 2].z - vertices[i].z, 2)
 		);
 
+		// Reverse angle if the direction is false
+		if (!direction) { a = -a; }
+
 		// Create the bounding box
 		sideboxes.push_back(
-			new Object(0.2, length, 2.0, new Position(x, y, z, angle))
+			new Object(offset * 2, length, 2.0, new Position(x, y, z, a))
 		);
 	}
 }
