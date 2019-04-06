@@ -129,9 +129,8 @@ void Turn::generateBoundingBoxes(void) {
 
 // Drawer
 void Turn::draw(void) {
-	float colorTrack[4] = { 0.3, 0.3, 0.3, 1.0 };
+	float colorTrack[4] = { 0.15, 0.15, 0.15, 1.0 };
 	glPushMatrix();
-		glColor3f(0.5, 0.5, 0.5);
 		glTranslatef(pos.x, pos.y, pos.z);
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);

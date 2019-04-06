@@ -84,10 +84,9 @@ void StraightLine::generateBoundingBoxes(void) {
 
 // Drawer
 void StraightLine::draw(void) {
-	float colorTrack[4] = { 0.3, 0.3, 0.3, 1.0 };
+	float colorTrack[4] = { 0.15, 0.15, 0.15, 1.0 };
 	glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
-		glColor3f(0.5, 0.5, 0.5);
 		glTranslatef(pos.x, pos.y, pos.z);
 		glPushMatrix();
 			glBegin(GL_QUADS);
