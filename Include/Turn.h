@@ -24,6 +24,9 @@ protected:
 	/* Bounding boxes generator */
 	virtual void generateBoundingBoxes(float offset);
 
+	/* Util function tu draw a cylindre */
+	void mySolidCylindre(double hauteur, double rayon, int ns);
+
 public:
 	/* Constructors */
 	Turn(void);

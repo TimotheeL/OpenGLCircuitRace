@@ -47,7 +47,6 @@ BRT::BRT(void) {
 	turns.push_back(new Turn(7.0, 12.3, 90.0, false, new Position(91.8, 0.0, 52.6, 290.0)));
 	turns.push_back(new Turn(7.0, 10.0, 110.0, false, new Position(112.0, 0.0, 62.0, 200.0)));
 
-
 	for (int i = -11; i < 9; i++) {
 		for (int j = -11; j < 9; j++) {
 			int nbTrees = 0;
