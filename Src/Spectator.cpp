@@ -104,11 +104,11 @@ void Spectator::draw(void) {
 		glPushMatrix();
 			glTranslatef(xPos, currYPos + 0.6, zPos);
 			glScalef(0.6f, 1.2f, 0.6f);
-			glutSolidSphere(0.5, 8, 8);
+			glutSolidSphere(0.5, 5, 4);
 		glPopMatrix();
 		glPushMatrix();
 			glTranslatef(xPos, currYPos + 1.6, zPos);
-			glutSolidSphere(0.3, 6, 6);
+			glutSolidSphere(0.3, 5, 4);
 		glPopMatrix();
 	glPopMatrix();
 }

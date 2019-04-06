@@ -37,7 +37,7 @@ BRT::BRT(void) {
 		for (int j = -11; j < 9; j++) {
 			int nbTrees = 0;
 			if (i < -10 || i > 7 || j < -10 || j > 7)
-				nbTrees = abs(i * j) / 32 + abs(i + j) / 4;
+				nbTrees = rand() % 5 + 3;
 			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
 
 			/* TEMPORARY GRID OF SPECTATORS
@@ -52,9 +52,9 @@ BRT::BRT(void) {
 	}
 
 	checker = new Checker();
-	bleachers.push_back(new Bleachers(-80.0, 100.0, 50, 10, 180.0, 0.2));
-	bleachers.push_back(new Bleachers(-20.0, 100.0, 50, 10, 180.0, 0.2));
-	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.2));
+	bleachers.push_back(new Bleachers(-80.0, 100.0, 50, 10, 180.0, 0.1));
+	bleachers.push_back(new Bleachers(-20.0, 100.0, 50, 10, 180.0, 0.1));
+	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.1));
 	for (int i = -80; i < 100; i += 20) {
 		trees.push_back(new Tree((float)i, 70.0, 0.5, 3.0, 2.0, 4.0));
 	}
