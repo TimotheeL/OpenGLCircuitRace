@@ -24,6 +24,7 @@ using namespace std;
 /* Global variables */
 static int pMode = 1; 
 static bool drawBBox = false;
+static bool switchToCar = false;
 
 const double dt = 1 / 60.0;	/* Simulation framerate */
 double currentTime = 0.0;	/* Current time */
@@ -65,14 +66,22 @@ static void init(void) {
 
 /* Scene function */
 static void scene(void) {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	glPushMatrix();
-		gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+		
+		if (switchToCar) {
+			/* Draw the camera locked on the racing car */
+			rc.setCamera();
+		}
+		else {
+			gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+		}
 
 		/* Draw */
-		glPushMatrix();
-			brt.draw();
-			rc.draw();
-		glPopMatrix();
+		brt.draw();
+		rc.draw();
 
 		/* Draw bounding boxes */
 		if (drawBBox) {
@@ -85,29 +94,20 @@ static void scene(void) {
 /* Input handling and physic simulation function */
 static void simulate(void) {
 	brt.update();
-	/* Reset colliding states */
-	//rc->resetIsColliding();
-	/*for (unsigned int i = 0; i < brt.getLines().size(); i++) {
-		brt.getLines()[i].resetIsColliding();
+
+	if (switchToCar) {
+		/* Reset colliding states */
+		rc.resetIsColliding();
+		brt.resetIsColliding();
+
+		/* Handle inputs for the car */
+		rc.handleInputs(keyStates, keySpecialStates);
+		/* Handle car's movement */
+		rc.handleMovement(dt);
+
+		/* Handle collisions */
+		rc.collision(&brt);
 	}
-
-	for (unsigned int i = 0; i < brt.getTurns().size(); i++) {
-		brt.getTurns()[i].resetIsColliding();
-	} */
-
-	/* Handle inputs for the car */
-	//rc->handleInputs(keyStates, keySpecialStates);
-	/* Handle car's movement */
-	//rc->handleMovement(dt);
-
-	/* Handle collisions */
-	/*for (unsigned int i = 0; i < listTrackParts.size(); i++) {
-		rc->collision(listTrackParts[i]);
-	}
-
-	for (unsigned int i = 0; i < listObjects.size(); i++) {
-		rc->collision(listObjects[i]);
-	}*/
 }
 
 /* Display function */
@@ -204,6 +204,10 @@ static void keyboard(unsigned char key, int x, int y) {
 			drawBBox = !drawBBox;
 			glutPostRedisplay();
 			break;
+		case 'c':
+		case 'C':
+			switchToCar = !switchToCar;
+			break;
 	}
 }
 
@@ -216,7 +220,8 @@ static void keyboardUp(unsigned char key, int x, int y) {
 static void special(int specialKey, int x, int y) {
 	keySpecialStates[specialKey] = true;
 
-	switch (specialKey) {
+	if (!switchToCar) {
+		switch (specialKey) {
 		case GLUT_KEY_UP:
 			eye_z -= 2.0;
 			break;
@@ -228,6 +233,7 @@ static void special(int specialKey, int x, int y) {
 			break;
 		case GLUT_KEY_RIGHT:
 			eye_x += 2.0;
+		}
 	}
 }
 

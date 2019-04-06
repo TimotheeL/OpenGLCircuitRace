@@ -15,7 +15,9 @@
 
 #include <RacingCar.h>
 
-#define PI 3.14159265
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795
+#endif
 
 const float RacingCar::MAX_SPD_FW = 10.0;
 const float RacingCar::MAX_SPD_BW = 5.0;
@@ -120,7 +122,7 @@ void RacingCar::handleInputs(bool *keyStates, bool *specialKeyStates) {
 void RacingCar::handleMovement(double deltaTime) {
 	// If the speed isn't at zero
 	if (speed != 0.0) {
-		float radangle = pos.angle * PI / 180;
+		float radangle = pos.angle * M_PI / 180;
 
 		// Calculate new position
 		if (dirForward) {
@@ -143,6 +145,19 @@ void RacingCar::handleMovement(double deltaTime) {
 
 		hitbox.update(&pos);
 	}
+}
+
+void RacingCar::setCamera(void) {
+	float radangle = (pos.angle + 90.0) * M_PI / 180;
+
+	gluLookAt(
+		pos.x + sin(-radangle) * 10,
+		pos.y + 6.0,
+		pos.z + cos(radangle) * 10,
+		pos.x, pos.y, pos.z,
+		0.0, 1.0, 0.0
+	);
+
 }
 
 /* Forward */
@@ -184,7 +199,7 @@ void RacingCar::handbrake() {
 
 /* Reset car's properties */
 void RacingCar::reset() {
-	pos = new Position();
+	pos = new Position(0, 0, 0, -90);
 	speed = 0.0;
 	handbrakeState = false;
 	dirForward = true;
@@ -237,5 +252,13 @@ void RacingCar::collision(TrackPart *tp) {
 		}
 
 		delete(mtv);
+	}
+}
+
+void RacingCar::collision(BRT *brt) {
+	vector<TrackPart*> *track = brt->getTrack();
+
+	for (int i = 0; i < track->size(); i++) {
+		collision(track->at(i));
 	}
 }

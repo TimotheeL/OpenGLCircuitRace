@@ -23,8 +23,7 @@ class BRT {
 protected:
 	Checker checker;
 	vector<Patch> patches;
-	vector<StraightLine> lines;
-	vector<Turn> turns;
+	vector<TrackPart*> track;
 	vector<Bleachers> bleachers;
 	vector<Tree> trees;
 	vector<Spectator> spectators;
@@ -34,8 +33,7 @@ public:
 	BRT(void);
 
 	/* getters */
-	vector<StraightLine> getLines(void);
-	vector<Turn> getTurns(void);
+	vector<TrackPart*> *getTrack(void);
 	Checker getChecker(void);
 	vector<Patch> getPatches(void);
 	vector<Tree> getTrees(void);
@@ -48,6 +46,8 @@ public:
 	/* drawer */
 	void draw(void);
 	void drawBoundingBoxes(void);
+
+	void resetIsColliding(void);
 };
 
 #endif // BRT

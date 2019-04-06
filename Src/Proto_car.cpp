@@ -55,14 +55,14 @@ static void init(void) {
 	glEnable(GL_NORMALIZE);
 
 	/* Init player's racing Car */
-	rc = new RacingCar(4.0, 2.0, 2.0);
+	rc = new RacingCar(4.0, 2.0, 2.0, new Position(0, 0, 0, -90));
 
 	/* Init other objects */
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, new Position(-10.0, 0.0, -10.0)));
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, new Position(-10.0, 0.0, 10.0)));
 	
 	/* Init track */
-	listTrackParts.push_back(new Turn(7.0, 10.0, 180.0, false, new Position(0.0, 0.0, 0.0, 180)));
+	listTrackParts.push_back(new Turn(7.0, 10.0, 90.0, false, new Position(10.0, 0.0, 0.0, 180)));
 	listTrackParts.push_back(new StraightLine(7.0, 20.0, new Position(30.0, 0.0, 10.0, 0.0)));
 
 	/* Init grid */
@@ -71,15 +71,13 @@ static void init(void) {
 
 /* Scene function */
 static void scene(void) {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	glPushMatrix();
 
 	/* Draw the camera locked on the racing car */
-	Position rcpos = rc->getPos();
-	gluLookAt(
-		0.0 + rcpos.x, 8.0 + rcpos.y, 10.0 + rcpos.z,
-		rcpos.x, rcpos.y, rcpos.z,
-		0.0, 1.0, 0.0
-	);
+	rc->setCamera();
 
 	rc->draw();
 

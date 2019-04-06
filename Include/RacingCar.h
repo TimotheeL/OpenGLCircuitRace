@@ -12,6 +12,7 @@
 #include <BoundingBox.h>
 #include <Object.h>
 #include <TrackPart.h>
+#include "BRT.h"
 
 class RacingCar : public Object {
 
@@ -55,6 +56,8 @@ public:
 	/* Movement handling */
 	void handleMovement(double deltaTime);
 
+	void setCamera(void);
+
 	/* Forward */
 	void forward(float distance);
 
@@ -76,6 +79,7 @@ public:
 	/* Collision handling */
 	virtual void collision(Object *o);
 	virtual void collision(TrackPart *tp);
+	virtual void collision(BRT *brt);
 };
 
 #endif
