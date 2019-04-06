@@ -6,12 +6,13 @@
 */
 #include <vector>
 
+#include <Crowd.h>
 #include <Tree.h>
 
 #ifndef ____PATCH____
 #define ____PATCH____
 
-class Patch {
+class Patch : public Crowd {
 
 private:
 	//Position of bottom left corner
@@ -26,6 +27,7 @@ public:
 
 	/* Constructors */
 	Patch(float xPos, float zPos, float size, int nbTrees);
+	Patch(float xPos, float zPos, float size, int nbTrees, int nbSpectators);
 	Patch(Patch *p1);
 	Patch(void);
 
@@ -34,9 +36,6 @@ public:
 
 	/* OpenGL code to draw the patch */
 	void draw(void);
-
-	/* Print */
-	//void print(void);
 
 	/* Getters */
 	float getXPos(void);

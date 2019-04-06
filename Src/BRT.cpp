@@ -48,9 +48,9 @@ BRT::BRT(void) {
 	turns.push_back(new Turn(7.0, 10.0, 110.0, false, new Position(112.0, 0.0, 62.0, 200.0)));
 
 	for (int i = -11; i < 9; i++) {
-		for (int j = -11; j < 9; j++) {
+		for (int j = -6; j < 9; j++) {
 			int nbTrees = 0;
-			if (i < -10 || i > 7 || j < -10 || j > 7)
+			if (i < -10 || i > 7 || j < -5 || j > 7)
 				nbTrees = rand() % 5 + 3;
 			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
 
@@ -69,6 +69,7 @@ BRT::BRT(void) {
 	bleachers.push_back(new Bleachers(-80.0, 100.0, 50, 10, 180.0, 0.1));
 	bleachers.push_back(new Bleachers(-20.0, 100.0, 50, 10, 180.0, 0.1));
 	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.1));
+	bleachers.push_back(new Bleachers(-50.0, -43.0, 50, 10, -47.0, 0.1));
 	for (int i = -80; i < 100; i += 20) {
 		trees.push_back(new Tree((float)i, 70.0, 0.5, 3.0, 2.0, 4.0));
 	}

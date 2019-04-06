@@ -1,6 +1,6 @@
 /*
 	Racing game project - Patch class
-	Represents a tree (background element)
+	Represents a patch of grass (background element)
 	2019
 	Nicolas Bouchard, Timothée Guy, Timothée Laurent
 */
@@ -35,6 +35,15 @@ Patch::Patch(float xPos, float zPos, float size, int nbTrees) {
 	}
 }
 
+// Constructor with spectators
+Patch::Patch(float xPos, float zPos, float size, int nbTrees, int nbSpectators):Patch(xPos, zPos, size, nbTrees) {
+	for (int i = 0; i < nbSpectators; i++) {
+		float specX = xPos + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (size)));
+		float specZ = zPos + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (size)));
+		spectators.push_back(new Spectator(specX, 0.0, specZ, (float)rand() / (RAND_MAX), (float)rand() / (RAND_MAX), (float)rand() / (RAND_MAX), false));
+	}
+}
+
 // Copy constructor
 Patch::Patch(Patch *p1) {
 	this->xPos = p1->xPos;
@@ -42,6 +51,7 @@ Patch::Patch(Patch *p1) {
 	this->size = p1->size;
 	this->nbTrees = p1->nbTrees;
 	this->trees = p1->trees;
+	this->spectators = p1->spectators;
 }
 
 Patch::Patch(void)
@@ -83,6 +93,9 @@ void Patch::draw(void) {
 			for (int i = 0; i < nbTrees; i++) {
 				trees[i].draw();
 			}
+		glPopMatrix();
+		glPushMatrix();
+			Crowd::draw();
 		glPopMatrix();
 	glPopMatrix();
 }

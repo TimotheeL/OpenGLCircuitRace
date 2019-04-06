@@ -104,6 +104,7 @@
     <ClCompile Include="..\..\Src\BoundingBox.cpp" />
     <ClCompile Include="..\..\Src\BRT.cpp" />
     <ClCompile Include="..\..\Src\Checker.cpp" />
+    <ClCompile Include="..\..\Src\Crowd.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
@@ -122,6 +123,7 @@
     <ClInclude Include="..\..\Include\BoundingBox.h" />
     <ClInclude Include="..\..\Include\BRT.h" />
     <ClInclude Include="..\..\Include\Checker.h" />
+    <ClInclude Include="..\..\Include\Crowd.h" />
     <ClInclude Include="..\..\Include\Object.h" />
     <ClInclude Include="..\..\Include\Patch.h" />
     <ClInclude Include="..\..\Include\Position.h" />

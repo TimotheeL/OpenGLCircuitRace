@@ -33,7 +33,7 @@ Bleachers::Bleachers(float xPos, float zPos, int width, int depth, float angle, 
 
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < depth; j++) {
-			float p = ((double)rand() / (RAND_MAX));
+			float p = ((float)rand() / (RAND_MAX));
 			if (p < filling) {
 				float specX = (zPos - j - 1 - centerZ) * sin(rad) + (xPos + i + 0.5 - centerX) * cos(rad);
 				float specZ = (zPos - j - 1 - centerZ) * cos(rad) - (xPos + i + 0.5 - centerX) * sin(rad);
@@ -57,7 +57,7 @@ Bleachers::Bleachers(Bleachers *b1) {
 }
 
 Bleachers::Bleachers(void)
-	:Bleachers(0.0, 0.0, 10, 3, 0.0, 1.0)
+	:Bleachers(0.0, 0.0, 10, 3, 0.0, 0.5)
 {}
 
 // Destructor
@@ -91,18 +91,7 @@ std::vector<Spectator> Bleachers::getSpectators(void) {
 	return spectators;
 }
 
-// Update spectators on a patch
-void Bleachers::update(void) {
-	int p = (rand() % static_cast<int>(spectators.size() * 100));
-	if (p < spectators.size()) {
-		spectators[p].setJumping();
-	}
-	for (unsigned int i = 0; i < spectators.size(); i++) {
-		spectators[i].move();
-	}
-}
-
-// Draw a patch
+// Draw a bleachers
 void Bleachers::draw(void) {
 	glPushMatrix();
 	float colorBleachers[4] = { 0.3, 0.3, 0.3, 1.0 };
@@ -120,10 +109,7 @@ void Bleachers::draw(void) {
 				glPopMatrix();
 			}
 		glPopMatrix();
-		for (unsigned int i = 0; i < spectators.size(); i++) {
-			spectators[i].draw();
-		}
-		
+		Crowd::draw();
 	glPopMatrix();
 }
 

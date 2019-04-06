@@ -5,12 +5,12 @@
 	Nicolas Bouchard, Timothée Guy, Timothée Laurent
 */
 #include <vector>
-#include "Spectator.h"
+#include "Crowd.h"
 
 #ifndef ____BLEACHERS____
 #define ____BLEACHERS____
 
-class Bleachers {
+class Bleachers : public Crowd {
 
 private:
 	float xPos;
@@ -20,7 +20,6 @@ private:
 	float filling; // Between 0 and 1: determines how crowded the bleachers are
 	int width;
 	int depth;
-	std::vector<Spectator> spectators;
 
 public:
 
@@ -32,11 +31,8 @@ public:
 	/* Destructor */
 	~Bleachers(void);
 
-	/* OpenGL code to draw the tree */
+	/* OpenGL code to draw the bleachers */
 	void draw(void);
-
-	/* Update each spectator*/
-	void update(void);
 
 	/* Print */
 	void print(void);
