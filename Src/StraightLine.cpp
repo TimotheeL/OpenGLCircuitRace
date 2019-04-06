@@ -72,14 +72,14 @@ void StraightLine::computeVertices(void) {
 
 /* Bounding boxes generator */
 void StraightLine::generateBoundingBoxes(void) {
-	Position right = rotate((width / 2.0) + 0.05, 0.0, -length / 2.0);
+	Position right = rotate((width / 2.0) + 0.1, 0.0, -length / 2.0);
 	right.x += pos.x; right.y += pos.y; right.z += pos.z;
 
-	Position left = rotate((-width / 2.0) - 0.05, 0.0, -length / 2.0);
+	Position left = rotate((-width / 2.0) - 0.1, 0.0, -length / 2.0);
 	left.x += pos.x; left.y += pos.y; left.z += pos.z;
 
-	sideboxes.push_back(new Object(0.1, length, 2.0, new Position(right)));
-	sideboxes.push_back(new Object(0.1, length, 2.0, new Position(left)));
+	sideboxes.push_back(new Object(0.2, length, 2.0, new Position(right)));
+	sideboxes.push_back(new Object(0.2, length, 2.0, new Position(left)));
 }
 
 // Drawer

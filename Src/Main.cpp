@@ -15,6 +15,7 @@
 #include <math.h>
 
 #include "Spectator.h"
+#include "Bleachers.h"
 #include "BRT.h"
 #include "RacingCar.h"
 
@@ -56,15 +57,18 @@ static void init(void) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 
+	/* Init circuit */
+	brt = BRT();
 	/* Init player's racing Car */
 	rc = RacingCar(4.0, 2.0, 2.0, new Position(80.0, 0.0, 78.0));
-	brt = BRT();
 }
 
 /* Scene function */
 static void scene(void) {
 	glPushMatrix();
 		gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
+		/* Draw */
 		glPushMatrix();
 			brt.draw();
 			rc.draw();
@@ -73,21 +77,14 @@ static void scene(void) {
 		/* Draw bounding boxes */
 		if (drawBBox) {
 			rc.drawBoundingBoxes();
-			// Other objects
-			/*for (unsigned int i = 0; i < brt.getLines().size(); i++) {
-				brt.getLines()[i].drawBoundingBoxes();
-			}
-
-			// Track
-			for (unsigned int i = 0; i < brt.getTurns().size(); i++) {
-				brt.getTurns()[i].drawBoundingBoxes();
-			}*/
+			brt.drawBoundingBoxes();
 		}
 	glPopMatrix();
 }
 
 /* Input handling and physic simulation function */
 static void simulate(void) {
+	brt.update();
 	/* Reset colliding states */
 	//rc->resetIsColliding();
 	/*for (unsigned int i = 0; i < brt.getLines().size(); i++) {
