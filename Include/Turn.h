@@ -22,7 +22,7 @@ protected:
 	virtual void computeVertices(void);
 
 	/* Bounding boxes generator */
-	virtual void generateBoundingBoxes(void);
+	virtual void generateBoundingBoxes(float offset);
 
 public:
 	/* Constructors */
