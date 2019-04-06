@@ -38,15 +38,9 @@ static int wTy = 600;
 static int wPx = 50;
 static int wPy = 50;
 
-Checker checker;
-vector<Patch> patches;
-vector<StraightLine> lines;
-vector<Turn> turns;
-
 static float eye_x = 0.0; // 0.0
 static float eye_y = 180.0; // 180.0
 static float eye_z = 1.0; // 1.0
-
 
 /* Player's racing car */
 RacingCar rc;
@@ -72,16 +66,12 @@ static void init(void) {
 /* Scene function */
 static void scene(void) {
 	glPushMatrix();
-
-
-		
 		gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
 		/* Draw */
 		glPushMatrix();
 			brt.draw();
 			rc.draw();
-			checker.draw();
 		glPopMatrix();
 
 		/* Draw bounding boxes */

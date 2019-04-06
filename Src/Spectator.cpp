@@ -47,6 +47,7 @@ Spectator::Spectator(Spectator *s1) {
 	this->yPos = s1->yPos;
 	this->zPos = s1->zPos;
 	this->currYPos = s1->currYPos;
+	this->jumping = s1->jumping;
 	this->goingUp = s1->goingUp;
 	for (int i = 0; i < 3; i++) {
 		this->color[i] = s1->color[i];

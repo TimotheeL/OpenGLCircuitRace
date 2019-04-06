@@ -36,16 +36,28 @@ BRT::BRT(void) {
 	for (int i = -16; i < 16; i++) {
 		for (int j = -16; j < 16; j++) {
 			int nbTrees = 0;
-			if (i < -11 || i > 8 || j < -11 || j > 8)
+			if (i < -10 || i > 7 || j < -10 || j > 7)
 				nbTrees = abs(i * j) / 32 + abs(i + j) / 4;
 			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
+
+			// TEMPORARY GRID OF SPECTATORS
+			if (i == 0 && j == 0) {
+				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 1.0, 1.0, 1.0, false));
+			} else if (i % 2 == 0 && j % 2 == 0) {
+				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 1.0, 0.0, 0.0, false));
+			} else {
+				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 0.0, 0.0, 1.0, false));
+			}
 		}
 	}
 
 	checker = new Checker();
-
+	bleachers.push_back(new Bleachers(-80.0, 100.0, 50, 10, 180.0, 0.5));
 	bleachers.push_back(new Bleachers(-20.0, 100.0, 50, 10, 180.0, 0.5));
 	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.5));
+	for (int i = -80; i < 100; i += 20) {
+		trees.push_back(new Tree((float)i, 70.0, 0.5, 3.0, 2.0, 4.0));
+	}
 }
 
 // getters
@@ -55,11 +67,29 @@ vector<StraightLine> BRT::getLines(void) {
 vector<Turn> BRT::getTurns(void) {
 	return turns;
 }
+Checker BRT::getChecker(void) {
+	return checker;
+}
+vector<Patch> BRT::getPatches(void) {
+	return patches;
+}
+vector<Tree> BRT::getTrees(void) {
+	return trees;
+}
+vector<Bleachers> BRT::getBleachers(void) {
+	return bleachers;
+}
+vector<Spectator> BRT::getSpectators(void) {
+	return spectators;
+}
 
 // Update
 void BRT::update(void) {
 	for (unsigned int i = 0; i < bleachers.size(); i++) {
 		bleachers[i].update();
+	}
+	for (unsigned int i = 0; i < spectators.size(); i++) {
+		spectators[i].move();
 	}
 }
 
@@ -77,6 +107,12 @@ void BRT::draw(void) {
 	}
 	for (unsigned int i = 0; i < bleachers.size(); i++) {
 		bleachers[i].draw();
+	}
+	for (unsigned int i = 0; i < trees.size(); i++) {
+		trees[i].draw();
+	}
+	for (unsigned int i = 0; i < spectators.size(); i++) {
+		spectators[i].draw();
 	}
 }
 

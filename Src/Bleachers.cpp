@@ -95,7 +95,6 @@ std::vector<Spectator> Bleachers::getSpectators(void) {
 void Bleachers::update(void) {
 	int p = (rand() % static_cast<int>(spectators.size() * 20));
 	if (p < spectators.size()) {
-		printf("%d", p);
 		spectators[p].setJumping();
 	}
 	for (unsigned int i = 0; i < spectators.size(); i++) {

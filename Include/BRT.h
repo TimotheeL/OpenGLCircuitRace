@@ -26,6 +26,8 @@ protected:
 	vector<StraightLine> lines;
 	vector<Turn> turns;
 	vector<Bleachers> bleachers;
+	vector<Tree> trees;
+	vector<Spectator> spectators;
 
 public:
 	/* Constructors */
@@ -34,6 +36,11 @@ public:
 	/* getters */
 	vector<StraightLine> getLines(void);
 	vector<Turn> getTurns(void);
+	Checker getChecker(void);
+	vector<Patch> getPatches(void);
+	vector<Tree> getTrees(void);
+	vector<Bleachers> getBleachers(void);
+	vector<Spectator> getSpectators(void);
 
 	/* update */
 	void update(void);
