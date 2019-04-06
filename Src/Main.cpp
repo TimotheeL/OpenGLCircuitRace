@@ -61,7 +61,7 @@ static void init(void) {
 	/* Init circuit */
 	brt = BRT();
 	/* Init player's racing Car */
-	rc = RacingCar(4.0, 2.0, 2.0, new Position(80.0, 0.0, 78.0));
+	rc = RacingCar(4.0, 2.0, 2.0, new Position(85.0, 0.0, 80.0, 180.0));
 }
 
 /* Scene function */
