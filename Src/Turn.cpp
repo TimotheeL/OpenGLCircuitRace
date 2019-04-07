@@ -81,8 +81,8 @@ void Turn::setDirection(bool direction) {
 // compute vertices to draw and compute collisions
 void Turn::computeVertices(void) {
 	int ns = 10 + (int) (angle / 6) * (softness / 5);
-	float rp, ar, a, cs, sn, xin = 0.0, xout = 0.0, zin = 0.0, zout = 0.0;
-	Position vin, vout;
+	float rp, ar, a, cs, sn, xin = 0.0, xout = 0.0, zin = 0.0, zout = 0.0, xtire = 0.0, ztire = 0.0;
+	Position vin, vout, tire;
 
 	ar = 2.0 * M_PI / (360.0 / angle);
 
@@ -98,6 +98,9 @@ void Turn::computeVertices(void) {
 		(direction ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * -cs + softness + width / 2));
 		zout = (softness + width) * sn;
 
+		(direction ? xtire = ((softness + width + 1.0) * cs - softness - (width + 1.0) / 2) : xtire = ((softness + width + 1.0) * -cs + softness + (width + 1.0) / 2));
+		ztire = (softness + width + 1.0) * sn;
+
 		vin = rotate(xin, 0.0, zin);
 		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;
 		vin.angle -= (float) (a * 180.0 / M_PI);
@@ -107,6 +110,11 @@ void Turn::computeVertices(void) {
 		vout.x += pos.x; vout.y += pos.y; vout.z += pos.z;
 		vout.angle -= (float) (a * 180.0 / M_PI);
 		vertices.push_back(vout);
+
+		tire = rotate(xtire, 0.0, ztire);
+		tire.x += pos.x; tire.y += pos.y; tire.z += pos.z;
+		tire.angle -= (float)(a * 180.0 / M_PI);
+		tires.push_back(tire);
 	}
 }
 
@@ -175,6 +183,18 @@ void Turn::mySolidCylindre(double hauteur, double rayon, int ns) {
 				glVertex3f(x, -hauteur, z);
 			}
 		glEnd();
+
+		glBegin(GL_POLYGON);
+		for (int i = 0; i <= ns; i++) {
+			float a = (2 * M_PI*i) / ns;
+			float cs = cos(a);
+			float sn = -sin(a);
+			glNormal3f(cs, 1.0F, sn);
+			float x = rayon * cs;
+			float z = rayon * sn;
+			glVertex3f(x, hauteur, z);
+		}
+		glEnd();
 	glPopMatrix();
 
 	glNormal3f(normale[0], normale[1], normale[2]);
@@ -198,14 +218,14 @@ void Turn::draw(void) {
 			glEnd();
 		glPopMatrix();
 		glPushMatrix();
-			for (unsigned int i = 0; i < vertices.size(); i++) {
+			for (unsigned int i = 0; i < tires.size(); i++) {
 				if (i % 2 != 0) {
 					glPushMatrix();
 						float white[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 						float red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
 						glMaterialfv(GL_FRONT, GL_DIFFUSE, i % 3 == 0 ? white : red);
-						glTranslatef(vertices[i].x - pos.x, vertices[i].y - pos.y, vertices[i].z - pos.z);
-						mySolidCylindre(2.0, 1.0, 8.0);
+						glTranslatef(tires[i].x - pos.x, tires[i].y - pos.y, tires[i].z - pos.z);
+						mySolidCylindre(1.0, 0.5, 8.0);
 					glPopMatrix();
 				}
 			}

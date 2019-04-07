@@ -14,6 +14,8 @@
 class Turn : public TrackPart {
 
 protected:
+	vector<Position> tires;
+
 	float softness;
 	float angle;
 	bool direction; // true : left, false : right
