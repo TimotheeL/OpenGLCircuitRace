@@ -158,11 +158,7 @@ static void reshape(int wx, int wy) {
 	glLoadIdentity();
 
 	double ratio = (double)wx / wy;
-
-	if (ratio > 1.0)
-		gluPerspective(60.0, ratio, 0.2, 1000.0);
-	else
-		gluPerspective(60.0 / ratio, ratio, 0.2, 1000.0);
+	ratio > 1.0 ? gluPerspective(60.0, ratio, 0.2, 1000.0) : gluPerspective(60.0 / ratio, ratio, 0.2, 1000.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

@@ -33,6 +33,7 @@ RacingCar::RacingCar(float clength, float cwidth, float cheight, Position *pos)
 	handbrakeState = false;
 	movingForward = true;
 	speed = 0.0;
+	startpos = Position(pos);
 }
 
 RacingCar::RacingCar(float clength, float cwidth, float cheight)
@@ -49,6 +50,7 @@ RacingCar::RacingCar(RacingCar *rc)
 	speed = rc->getSpeed();
 	handbrakeState = rc->getHandbrakeState();
 	movingForward = rc->getMovingForward();
+	startpos = Position(rc->getStartPos());
 }
 
 /* Destructor */
@@ -61,6 +63,10 @@ float RacingCar::getSpeed(void) {
 
 bool RacingCar::getHandbrakeState(void) {
 	return handbrakeState;
+}
+
+Position *RacingCar::getStartPos(void) {
+	return &startpos;
 }
 
 /* Draw */
@@ -203,7 +209,7 @@ void RacingCar::handbrake() {
 
 /* Reset car's properties */
 void RacingCar::reset() {
-	pos = new Position(0, 0, 0, -90);
+	pos = new Position(startpos);
 	speed = 0.0;
 	handbrakeState = false;
 	movingForward = true;

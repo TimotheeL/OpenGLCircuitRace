@@ -25,6 +25,8 @@ public:
 	static const float ROT_ANGLE;	// Rotation rate
 
 private:
+	Position startpos;
+
 	bool handbrakeState;	// Handbrake state
 
 	float speed;			// Speed
@@ -45,6 +47,7 @@ public:
 	/* Getters */
 	float getSpeed(void);
 	bool getHandbrakeState(void);
+	Position *getStartPos(void);
 	
 	/*Draw */
 	virtual void draw(void);
