@@ -10,6 +10,7 @@
 
 #include <vector>
 
+#include "Billboard.h"
 #include "Bleachers.h"
 #include "Checker.h"
 #include "Patch.h"
@@ -27,6 +28,7 @@ protected:
 	vector<Bleachers> bleachers;
 	vector<Tree> trees;
 	vector<Spectator> spectators;
+	vector<Billboard> billboards;
 
 public:
 	/* Constructors */
@@ -39,6 +41,7 @@ public:
 	vector<Tree> getTrees(void);
 	vector<Bleachers> getBleachers(void);
 	vector<Spectator> getSpectators(void);
+	vector<Billboard> getBillboards(void);
 
 	/* update */
 	void update(void);

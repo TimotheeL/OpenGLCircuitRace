@@ -90,6 +90,14 @@ BRT::BRT(void) {
 	for (int i = -80; i < 100; i += 20) {
 		trees.push_back(new Tree((float)i, 70.0, 0.5, 3.0, 2.0, 4.0));
 	}
+	for (int i = -80; i < 100; i += 3) {
+		billboards.push_back(new Billboard((float)i, 0.0, 74.0, 3.0, 0.5, 0.0, 0.6));
+		billboards.push_back(new Billboard((float)i, 0.0, 74.0, 3.0, 0.5, 0.0, 0.0));
+		billboards.push_back(new Billboard((float)i, 0.0, 86.0, 3.0, 0.5, 180.0, 0.6));
+		billboards.push_back(new Billboard((float)i, 0.0, 86.0, 3.0, 0.5, 180.0, 0.0));
+	}
+
+	billboards.push_back(new Billboard(-120.0, 0.0, 90.0, 6.0, 3.5, 135.0, 1.5));
 }
 
 // getters
@@ -116,6 +124,9 @@ vector<Bleachers> BRT::getBleachers(void) {
 vector<Spectator> BRT::getSpectators(void) {
 	return spectators;
 }
+vector<Billboard> BRT::getBillboards(void) {
+	return billboards;
+}
 
 // Update
 void BRT::update(void) {
@@ -128,6 +139,9 @@ void BRT::update(void) {
 	for (unsigned int i = 0; i < patches.size(); i++) {
 		patches[i].update();
 	}
+	/*for (unsigned int i = 0; i < billboards.size(); i++) {
+		billboards[i].update();
+	}*/
 }
 
 // drawer
@@ -146,6 +160,10 @@ void BRT::draw(void) {
 
 	for (unsigned int i = 0; i < spectators.size(); i++) {
 		spectators[i].draw();
+	}
+
+	for (unsigned int i = 0; i < billboards.size(); i++) {
+		billboards[i].draw();
 	}
 
 	checker.draw();
