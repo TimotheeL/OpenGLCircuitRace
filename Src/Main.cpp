@@ -14,10 +14,9 @@
 #include <GL/glu.h>
 #include <math.h>
 
-#include "Spectator.h"
-#include "Bleachers.h"
 #include "BRT.h"
 #include "RacingCar.h"
+#include "Billboard.h"
 
 using namespace std;
 
@@ -61,7 +60,7 @@ static void init(void) {
 	/* Init circuit */
 	brt = BRT();
 	/* Init player's racing Car */
-	rc = RacingCar(4.0, 2.0, 2.0, new Position(85.0, 0.0, 80.0, 180.0));
+	rc = RacingCar(4.0, 1.5, 1.8, new Position(85.0, 0.0, 80.0, 180.0));
 }
 
 /* Scene function */
@@ -70,7 +69,6 @@ static void scene(void) {
 	glLoadIdentity();
 
 	glPushMatrix();
-		
 		if (switchToCar) {
 			/* Draw the camera locked on the racing car */
 			rc.setCamera();
@@ -193,11 +191,11 @@ static void keyboard(unsigned char key, int x, int y) {
 			break;
 		case 'p':
 		case 'P':
-			eye_y += 10.0;
+			eye_y += 2.0;
 			break;
 		case 'm':
 		case 'M':
-			eye_y -= 10.0;
+			eye_y -= 2.0;
 			break;
 		case 'b':
 		case 'B':

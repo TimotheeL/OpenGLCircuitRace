@@ -74,9 +74,19 @@ BRT::BRT(void) {
 	patches.push_back(new Patch(0.0, -32.0, 16.0, 0, 5));
 	patches.push_back(new Patch(16.0, -16.0, 16.0, 0, 5));
 	patches.push_back(new Patch(-88.0, -93.0, 8.0, 0, 3));
+	patches.push_back(new Patch(-72.0, -90.0, 8.0, 0, 3));
 	patches.push_back(new Patch(112.0, 80, 16.0, 0, 5));
 	patches.push_back(new Patch(100.0, 88, 8.0, 0, 3));
-
+	patches.push_back(new Patch(64.0, 0.0, 16.0, 0, 6));
+	patches.push_back(new Patch(48.0, -16.0, 16.0, 0, 3));
+	patches.push_back(new Patch(80.0, 32.0, 12.0, 0, 4));
+	patches.push_back(new Patch(118.0, 48.0, 6.0, 0, 3));
+	patches.push_back(new Patch(-128.0, -96.0, 16.0, 0, 4));
+	patches.push_back(new Patch(-144.0, -80.0, 16.0, 0, 5));
+	patches.push_back(new Patch(-160.0, -48.0, 16.0, 0, 4));
+	for (int i = -16; i < 96; i += 16) {
+		patches.push_back(new Patch(-144.0, (float)i, 16.0, 0, rand() % 5));
+	}
 	for (int i = -80; i < 100; i += 20) {
 		trees.push_back(new Tree((float)i, 70.0, 0.5, 3.0, 2.0, 4.0));
 	}

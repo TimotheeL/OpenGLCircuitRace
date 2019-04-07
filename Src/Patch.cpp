@@ -79,16 +79,18 @@ void Patch::draw(void) {
 	float colorLeaves[4] = { 0.1, 0.4, 0.1, 1.0 };
 
 	glPushMatrix();
-		glPushMatrix();
+		if (spectators.size() == 0) {
+			glPushMatrix();
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
 			glBegin(GL_QUADS);
-				glNormal3f(0.0F, 1.0F, 0.0F);
-				glVertex3f(xPos, -0.1, zPos);
-				glVertex3f(xPos + size, -0.1, zPos);
-				glVertex3f(xPos + size, -0.1, zPos - size);
-				glVertex3f(xPos, -0.1, zPos - size);
+			glNormal3f(0.0F, 1.0F, 0.0F);
+			glVertex3f(xPos, -0.1, zPos);
+			glVertex3f(xPos + size, -0.1, zPos);
+			glVertex3f(xPos + size, -0.1, zPos - size);
+			glVertex3f(xPos, -0.1, zPos - size);
 			glEnd();
-		glPopMatrix();
+			glPopMatrix();
+		}
 		glPushMatrix();
 			for (int i = 0; i < nbTrees; i++) {
 				trees[i].draw();
