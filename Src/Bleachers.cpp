@@ -22,6 +22,7 @@
 Bleachers::Bleachers(float xPos, float zPos, int width, int depth, float angle, float filling) {
 	this->xPos = xPos;
 	this->zPos = zPos;
+	this->yPos = 0.0;
 	this->width = width;
 	this->depth = depth;
 	this->angle = angle;
@@ -49,6 +50,7 @@ Bleachers::Bleachers(float xPos, float zPos, int width, int depth, float angle, 
 Bleachers::Bleachers(Bleachers *b1) {
 	this->xPos = b1->xPos;
 	this->zPos = b1->zPos;
+	this->yPos = b1->yPos;
 	this->width = b1->width;
 	this->depth = b1->depth;
 	this->angle = b1->angle;

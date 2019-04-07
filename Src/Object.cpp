@@ -16,6 +16,10 @@
 
 #include <Object.h>
 
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795
+#endif
+
 /*-- Classes written to be synctactically comprehensive --*/
 
 /* MTV : Constructor */
@@ -26,7 +30,6 @@ MTV::MTV(void) {
 
 /* MTV : Destructor */
 MTV::~MTV(void) {}
-
 
 /*------------------------------
 	Object Class
@@ -40,6 +43,7 @@ Object::Object(float length, float width, float height, Position *posi) {
 	this->width = width;
 	this->height = height;
 	isColliding = false;
+	movingForward = true;
 }
 
 Object::Object(float length, float width, float height)
@@ -54,6 +58,7 @@ Object::Object(Object *o)
 	width = o->width;
 	height = o->height;
 	isColliding = o->isColliding;
+	movingForward = o->movingForward;
 }
 
 Object::Object(void)
@@ -88,6 +93,10 @@ bool Object::getIsColliding(void) {
 	return isColliding;
 }
 
+bool Object::getMovingForward(void) {
+	return movingForward;
+}
+
 /* Setters */
 void Object::resetIsColliding(void) {
 	isColliding = false;
@@ -107,8 +116,14 @@ void Object::collision(Object *o) {
 	MTV *mtv = collisionTestSAT(o);
 
 	if (mtv != NULL) {
-		pos.x += mtv->axis.x * mtv->overlap;
-		pos.z += mtv->axis.z * mtv->overlap;
+		if (movingForward) {
+			pos.x += mtv->axis.x * mtv->overlap;
+			pos.z += mtv->axis.z * mtv->overlap;
+		}
+		else {
+			pos.x -= mtv->axis.x * mtv->overlap;
+			pos.z -= mtv->axis.z * mtv->overlap;
+		}
 
 		hitbox.update(&pos);
 	}
@@ -151,10 +166,10 @@ MTV *Object::collisionTestSAT(Object *o) {
 		projectObjectSAT(axes[i], &hitbox, projection);
 		projectObjectSAT(axes[i], &o->hitbox, oprojection);
 
-		bool over = getOverlap(&overlap, projection, oprojection);
+		overlap = getOverlap(projection, oprojection);
 
 		/* Check projections overlapping */
-		if (!over) {
+		if (overlap == 0.0) {
 			/* If there's no overlap, there's no collision, return nothing
 			 * Change the color if there's no collision at all
 			 */
@@ -186,10 +201,10 @@ MTV *Object::collisionTestSAT(Object *o) {
 		projectObjectSAT(oaxes[i], &o->hitbox, oprojection);
 
 		/* Calculate overlap */
-		bool over = getOverlap(&overlap, projection, oprojection);
+		overlap = getOverlap(projection, oprojection);
 
 		/* Check projections overlapping */
-		if (!over) {
+		if (overlap == 0) {
 			/* If there's no overlap, there's no collision, return nothing
 			 * Change the color if there's no collision at all
 			 */
@@ -235,14 +250,11 @@ MTV *Object::collisionTestSAT(Object *o) {
 	/* If the mtv and the dir of the object points in 
 	 * the same direction, reverse the mtv
 	 */
-	Axis dir = Axis();
-	dir.x = o->pos.x - pos.x;
-	dir.z = o->pos.z - pos.z;
-
-	float p = dir.x * mtv->axis.x + dir.z * mtv->axis.z;
-	if (p > 0) {
-		mtv->axis.x *= -1;
-		mtv->axis.z *= -1;
+	float radangle = pos.angle * M_PI / 180;
+	float p = cos(radangle) * mtv->axis.x + sin(radangle) * mtv->axis.z;
+	if (p >= 0.0) {
+		mtv->axis.x = -mtv->axis.x;
+		mtv->axis.z = -mtv->axis.z;
 	}
 
 	/* Return the MTV */
@@ -250,25 +262,8 @@ MTV *Object::collisionTestSAT(Object *o) {
 }
 
 /* Get the overlap between two projections */
-bool Object::getOverlap(float *overlap, Projection *projection, Projection *oprojection) {
-	if (projection->min >= oprojection->min && projection->min <= oprojection->max) {
-		*overlap = abs(oprojection->max - projection->min);
-		return true;
-	}
-	else if (projection->max >= oprojection->min && projection->max <= oprojection->max) {
-		*overlap = abs(oprojection->min - projection->max);
-		return true;
-	}
-	else if (oprojection->min >= projection->min && oprojection->min <= projection->max) {
-		*overlap = abs(projection->max - oprojection->min);
-		return true;
-	}
-	else if (oprojection->max >= projection->min && oprojection->max <= projection->max) {
-		*overlap = abs(projection->min - oprojection->max);
-		return true;
-	}
-
-	return false;
+float Object::getOverlap(Projection *projection, Projection *oprojection) {
+	return max(0, min(projection->max, oprojection->max) - max(projection->min, oprojection->min));
 }
 
 /* Get the 4 axes of a bounding box for the SAT */

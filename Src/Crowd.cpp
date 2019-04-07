@@ -40,7 +40,7 @@ std::vector<Spectator> Crowd::getSpectators(void) {
 // Update spectators
 void Crowd::update(void) {
 	if (spectators.size() > 0) {
-		int p = (rand() % static_cast<int>(spectators.size() * 100));
+		unsigned int p = (rand() % static_cast<int>(spectators.size() * 100));
 		if (p < spectators.size()) {
 			spectators[p].setJumping();
 		}

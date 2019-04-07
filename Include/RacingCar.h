@@ -1,6 +1,8 @@
 ﻿/*
 	Racing game project - Racing car class
 
+	Represents a racing car, with all its properties
+
 	2019
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
@@ -24,7 +26,6 @@ public:
 
 private:
 	bool handbrakeState;	// Handbrake state
-	bool dirForward;		// Direction state
 
 	float speed;			// Speed
 
@@ -43,9 +44,7 @@ public:
 
 	/* Getters */
 	float getSpeed(void);
-
 	bool getHandbrakeState(void);
-	bool getDirForward(void);
 	
 	/*Draw */
 	virtual void draw(void);

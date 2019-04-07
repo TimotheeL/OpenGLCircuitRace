@@ -17,9 +17,6 @@ using namespace std;
 
 class TrackPart : public Object {
 
-private:
-	float radians(float angle);
-
 protected:
 	float width;
 	Position pos;
@@ -45,21 +42,21 @@ public:
 	~TrackPart(void);
 
 	/* Getters */
-	float virtual getWidth(void);
-	Position virtual getPosition(void);
+	virtual float getWidth(void);
+	virtual Position getPosition(void);
 	vector<Position> getVertices(void);
 	vector<Object> *getSideboxes(void);
 
 	/* Setters */
-	void virtual setWidth(float width);
+	virtual void setWidth(float width);
 
 	/* Drawer */
-	void virtual draw(void);
+	virtual void draw(void);
 
-	void virtual drawBoundingBoxes(void);
+	virtual void drawBoundingBoxes(void);
 
 	/* Basic IsColliding resetter for a track part */
-	void virtual resetIsColliding(void);
+	virtual void resetIsColliding(void);
 };
 
 #endif // TrackPart

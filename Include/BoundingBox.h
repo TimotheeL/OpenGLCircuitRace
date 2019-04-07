@@ -1,6 +1,8 @@
 /*
 	Racing game project - BoundingBox class
 
+	Represents a bounding box, characterized by 8 3D-points
+
 	2019
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */

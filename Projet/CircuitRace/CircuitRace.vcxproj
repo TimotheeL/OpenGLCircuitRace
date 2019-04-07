@@ -100,7 +100,7 @@
     <Library Include="..\..\Lib\glut32.ms.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Include\Billboard.cpp" />
+    <ClCompile Include="..\..\Src\Billboard.cpp" />
     <ClCompile Include="..\..\Src\Bleachers.cpp" />
     <ClCompile Include="..\..\Src\BoundingBox.cpp" />
     <ClCompile Include="..\..\Src\BRT.cpp" />

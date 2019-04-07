@@ -45,6 +45,7 @@ protected:
 	Position pos;
 
 	bool isColliding;
+	bool movingForward;
 
 	float length;
 	float width;
@@ -70,6 +71,7 @@ public:
 	float getWidth(void);
 	float getHeight(void);
 	bool getIsColliding(void);
+	bool getMovingForward(void);
 
 	/* Setters */
 	virtual void resetIsColliding(void);
@@ -97,7 +99,7 @@ private:
 	void projectObjectSAT(Axis axis, BoundingBox *hitbox, Projection *projection);
 
 	/* Get the overlap between two projections */
-	bool getOverlap(float *overlap, Projection *projection, Projection *oprojection);
+	float getOverlap(Projection *projection, Projection *oprojection);
 };
 
 #endif

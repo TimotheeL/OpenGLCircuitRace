@@ -63,16 +63,13 @@ void TrackPart::setWidth(float width) {
 	this->width = width;
 }
 
-// Degrees to radians conversion
-float TrackPart::radians(float angle) {
-	return (float) ((angle * M_PI) / 180.0);
-}
-
 // Rotate util function
 Position TrackPart::rotate(float x, float y, float z) {
-	float rx = cos(radians(pos.angle)) * x + sin(radians(pos.angle)) * z;
+	float radangle = pos.angle * M_PI / 180.0;
+	float rx = cos(radangle) * x + sin(radangle) * z;
 	float ry = y;
-	float rz = - sin(radians(pos.angle)) * x + cos(radians(pos.angle)) * z;
+	float rz = - sin(radangle) * x + cos(radangle) * z;
+
 	return new Position(rx, ry, rz, -pos.angle);
 }
 

@@ -1,5 +1,7 @@
 /*
-	Racing game project - Position class
+	Racing game project - Position
+
+	Represents a position in a 3D world
 
 	2019
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent

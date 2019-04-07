@@ -1,6 +1,8 @@
 /*
 	Racing game project - BoundingBox class
 
+	Represents a bounding box, characterized by 8 3D-points
+
 	2019
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
@@ -33,17 +35,17 @@ const GLfloat blanc[] = { 1.0, 1.0, 1.0 };
 
 /* Constructors */
 BoundingBox::BoundingBox(float objLength, float objWidth, float objHeight, Position *objCenter) {
-	length = objLength;			// Set length to object length
-	width = objWidth;			// Set width to object width
-	height = objHeight;			// Set height to object height
+	length = objLength;
+	width = objWidth;
+	height = objHeight;
 
 	// Allocate memory for each point
 	for (int i = 0; i < 8; i++) {
 		points[i] = new Position();
 	}
 
-	update(objCenter);			// Update the position of the box with the object position
-	
+	update(objCenter);
+
 	color[0] = 1.0; color[1] = 0.0; color[2] = 0.0;
 }
 
@@ -84,8 +86,8 @@ void BoundingBox::update(Position *newPos) {
 
 	float ar = radangle + alpha;	// Rotation angle for points +x +z (0,4)
 	float br = radangle - alpha;	// Rotation angle for points +x -z (1,5)
-	float dr = br + M_PI;				// Rotation angle for points -x -z (2,6)
-	float cr = ar - M_PI;				// Rotation angle for points -x +z (3,7)
+	float dr = br + M_PI;			// Rotation angle for points -x -z (2,6)
+	float cr = ar - M_PI;			// Rotation angle for points -x +z (3,7)
 	float pi180 = 180 / M_PI;
 
 	// Update each points

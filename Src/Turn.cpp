@@ -99,11 +99,13 @@ void Turn::computeVertices(void) {
 		zout = (softness + width) * sn;
 
 		vin = rotate(xin, 0.0, zin);
-		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;vin.angle -= a * 180 / M_PI;
+		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;
+		vin.angle -= (float) (a * 180.0 / M_PI);
 		vertices.push_back(vin);
 
 		vout = rotate(xout, 0.0, zout);
-		vout.x += pos.x; vout.y += pos.y; vout.z += pos.z; vout.angle -= a * 180 / M_PI;
+		vout.x += pos.x; vout.y += pos.y; vout.z += pos.z;
+		vout.angle -= (float) (a * 180.0 / M_PI);
 		vertices.push_back(vout);
 	}
 }
@@ -123,14 +125,14 @@ void Turn::generateBoundingBoxes(float offset) {
 		}
 		
 		// Shift point with the offset
-		float rad = a / 180 * M_PI;			
+		float radangle = a / 180 * M_PI;			
 		if (i % 2) {
-			(direction ? x += cos(rad) * offset : x += -(cos(rad) * offset));
-			z += sin(rad) * offset;
+			(direction ? x += cos(radangle) * offset : x += -(cos(radangle) * offset));
+			z += sin(radangle) * offset;
 		}
 		else {
-			(direction ? x += cos(rad) * -offset : x += -(cos(rad) * -offset));
-			z += sin(rad) * -offset;
+			(direction ? x += cos(radangle) * -offset : x += -(cos(radangle) * -offset));
+			z += sin(radangle) * -offset;
 		}
 
 		// Compute length
@@ -152,28 +154,33 @@ void Turn::generateBoundingBoxes(float offset) {
 // Util function to draw a cylindre
 void Turn::mySolidCylindre(double hauteur, double rayon, int ns) {
 	GLboolean nm = glIsEnabled(GL_NORMALIZE);
-	if (!nm)
+	if (!nm) {
 		glEnable(GL_NORMALIZE);
+	}
+
 	float normale[4];
 	glGetFloatv(GL_CURRENT_NORMAL, normale);
+
 	glPushMatrix();
-	hauteur /= 2.0F;
-	glBegin(GL_QUAD_STRIP);
-	for (int i = 0; i <= ns; i++) {
-		float a = (2 * M_PI*i) / ns;
-		float cs = cos(a);
-		float sn = -sin(a);
-		glNormal3f(cs, 0.0F, sn);
-		float x = rayon * cs;
-		float z = rayon * sn;
-		glVertex3f(x, hauteur, z);
-		glVertex3f(x, -hauteur, z);
-	}
-	glEnd();
+		hauteur /= 2.0F;
+		glBegin(GL_QUAD_STRIP);
+			for (int i = 0; i <= ns; i++) {
+				float a = (2 * M_PI*i) / ns;
+				float cs = cos(a);
+				float sn = -sin(a);
+				glNormal3f(cs, 0.0F, sn);
+				float x = rayon * cs;
+				float z = rayon * sn;
+				glVertex3f(x, hauteur, z);
+				glVertex3f(x, -hauteur, z);
+			}
+		glEnd();
 	glPopMatrix();
+
 	glNormal3f(normale[0], normale[1], normale[2]);
-	if (!nm)
+	if (!nm) {
 		glDisable(GL_NORMALIZE);
+	}
 }
 
 // Drawer
@@ -182,7 +189,7 @@ void Turn::draw(void) {
 	glPushMatrix();
 		glTranslatef(pos.x, pos.y, pos.z);
 		glPushMatrix();
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
 			glBegin(GL_QUAD_STRIP);
 				glNormal3f(0.0F, 1.0F, 0.0F);
 				for (unsigned int i = 0; i < vertices.size(); i++) {

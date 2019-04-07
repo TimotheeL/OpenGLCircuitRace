@@ -63,7 +63,7 @@
     <ClCompile Include="..\..\Src\Crowd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Include\Billboard.cpp">
+    <ClCompile Include="..\..\Src\Billboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,8 @@
 /*
 	Racing game project - Racing car class
 
+	Represents a racing car, with all its properties
+
 	2019
 	Nicolas Bouchard, Timothee Guy, Timothee Laurent
 */
@@ -29,7 +31,7 @@ RacingCar::RacingCar(float clength, float cwidth, float cheight, Position *pos)
 	:Object(clength, cwidth, cheight, pos)
 {
 	handbrakeState = false;
-	dirForward = true;
+	movingForward = true;
 	speed = 0.0;
 }
 
@@ -46,17 +48,20 @@ RacingCar::RacingCar(RacingCar *rc)
 {
 	speed = rc->getSpeed();
 	handbrakeState = rc->getHandbrakeState();
-	dirForward = rc->getDirForward();
+	movingForward = rc->getMovingForward();
 }
 
 /* Destructor */
 RacingCar::~RacingCar(void) {}
 
 /* Getters */
-float RacingCar::getSpeed(void) { return speed; }
+float RacingCar::getSpeed(void) {
+	return speed;
+}
 
-bool RacingCar::getHandbrakeState(void) { return handbrakeState; }
-bool RacingCar::getDirForward(void) { return dirForward; }
+bool RacingCar::getHandbrakeState(void) {
+	return handbrakeState;
+}
 
 /* Draw */
 void RacingCar::draw(void) {
@@ -125,7 +130,7 @@ void RacingCar::handleMovement(double deltaTime) {
 		float radangle = pos.angle * M_PI / 180;
 
 		// Calculate new position
-		if (dirForward) {
+		if (movingForward) {
 			pos.x += speed * deltaTime * cos(radangle);
 			pos.z += speed * deltaTime * sin(radangle);
 		}
@@ -151,25 +156,24 @@ void RacingCar::setCamera(void) {
 	float radangle = (pos.angle + 90.0) * M_PI / 180;
 
 	gluLookAt(
-		pos.x + sin(-radangle) * 10,
+		pos.x + sin(-radangle) * 10.0,
 		pos.y + 6.0,
-		pos.z + cos(radangle) * 10,
+		pos.z + cos(radangle) * 10.0,
 		pos.x, pos.y, pos.z,
 		0.0, 1.0, 0.0
 	);
-
 }
 
 /* Forward */
 void RacingCar::forward(float distance) {
-	dirForward = true;
+	movingForward = true;
 	handbrakeState = false;
 	(speed < MAX_SPD_FW) ? speed += distance : speed = MAX_SPD_FW;
 }
 
 /* Backward */
 void RacingCar::backward(float distance) {
-	dirForward = false;
+	movingForward = false;
 	handbrakeState = false;
 	(speed < MAX_SPD_BW) ? speed += distance : speed = MAX_SPD_BW;
 }
@@ -202,7 +206,7 @@ void RacingCar::reset() {
 	pos = new Position(0, 0, 0, -90);
 	speed = 0.0;
 	handbrakeState = false;
-	dirForward = true;
+	movingForward = true;
 	hitbox.update(&pos);
 }
 
@@ -211,8 +215,14 @@ void RacingCar::collision(Object *o) {
 	MTV *mtv = collisionTestSAT(o);
 
 	if (mtv != NULL) {
-		pos.x += mtv->axis.x * mtv->overlap;
-		pos.z += mtv->axis.z * mtv->overlap;
+		if (movingForward) {
+			pos.x += mtv->axis.x * mtv->overlap;
+			pos.z += mtv->axis.z * mtv->overlap;
+		}
+		else {
+			pos.x -= mtv->axis.x * mtv->overlap;
+			pos.z -= mtv->axis.z * mtv->overlap;
+		}
 
 		speed = 0.0;
 		hitbox.update(&pos);
@@ -229,8 +239,14 @@ void RacingCar::collision(TrackPart *tp) {
 		// If there's a collision
 		if (mtv != NULL) {
 			// Adjust the position of the car
-			pos.x += mtv->axis.x * mtv->overlap;
-			pos.z += mtv->axis.z * mtv->overlap;
+			if (movingForward) {
+				pos.x += mtv->axis.x * mtv->overlap;
+				pos.z += mtv->axis.z * mtv->overlap;
+			}
+			else {
+				pos.x -= mtv->axis.x * mtv->overlap;
+				pos.z -= mtv->axis.z * mtv->overlap;
+			}
 
 			// Adjust the angle
 			if ((pos.angle > 0 && pos.angle < 90)
@@ -258,7 +274,7 @@ void RacingCar::collision(TrackPart *tp) {
 void RacingCar::collision(BRT *brt) {
 	vector<TrackPart*> *track = brt->getTrack();
 
-	for (int i = 0; i < track->size(); i++) {
+	for (unsigned int i = 0; i < track->size(); i++) {
 		collision(track->at(i));
 	}
 }
