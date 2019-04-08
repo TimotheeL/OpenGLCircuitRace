@@ -50,12 +50,13 @@ BRT brt;
 
 /* Init function */
 static void init(void) {
-	glClearColor(0.1F, 0.4F, 0.9F, 1.0F);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
+
+	glClearColor(0.1F, 0.4F, 0.9F, 1.0F);
 
 	/* Init circuit */
 	brt = BRT();
@@ -142,11 +143,6 @@ static void display(void) {
 
 	glFlush();
 	glutSwapBuffers();
-
-	int error = glGetError();
-	if (error != GL_NO_ERROR) {
-		printf("Attention erreur %d\n", error);
-	}
 }
 
 /* Reshape function */

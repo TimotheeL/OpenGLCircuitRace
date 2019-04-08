@@ -3,3 +3,7 @@
 Temp/
 
 Bin/
+
+*.psess
+
+*.vspx
