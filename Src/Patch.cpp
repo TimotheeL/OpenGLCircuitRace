@@ -33,6 +33,8 @@ Patch::Patch(float xPos, float zPos, float size, int nbTrees) {
 		Tree tree = new Tree(xPos, zPos, wTrunk, hTrunk, wLeaves, hLeaves);
 		trees.push_back(tree);
 	}
+	this->xPos2 = xPos + size;
+	this->zPos2 = zPos - size;
 }
 
 // Constructor with spectators
@@ -52,6 +54,8 @@ Patch::Patch(Patch *p1) {
 	this->nbTrees = p1->nbTrees;
 	this->trees = p1->trees;
 	this->spectators = p1->spectators;
+	this->xPos2 = p1->xPos2;
+	this->zPos2 = p1->zPos2;
 }
 
 Patch::Patch(void)
@@ -81,14 +85,14 @@ void Patch::draw(void) {
 	glPushMatrix();
 		if (spectators.size() == 0) {
 			glPushMatrix();
-			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
-			glBegin(GL_QUADS);
-			glNormal3f(0.0F, 1.0F, 0.0F);
-			glVertex3f(xPos, -0.1, zPos);
-			glVertex3f(xPos + size, -0.1, zPos);
-			glVertex3f(xPos + size, -0.1, zPos - size);
-			glVertex3f(xPos, -0.1, zPos - size);
-			glEnd();
+				glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
+				glBegin(GL_QUADS);
+					glNormal3f(0.0F, 1.0F, 0.0F);
+					glVertex3f(xPos, -0.1, zPos);
+					glVertex3f(xPos2, -0.1, zPos);
+					glVertex3f(xPos2, -0.1, zPos2);
+					glVertex3f(xPos, -0.1, zPos2);
+				glEnd();
 			glPopMatrix();
 		}
 		glPushMatrix();

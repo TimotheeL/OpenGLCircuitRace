@@ -18,6 +18,10 @@ private:
 	float wLeaves;
 	float hLeaves;
 
+	// Attributes used to pre compute the centers, in order to avoid calculations in the draw method
+	float centerLeaves;
+	float centerTrunk;
+
 public:
 
 	/* Constructors */
@@ -30,9 +34,6 @@ public:
 
 	/* OpenGL code to draw the tree */
 	void draw(void);
-
-	/* Print */
-	void print(void);
 
 	/* Getters */
 	float getXPos(void);

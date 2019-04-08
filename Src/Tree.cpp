@@ -24,16 +24,20 @@ Tree::Tree(float xPos, float zPos, float wTrunk, float hTrunk, float wLeaves, fl
 	this->hTrunk = hTrunk;
 	this->wLeaves = wLeaves;
 	this->hLeaves = hLeaves;
+	this->centerLeaves = hTrunk + hLeaves / 2;
+	this->centerTrunk = hTrunk / 2;
 }
 
 // Copy constructor
 Tree::Tree(Tree *t1) {
-	this->xPos = t1->getXPos();
-	this->zPos = t1->getZPos();
-	this->wTrunk = t1->getWTrunk();
-	this->hTrunk = t1->getHTrunk();
-	this->wLeaves = t1->getWLeaves();
-	this->hLeaves = t1->getHLeaves();
+	this->xPos = t1->xPos;
+	this->zPos = t1->zPos;
+	this->wTrunk = t1->wTrunk;
+	this->hTrunk = t1->hTrunk;
+	this->wLeaves = t1->wLeaves;
+	this->hLeaves = t1->hLeaves;
+	this->centerLeaves = t1->centerLeaves;
+	this->centerTrunk = t1->centerTrunk;
 }
 
 Tree::Tree(void)
@@ -74,23 +78,18 @@ void Tree::draw(void) {
 	float colorLeaves[4] = { 0.1, 0.5, 0.1, 1.0 };
 
 	glPushMatrix();
-		glTranslatef((GLfloat)xPos, -0.1, (GLfloat)zPos);
+		glTranslatef(xPos, -0.1, zPos);
 		glPushMatrix();
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrunk);
-			glTranslatef(0.0, hTrunk / 2, 0.0);
+			glTranslatef(0.0, centerTrunk, 0.0);
 			glScalef(wTrunk, hTrunk, wTrunk);
 			glutSolidCube(1.0);
 		glPopMatrix();
 		glPushMatrix();
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
-			glTranslatef(0.0, hTrunk + hLeaves / 2, 0.0);
+			glTranslatef(0.0, centerLeaves, 0.0);
 			glScalef(wLeaves, hLeaves, wLeaves);
 			glutSolidCube(1.0);
 		glPopMatrix();
 	glPopMatrix();
-}
-
-// Print
-void Tree::print(void) {
-	printf("%f, %f, %f, %f, %f, %f", xPos, zPos, wTrunk, hTrunk, wLeaves, hLeaves);
 }

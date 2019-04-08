@@ -27,6 +27,8 @@ Spectator::Spectator(float xPos, float yPos, float zPos, float color[3], bool ju
 	for (int i = 0; i < 3; i++) {
 		this->color[i] = color[i];
 	}
+	this->bodyPos = yPos + 0.6;
+	this->headPos = yPos + 1.6;
 }
 
 Spectator::Spectator(float xPos, float yPos, float zPos, float red, float green, float blue, bool jumping) {
@@ -52,6 +54,8 @@ Spectator::Spectator(Spectator *s1) {
 	for (int i = 0; i < 3; i++) {
 		this->color[i] = s1->color[i];
 	}
+	this->bodyPos = s1->bodyPos;
+	this->headPos = s1->headPos;
 }
 
 Spectator::Spectator(void)
@@ -95,6 +99,8 @@ void Spectator::move(void) {
 			goingUp = true;
 		}
 		currYPos += goingUp ? 0.05 : -0.05;
+		bodyPos = currYPos + 0.6;
+		headPos = currYPos + 1.6;
 	}
 }
 
@@ -102,12 +108,12 @@ void Spectator::draw(void) {
 	glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 		glPushMatrix();
-			glTranslatef(xPos, currYPos + 0.6, zPos);
-			glScalef(0.6f, 1.2f, 0.6f);
+			glTranslatef(xPos, bodyPos, zPos);
+			glScalef(0.6, 1.2, 0.6);
 			glutSolidSphere(0.5, 5, 4);
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(xPos, currYPos + 1.6, zPos);
+			glTranslatef(xPos, headPos, zPos);
 			glutSolidSphere(0.3, 5, 4);
 		glPopMatrix();
 	glPopMatrix();

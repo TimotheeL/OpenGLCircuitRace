@@ -23,6 +23,10 @@ private:
 	int nbTrees;
 	std::vector<Tree> trees;
 
+	// Attributes to avoid calculations in the draw method
+	float xPos2;
+	float zPos2;
+
 public:
 
 	/* Constructors */

@@ -19,6 +19,9 @@ private:
 	bool jumping;
 	bool goingUp;
 
+	float bodyPos;
+	float headPos;
+
 public:
 
 	/* Constructors */
