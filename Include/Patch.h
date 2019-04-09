@@ -18,20 +18,23 @@ private:
 	//Position of bottom left corner
 	float xPos;
 	float zPos;
-	// Size of the patch (patches are squares)
-	float size;
+	// Size of the patch (width and height)
+	float width;
+	float height;
 	int nbTrees;
 	std::vector<Tree> trees;
+	bool drawGrass;
 
 	// Attributes to avoid calculations in the draw method
 	float xPos2;
 	float zPos2;
 
+	
+
 public:
 
 	/* Constructors */
-	Patch(float xPos, float zPos, float size, int nbTrees);
-	Patch(float xPos, float zPos, float size, int nbTrees, int nbSpectators);
+	Patch(float xPos, float zPos, float width, float height, int nbTrees, int nbSpectators, bool drawGrass);
 	Patch(Patch *p1);
 	Patch(void);
 
@@ -44,8 +47,10 @@ public:
 	/* Getters */
 	float getXPos(void);
 	float getZPos(void);
-	float getSize(void);
+	float getWidth(void);
+	float getHeight(void);
 	int getNbTrees(void);
+	bool getDrawGrass(void);
 };
 
 #endif // Patch

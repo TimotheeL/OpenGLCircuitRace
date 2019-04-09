@@ -47,13 +47,14 @@ BRT::BRT(void) {
 	track.push_back(new Turn(7.0, 12.3, 90.0, false, new Position(91.8, 0.0, 52.6, 290.0)));
 	track.push_back(new Turn(7.0, 9.9, 110.0, false, new Position(112.0, 0.0, 62.0, 200.0)));
 
+	patches.push_back(new Patch(-176, 128, 320, 240.0, 0, 0, true));
 	for (int i = -11; i < 9; i++) {
 		for (int j = -6; j < 9; j++) {
 			int nbTrees = 0;
-			if (i < -10 || i > 7 || j < -5 || j > 7)
+			if (i < -10 || i > 7 || j < -5 || j > 7) {
 				nbTrees = rand() % 5 + 3;
-			patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, nbTrees));
-
+				patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, 16.0, nbTrees, 0, false));
+			}
 			/* TEMPORARY GRID OF SPECTATORS
 			if (i == 0 && j == 0) {
 				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 1.0, 1.0, 1.0, false));
@@ -71,21 +72,21 @@ BRT::BRT(void) {
 	bleachers.push_back(new Bleachers(40.0, 100.0, 50, 10, 180.0, 0.1));
 	bleachers.push_back(new Bleachers(-50.0, -43.0, 50, 10, -47.0, 0.1));
 
-	patches.push_back(new Patch(0.0, -32.0, 16.0, 0, 5));
-	patches.push_back(new Patch(16.0, -16.0, 16.0, 0, 5));
-	patches.push_back(new Patch(-88.0, -93.0, 8.0, 0, 3));
-	patches.push_back(new Patch(-72.0, -90.0, 8.0, 0, 3));
-	patches.push_back(new Patch(112.0, 80, 16.0, 0, 5));
-	patches.push_back(new Patch(100.0, 88, 8.0, 0, 3));
-	patches.push_back(new Patch(64.0, 0.0, 16.0, 0, 6));
-	patches.push_back(new Patch(48.0, -16.0, 16.0, 0, 3));
-	patches.push_back(new Patch(80.0, 32.0, 12.0, 0, 4));
-	patches.push_back(new Patch(118.0, 48.0, 6.0, 0, 3));
-	patches.push_back(new Patch(-128.0, -96.0, 16.0, 0, 4));
-	patches.push_back(new Patch(-144.0, -80.0, 16.0, 0, 5));
-	patches.push_back(new Patch(-160.0, -48.0, 16.0, 0, 4));
+	patches.push_back(new Patch(0.0, -16.0, 16.0, 16.0, 0, 5, false));
+	patches.push_back(new Patch(16.0, 0.0, 16.0, 16.0, 0, 5, false));
+	patches.push_back(new Patch(-88.0, -85.0, 8.0, 8.0, 0, 3, false));
+	patches.push_back(new Patch(-72.0, -82.0, 8.0, 8.0, 0, 3, false));
+	patches.push_back(new Patch(112.0, 96, 16.0, 16.0, 0, 5, false));
+	patches.push_back(new Patch(100.0, 96, 8.0, 8.0, 0, 3, false));
+	patches.push_back(new Patch(64.0, 16.0, 16.0, 16.0, 0, 6, false));
+	patches.push_back(new Patch(48.0, 0.0, 16.0, 16.0, 0, 3, false));
+	patches.push_back(new Patch(80.0, 44.0, 12.0, 12.0, 0, 4, false));
+	patches.push_back(new Patch(118.0, 54.0, 6.0, 6.0, 0, 3, false));
+	patches.push_back(new Patch(-128.0, -80.0, 16.0, 16.0, 0, 4, false));
+	patches.push_back(new Patch(-144.0, -64.0, 16.0, 16.0, 0, 5, false));
+	patches.push_back(new Patch(-160.0, -32.0, 16.0, 16.0, 0, 4, false));
 	for (int i = -16; i < 96; i += 16) {
-		patches.push_back(new Patch(-144.0, (float)i, 16.0, 0, rand() % 5));
+		patches.push_back(new Patch(-144.0, (float)i, 16.0, 16.0, 0, rand() % 5, false));
 	}
 	for (int i = -80; i < 100; i += 20) {
 		trees.push_back(new Tree((float)i, 70.0, 0.5, 3.0, 2.0, 4.0));
