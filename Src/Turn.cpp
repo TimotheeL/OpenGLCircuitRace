@@ -16,6 +16,11 @@
 #define M_PI 3.1415926535897932384626433832795
 #endif
 
+static float white[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+static float red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+static float grey[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+
+
 // Regular constructor
 Turn::Turn(void):
 	TrackPart(),
@@ -98,8 +103,8 @@ void Turn::computeVertices(void) {
 		(direction ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * -cs + softness + width / 2));
 		zout = (softness + width) * sn;
 
-		(direction ? xtire = ((softness + width + 1.0) * cs - softness - (width + 1.0) / 2) : xtire = ((softness + width + 1.0) * -cs + softness + (width + 1.0) / 2));
-		ztire = (softness + width + 1.0) * sn;
+		(direction ? xtire = ((softness + width + 2.0) * cs - softness - (width) / 2) : xtire = ((softness + width + 2.0) * -cs + softness + (width) / 2));
+		ztire = (softness + width + 2.0) * sn;
 
 		vin = rotate(xin, 0.0, zin);
 		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;
@@ -183,13 +188,16 @@ void Turn::mySolidCylindre(double hauteur, double rayon, int ns) {
 				glVertex3f(x, -hauteur, z);
 			}
 		glEnd();
+		glNormal3f(normale[0], normale[1], normale[2]);
 
+
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, grey);
 		glBegin(GL_POLYGON);
 		for (int i = 0; i <= ns; i++) {
 			float a = (2 * M_PI*i) / ns;
 			float cs = cos(a);
 			float sn = -sin(a);
-			glNormal3f(cs, 1.0F, sn);
+			glNormal3f(0.0, 1.0F, 0.0);
 			float x = rayon * cs;
 			float z = rayon * sn;
 			glVertex3f(x, hauteur, z);
@@ -197,7 +205,6 @@ void Turn::mySolidCylindre(double hauteur, double rayon, int ns) {
 		glEnd();
 	glPopMatrix();
 
-	glNormal3f(normale[0], normale[1], normale[2]);
 	if (!nm) {
 		glDisable(GL_NORMALIZE);
 	}
@@ -225,7 +232,7 @@ void Turn::draw(void) {
 						float red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
 						glMaterialfv(GL_FRONT, GL_DIFFUSE, i % 3 == 0 ? white : red);
 						glTranslatef(tires[i].x - pos.x, tires[i].y - pos.y, tires[i].z - pos.z);
-						mySolidCylindre(1.0, 0.5, 8.0);
+						mySolidCylindre(1.0, 1.0, 8.0);
 					glPopMatrix();
 				}
 			}
