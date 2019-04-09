@@ -26,6 +26,7 @@
 MTV::MTV(void) {
 	overlap = FLT_MAX;
 	axis = Axis();
+	point = 0;
 }
 
 /* MTV : Destructor */
@@ -243,19 +244,38 @@ MTV *Object::collisionTestSAT(Object *o) {
 		o->hitbox.setColor(0.0, 1.0, 0.0);
 	}
 
-	/* Free memory */
-	delete(projection);
-	delete(oprojection);
+	float abx = o->hitbox.points[1].x - o->hitbox.points[0].x;
+	float abz = o->hitbox.points[1].z - o->hitbox.points[0].z;
 
-	/* If the mtv and the dir of the object points in 
-	 * the same direction, reverse the mtv
-	 */
+	float adx = o->hitbox.points[3].x - o->hitbox.points[0].x;
+	float adz = o->hitbox.points[3].z - o->hitbox.points[0].z;
+
+	float adad = (adx * adx) + (adz * adz);
+	float abab = (abx * abx) + (abz * abz);
+
+	for (int i = 0; i < 4; i++) {
+		float amx = hitbox.points[i].x - o->hitbox.points[0].x;
+		float amz = hitbox.points[i].z - o->hitbox.points[0].z;
+
+		float amab = (amx * abx) + (amz * abz);
+		float amad = (amx * adx) + (amz * adz);
+		
+		if (0 < amab && amab < abab && 0 < amad && amad < adad) {
+			mtv->point = i;
+		}
+	}
+
+	/*
 	float radangle = pos.angle * M_PI / 180;
 	float p = cos(radangle) * mtv->axis.x + sin(radangle) * mtv->axis.z;
 	if (p >= 0.0) {
 		mtv->axis.x = -mtv->axis.x;
 		mtv->axis.z = -mtv->axis.z;
-	}
+	}*/
+
+	/* Free memory */
+	delete(projection);
+	delete(oprojection);
 
 	/* Return the MTV */
 	return mtv;

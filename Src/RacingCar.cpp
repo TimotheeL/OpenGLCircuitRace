@@ -221,7 +221,7 @@ void RacingCar::collision(Object *o) {
 	MTV *mtv = collisionTestSAT(o);
 
 	if (mtv != NULL) {
-		if (movingForward) {
+		if (mtv->point == 0 || mtv->point == 1) {
 			pos.x += mtv->axis.x * mtv->overlap;
 			pos.z += mtv->axis.z * mtv->overlap;
 		}
@@ -245,7 +245,7 @@ void RacingCar::collision(TrackPart *tp) {
 		// If there's a collision
 		if (mtv != NULL) {
 			// Adjust the position of the car
-			if (movingForward) {
+			if (mtv->point == 0 || mtv->point == 1) {
 				pos.x += mtv->axis.x * mtv->overlap;
 				pos.z += mtv->axis.z * mtv->overlap;
 			}

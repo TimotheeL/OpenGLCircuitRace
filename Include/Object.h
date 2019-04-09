@@ -31,6 +31,7 @@ class MTV {
 public:
 	Axis axis;
 	float overlap;
+	short point;
 public:
 	MTV(void);
 	~MTV(void);

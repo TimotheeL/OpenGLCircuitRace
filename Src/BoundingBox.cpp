@@ -111,25 +111,25 @@ void BoundingBox::update(Position *newPos) {
 	points[3].z = newPos->z + radius * sin(dr);
 	points[3].angle = dr * pi180;
 
-	points[4].x = newPos->x + radius * cos(ar);
+	points[4].x = points[0].x;
 	points[4].y = newPos->y + height;
-	points[4].z = newPos->z + radius * sin(ar);
-	points[4].angle = ar * pi180;
+	points[4].z = points[0].z;
+	points[4].angle = points[0].angle;
 
-	points[5].x = newPos->x + radius * cos(br);
+	points[5].x = points[1].x;
 	points[5].y = newPos->y + height;
-	points[5].z = newPos->z + radius * sin(br);
-	points[5].angle = br * pi180;
+	points[5].z = points[1].z;
+	points[5].angle = points[1].angle;
 
-	points[6].x = newPos->x + radius * cos(cr);
+	points[6].x = points[2].x;
 	points[6].y = newPos->y + height;
-	points[6].z = newPos->z + radius * sin(cr);
-	points[6].angle = cr * pi180;
+	points[6].z = points[2].z;
+	points[6].angle = points[2].angle;
 
-	points[7].x = newPos->x + radius * cos(dr);
+	points[7].x = points[3].x;
 	points[7].y = newPos->y + height;
-	points[7].z = newPos->z + radius * sin(dr);
-	points[7].angle = dr * pi180;
+	points[7].z = points[3].z;
+	points[7].angle = points[3].angle;
 }
 
 /* Draw the hitbox */

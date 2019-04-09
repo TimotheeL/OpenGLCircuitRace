@@ -62,8 +62,8 @@ static void init(void) {
 	listObjects.push_back(new RacingCar(4.0, 2.0, 2.0, new Position(-10.0, 0.0, 10.0)));
 	
 	/* Init track */
-	listTrackParts.push_back(new Turn(7.0, 10.0, 90.0, false, new Position(10.0, 0.0, 0.0, 180)));
-	listTrackParts.push_back(new StraightLine(7.0, 20.0, new Position(30.0, 0.0, 10.0, 0.0)));
+	listTrackParts.push_back(new Turn(7.0, 10.0, 90.0, false, new Position(30.0, 0.0, 0.0, 180)));
+	listTrackParts.push_back(new StraightLine(7.0, 20.0, new Position(10.0, 0.0, 10.0, 0.0)));
 
 	/* Init grid */
 	grid = new Grid();
