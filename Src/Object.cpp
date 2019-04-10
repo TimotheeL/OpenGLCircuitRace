@@ -244,6 +244,7 @@ MTV *Object::collisionTestSAT(Object *o) {
 		o->hitbox.setColor(0.0, 1.0, 0.0);
 	}
 
+	/* Calculate which point is colliding */
 	float abx = o->hitbox.points[1].x - o->hitbox.points[0].x;
 	float abz = o->hitbox.points[1].z - o->hitbox.points[0].z;
 
@@ -265,13 +266,13 @@ MTV *Object::collisionTestSAT(Object *o) {
 		}
 	}
 
-	/*
+	/* If the object and the mtv are in the same direction, reverse the mtv */
 	float radangle = pos.angle * M_PI / 180;
 	float p = cos(radangle) * mtv->axis.x + sin(radangle) * mtv->axis.z;
 	if (p >= 0.0) {
 		mtv->axis.x = -mtv->axis.x;
 		mtv->axis.z = -mtv->axis.z;
-	}*/
+	}
 
 	/* Free memory */
 	delete(projection);

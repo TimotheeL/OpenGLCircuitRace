@@ -255,15 +255,11 @@ void RacingCar::collision(TrackPart *tp) {
 			}
 
 			// Adjust the angle
-			if ((pos.angle > 0 && pos.angle < 90)
-				|| (pos.angle > -180 && pos.angle < -90)) 
-			{
-				turnRight(1.0);
-			}
-			else if ((pos.angle > 90 && pos.angle < 180)
-				|| (pos.angle > -90 && pos.angle < 0))
-			{
+			if (mtv->point == 0 || mtv->point == 2) {
 				turnLeft(1.0);
+			}
+			else {
+				turnRight(1.0);
 			}
 
 			// Adjust speed

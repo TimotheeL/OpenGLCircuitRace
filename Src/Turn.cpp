@@ -85,7 +85,7 @@ void Turn::setDirection(bool direction) {
 
 // compute vertices to draw and compute collisions
 void Turn::computeVertices(void) {
-	int ns = 10 + (int) (angle / 6) * (softness / 5);
+	int ns = (int) (angle / 6) * (softness / 5);
 	float rp, ar, a, cs, sn, xin = 0.0, xout = 0.0, zin = 0.0, zout = 0.0, xtire = 0.0, ztire = 0.0;
 	Position vin, vout, tire;
 
@@ -103,9 +103,6 @@ void Turn::computeVertices(void) {
 		(direction ? xout = ((softness + width) * cs - softness - width / 2) : xout = ((softness + width) * -cs + softness + width / 2));
 		zout = (softness + width) * sn;
 
-		(direction ? xtire = ((softness + width + 2.0) * cs - softness - (width) / 2) : xtire = ((softness + width + 2.0) * -cs + softness + (width) / 2));
-		ztire = (softness + width + 2.0) * sn;
-
 		vin = rotate(xin, 0.0, zin);
 		vin.x += pos.x; vin.y += pos.y; vin.z += pos.z;
 		vin.angle -= (float) (a * 180.0 / M_PI);
@@ -115,6 +112,9 @@ void Turn::computeVertices(void) {
 		vout.x += pos.x; vout.y += pos.y; vout.z += pos.z;
 		vout.angle -= (float) (a * 180.0 / M_PI);
 		vertices.push_back(vout);
+
+		(direction ? xtire = ((softness + width + 2.0) * cs - softness - (width) / 2) : xtire = ((softness + width + 2.0) * -cs + softness + (width) / 2));
+		ztire = (softness + width + 2.0) * sn;
 
 		tire = rotate(xtire, 0.0, ztire);
 		tire.x += pos.x; tire.y += pos.y; tire.z += pos.z;
@@ -159,7 +159,7 @@ void Turn::generateBoundingBoxes(float offset) {
 
 		// Create the bounding box
 		sideboxes.push_back(
-			new Object(offset * 2, length, 2.0, new Position(x, y, z, a))
+			new Object(offset * 2, length * 2, 2.0, new Position(x, y, z, a))
 		);
 	}
 }
