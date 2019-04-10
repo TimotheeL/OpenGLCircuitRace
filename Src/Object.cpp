@@ -141,8 +141,6 @@ MTV *Object::collisionTestSAT(Object *o) {
 	 * so we'll check only 4 axes like in a 2D world
 	 * An axis is a 2D normalized vector
 	 */
-	Axis axes[4];  // Axes for this object
-	Axis oaxes[4]; // Axes for the other object
 
 	/* A projection is composed of [0] = min and [1] = max.
 	 * Thoses are the result of the projection of the points of a bounding box
@@ -158,14 +156,13 @@ MTV *Object::collisionTestSAT(Object *o) {
 	float overlap = 0.0;
 
 	/* Get the axes */
-	getAxesSAT(axes, &hitbox);
-	getAxesSAT(oaxes, &o->hitbox);
+	hitbox.generateAxesSAT();
 
 	/* For every axis found for the first object */
 	for (int i = 0; i < 4; i++) {
 		/* Do the projection for both objects */
-		projectObjectSAT(axes[i], &hitbox, projection);
-		projectObjectSAT(axes[i], &o->hitbox, oprojection);
+		projectObjectSAT(hitbox.axesSAT[i], &hitbox, projection);
+		projectObjectSAT(hitbox.axesSAT[i], &o->hitbox, oprojection);
 
 		overlap = getOverlap(projection, oprojection);
 
@@ -191,15 +188,15 @@ MTV *Object::collisionTestSAT(Object *o) {
 		}
 		else if (overlap < mtv->overlap) {
 			mtv->overlap = overlap;
-			mtv->axis = axes[i];
+			mtv->axis = hitbox.axesSAT[i];
 		}
 	}
 
 	/* For every axis found for the second object */
 	for (int i = 0; i < 4; i++) {
 		/* Do the projection for both objects */
-		projectObjectSAT(oaxes[i], &hitbox, projection);
-		projectObjectSAT(oaxes[i], &o->hitbox, oprojection);
+		projectObjectSAT(o->hitbox.axesSAT[i], &hitbox, projection);
+		projectObjectSAT(o->hitbox.axesSAT[i], &o->hitbox, oprojection);
 
 		/* Calculate overlap */
 		overlap = getOverlap(projection, oprojection);
@@ -226,7 +223,7 @@ MTV *Object::collisionTestSAT(Object *o) {
 		}
 		else if (overlap < mtv->overlap) {
 			mtv->overlap = overlap;
-			mtv->axis = axes[i];
+			mtv->axis = o->hitbox.axesSAT[i];
 		}
 	}
 
@@ -285,27 +282,6 @@ MTV *Object::collisionTestSAT(Object *o) {
 /* Get the overlap between two projections */
 float Object::getOverlap(Projection *projection, Projection *oprojection) {
 	return max(0, min(projection->max, oprojection->max) - max(projection->min, oprojection->min));
-}
-
-/* Get the 4 axes of a bounding box for the SAT */
-void Object::getAxesSAT(Axis axes[4], BoundingBox *hitbox) {
-	for (int i = 0; i < 4; i++) {
-		/* Get 2 points that makes one edge of the box */
-		Position p1 = hitbox->points[i];
-		Position p2 = hitbox->points[i + 1 == 4 ? 0 : i + 1];
-
-		/* Calculate the vector representing one edge of the box */
-		float vec[2] = { p1.x - p2.x, p1.z - p2.z };
-
-		/* Normalize the vector */
-		float magnitude = sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
-		vec[0] = vec[0] / magnitude;
-		vec[1] = vec[1] / magnitude;
-
-		/* Store the axis as the normal of the vector */
-		axes[i].x = -vec[1];
-		axes[i].z = vec[0];
-	}
 }
 
 /* Projection for the SAT */

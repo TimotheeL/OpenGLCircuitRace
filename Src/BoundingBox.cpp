@@ -45,6 +45,7 @@ BoundingBox::BoundingBox(float objLength, float objWidth, float objHeight, Posit
 	}
 
 	update(objCenter);
+	generateAxesSAT();
 
 	color[0] = 1.0; color[1] = 0.0; color[2] = 0.0;
 }
@@ -59,6 +60,8 @@ BoundingBox::BoundingBox(BoundingBox *b) {
 	for (int i = 0; i < 8; i++) {
 		points[i] = new Position(b->points[i]);
 	}
+
+	generateAxesSAT();
 }
 
 BoundingBox::BoundingBox(void)
@@ -130,6 +133,27 @@ void BoundingBox::update(Position *newPos) {
 	points[7].y = newPos->y + height;
 	points[7].z = points[3].z;
 	points[7].angle = points[3].angle;
+}
+
+/* Get the 4 axes of a bounding box for the SAT */
+void BoundingBox::generateAxesSAT(void) {
+	for (int i = 0; i < 4; i++) {
+		/* Get 2 points that makes one edge of the box */
+		Position p1 = points[i];
+		Position p2 = points[i + 1 == 4 ? 0 : i + 1];
+
+		/* Calculate the vector representing one edge of the box */
+		float vec[2] = { p1.x - p2.x, p1.z - p2.z };
+
+		/* Normalize the vector */
+		float magnitude = sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
+		vec[0] = vec[0] / magnitude;
+		vec[1] = vec[1] / magnitude;
+
+		/* Store the axis as the normal of the vector */
+		axesSAT[i].x = -vec[1];
+		axesSAT[i].z = vec[0];
+	}
 }
 
 /* Draw the hitbox */

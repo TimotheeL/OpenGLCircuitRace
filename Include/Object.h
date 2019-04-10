@@ -12,13 +12,6 @@
 
 /*-- Classes written to be synctactically comprehensive --*/
 
-/* Axis : a class representing an axis for the SAT */
-class Axis {
-public:
-	float x;
-	float z;
-};
-
 /* Projection : a projection of coordinates on an axis */
 class Projection {
 public:
@@ -93,9 +86,6 @@ public:
 	MTV *collisionTestSAT(Object *o);
 
 private:
-	/* Get the 4 axes of a bounding box for the SAT */
-	void getAxesSAT(Axis axes[4], BoundingBox *hitbox);
-
 	/* Get the projections for the SAT */
 	void projectObjectSAT(Axis axis, BoundingBox *hitbox, Projection *projection);
 

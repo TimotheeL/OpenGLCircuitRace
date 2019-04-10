@@ -14,11 +14,21 @@
 
 #include <Position.h>
 
+/*-- Classes written to be synctactically comprehensive --*/
+
+/* Axis : a class representing an axis for the SAT */
+class Axis {
+public:
+	float x;
+	float z;
+};
+
 class BoundingBox {
 public:
 	float length, width, height;
 	Position points[8];
 	GLfloat color[3];
+	Axis axesSAT[4];
 
 	/*	BoundingBox points structure
 
@@ -46,6 +56,9 @@ public:
 
 	/* Update hitbox's points with a new position */
 	void update(Position *newPos);
+
+	/* Generate axes for the SAT */
+	void BoundingBox::generateAxesSAT(void);
 
 	/* Draw the hitbox */
 	void draw(void);
