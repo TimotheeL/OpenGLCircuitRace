@@ -51,9 +51,9 @@ This project is made to run on Windows 7 or above using Visual Studio. Open `Pro
 ```
 
 ### Controls
-Use *Arrow Keys* to move the car forward, left, right and backward.
-Use *Space Bar* for hand braking.
-At any moment, press *R* to restart.
+Use **Arrow Keys** to move the car forward, left, right and backward.
+Use **Space Bar** for hand braking.
+At any moment, press **R** to restart.
 
 ### Authors
 - Nicolas Bouchard;
