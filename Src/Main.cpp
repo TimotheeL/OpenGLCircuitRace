@@ -23,7 +23,7 @@ using namespace std;
 /* Global variables */
 static int pMode = 1; 
 static bool drawBBox = false;
-static bool switchToCar = false;
+static int switchGameMode = 0;
 
 const double dt = 1 / 60.0;	/* Simulation framerate */
 double currentTime = 0.0;	/* Current time */
@@ -70,12 +70,10 @@ static void scene(void) {
 	glLoadIdentity();
 
 	glPushMatrix();
-		if (switchToCar) {
-			/* Draw the camera locked on the racing car */
-			rc.setCamera();
-		}
-		else {
-			gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+		switch (switchGameMode) {
+			case 0: rc.setCamera(true); break;
+			case 1: rc.setCamera(false); break;
+			default: gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 		}
 
 		/* Draw */
@@ -94,7 +92,7 @@ static void scene(void) {
 static void simulate(void) {
 	brt.update();
 
-	if (switchToCar) {
+	if (switchGameMode == 1) {
 		/* Reset colliding states */
 		rc.resetIsColliding();
 		brt.resetIsColliding();
@@ -196,7 +194,10 @@ static void keyboard(unsigned char key, int x, int y) {
 			break;
 		case 'c':
 		case 'C':
-			switchToCar = !switchToCar;
+			switchGameMode++;
+			if (switchGameMode > 2) {
+				switchGameMode = 0;
+			}
 			break;
 	}
 }
@@ -210,7 +211,7 @@ static void keyboardUp(unsigned char key, int x, int y) {
 static void special(int specialKey, int x, int y) {
 	keySpecialStates[specialKey] = true;
 
-	if (!switchToCar) {
+	if (switchGameMode == 2) {
 		switch (specialKey) {
 		case GLUT_KEY_UP:
 			eye_z -= 2.0;

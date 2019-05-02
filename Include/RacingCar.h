@@ -26,6 +26,8 @@ public:
 
 private:
 	Position startpos;
+	
+	float camangle;
 
 	bool handbrakeState;	// Handbrake state
 
@@ -58,7 +60,7 @@ public:
 	/* Movement handling */
 	void handleMovement(double deltaTime);
 
-	void setCamera(void);
+	void setCamera(bool autoRotate);
 
 	/* Forward */
 	void forward(float distance);

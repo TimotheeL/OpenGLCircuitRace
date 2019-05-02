@@ -77,7 +77,7 @@ static void scene(void) {
 	glPushMatrix();
 
 	/* Draw the camera locked on the racing car */
-	rc->setCamera();
+	rc->setCamera(true);
 
 	rc->draw();
 

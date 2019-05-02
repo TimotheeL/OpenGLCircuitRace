@@ -34,6 +34,7 @@ RacingCar::RacingCar(float clength, float cwidth, float cheight, Position *pos)
 	movingForward = true;
 	speed = 0.0;
 	startpos = Position(pos);
+	camangle = 0.0;
 }
 
 RacingCar::RacingCar(float clength, float cwidth, float cheight)
@@ -158,8 +159,16 @@ void RacingCar::handleMovement(double deltaTime) {
 	}
 }
 
-void RacingCar::setCamera(void) {
-	float radangle = (pos.angle + 90.0) * M_PI / 180;
+void RacingCar::setCamera(bool autoRotate) {
+	float radangle;
+
+	if (autoRotate) {
+		camangle += 0.25;
+		radangle = camangle * M_PI / 180;
+	}
+	else {
+		radangle = (pos.angle + 90.0) * M_PI / 180;
+	}
 
 	gluLookAt(
 		pos.x + sin(-radangle) * 10.0,
