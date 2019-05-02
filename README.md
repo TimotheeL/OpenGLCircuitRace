@@ -51,7 +51,7 @@ This project is made to run on Windows 7 or above using Visual Studio. Open `Pro
 ```
 
 ### Controls
-Use **Enter Key** to start plaing.
+Use **Enter Key** to start playing.
 
 Use **Arrow Keys** to move the car forward, left, right and backward.
 
