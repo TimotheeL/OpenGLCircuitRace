@@ -50,8 +50,6 @@ BRT brt;
 
 /* Init function */
 static void init(void) {
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
@@ -66,15 +64,7 @@ static void init(void) {
 
 /* Scene function */
 static void scene(void) {
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
 	glPushMatrix();
-		switch (switchGameMode) {
-			case 0: rc.setCamera(true); break;
-			case 1: rc.setCamera(false); break;
-			default: gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-		}
 
 		/* Draw */
 		brt.draw();
@@ -109,6 +99,8 @@ static void simulate(void) {
 
 /* Display function */
 static void display(void) {
+	const float blanc[] = { 0.5F,0.5F,0.5F,1.0F };
+
 	if (pMode == 1) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glEnable(GL_LIGHTING);
@@ -136,8 +128,22 @@ static void display(void) {
 		simulate();
 		accumulator -= dt;
 	}
+	glPushMatrix();
+		switch (switchGameMode) {
+			case 0: rc.setCamera(true); break;
+			case 1: rc.setCamera(false); break;
+			default: gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+		}
 
-	scene();
+		glEnable(GL_LIGHTING);
+		const GLfloat pos[] = { 0.0, 100.0, 0.0, 1.0 };
+		glLightfv(GL_LIGHT0, GL_AMBIENT, blanc);
+		glLightfv(GL_LIGHT0, GL_POSITION, pos);
+		glEnable(GL_LIGHT0);
+
+
+		scene();
+	glPopMatrix();
 
 	glFlush();
 	glutSwapBuffers();
