@@ -137,9 +137,17 @@ static void display(void) {
 
 		glEnable(GL_LIGHTING);
 		const GLfloat pos[] = { 0.0, 100.0, 0.0, 1.0 };
+		const GLfloat post[] = { 0.0, 100.0, -50.0, 1.0 };
+		const GLfloat posb[] = { 0.0, 100.0, 50.0, 1.0 };
 		glLightfv(GL_LIGHT0, GL_AMBIENT, blanc);
 		glLightfv(GL_LIGHT0, GL_POSITION, pos);
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, blanc);
+		glLightfv(GL_LIGHT1, GL_POSITION, pos);
+		glLightfv(GL_LIGHT2, GL_DIFFUSE, blanc);
+		glLightfv(GL_LIGHT2, GL_POSITION, pos);
 		glEnable(GL_LIGHT0);
+		glEnable(GL_LIGHT1);
+		glEnable(GL_LIGHT2);
 
 
 		scene();
