@@ -21,9 +21,9 @@
 #define M_PI 3.1415926535897932384626433832795
 #endif
 
-const float RacingCar::MAX_SPD_FW = 10.0;
-const float RacingCar::MAX_SPD_BW = 5.0;
-const float RacingCar::ACCEL = 3.0;
+const float RacingCar::MAX_SPD_FW = 20.0;
+const float RacingCar::MAX_SPD_BW = 4.0;
+const float RacingCar::ACCEL = 5.0;
 const float RacingCar::ROT_ANGLE = 2.0;
 
 /* Constructors */
