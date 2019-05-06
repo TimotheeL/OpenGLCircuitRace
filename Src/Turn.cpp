@@ -190,7 +190,6 @@ void Turn::mySolidCylindre(double hauteur, double rayon, int ns) {
 		glEnd();
 		glNormal3f(normale[0], normale[1], normale[2]);
 
-
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, grey);
 		glBegin(GL_POLYGON);
 		for (int i = 0; i <= ns; i++) {

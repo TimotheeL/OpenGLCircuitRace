@@ -70,25 +70,117 @@ Position *RacingCar::getStartPos(void) {
 	return &startpos;
 }
 
+const GLfloat red[] = { 1.0, 0.0, 0.0 };
+const GLfloat white[] = { 1.0, 1.0, 1.0 };
+const GLfloat black[] = { 0.0, 0.0, 0.0 };
+const GLfloat grey[] = { 0.2, 0.2, 0.2 };
+const GLfloat yellow[] = { 1.0, 1.0, 0.0 };
+
 /* Draw */
 void RacingCar::draw(void) {
-	const GLfloat blanc[] = { 1.0, 1.0, 1.0 };
-
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blanc);
-
 	glPushMatrix();
-		glTranslatef(pos.x, pos.y + height/4, pos.z);
+		glTranslatef(pos.x, pos.y + height/4 + 0.5, pos.z);
 		glRotatef(pos.angle, 0.0, -1.0, 0.0);
 
+		// Middle
 		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, red);
 			glScalef(length, height/2, width);
 			glutSolidCube(1.0);
 		glPopMatrix();
 	
+		// Top
 		glPushMatrix();
-			glScalef(length*0.5, height/2, width);
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, white);
+			glRotatef(-2.0, 0.0, 0.0, 1.0);
+			glScalef(length*0.5, height/2 - 0.2, width-0.1);
 			glTranslatef(-0.2, height/2, 0.0);
 			glutSolidCube(1.0);
+		glPopMatrix();
+
+		// Vent
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, grey);
+			glTranslatef(length / 3, height/4 - 0.1, 0.0);
+			glRotatef(8.0, 0.0, 0.0, 1.0);
+			glutSolidCube(0.5);
+		glPopMatrix();
+
+		// Radiator
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, grey);
+			glTranslatef(length / 2 - 0.2, 0.0, 0.0);
+			glScalef(1.0, 1.0, 1.5);
+			glutSolidCube(0.5);
+		glPopMatrix();
+
+		// Backplate
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, white);
+			glTranslatef(-length / 2 + 0.2, -0.1, 0.0);
+			glScalef(1.0, 0.5, 1.2);
+			glutSolidCube(0.5);
+		glPopMatrix();
+
+		// Head lights
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, yellow);
+			glTranslatef(length / 2 - 0.075, 0.3, 0.6);
+			glScalef(1.0, 1.0, 1.0);
+			glutSolidCube(0.2);
+		glPopMatrix();
+
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, yellow);
+			glTranslatef(length / 2 - 0.075, 0.3, -0.6);
+			glScalef(1.0, 1.0, 1.0);
+			glutSolidCube(0.2);
+		glPopMatrix();
+
+		// Back lights
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, yellow);
+			glTranslatef(-length / 2 + 0.075, 0.3, 0.6);
+			glScalef(1.0, 1.0, 1.0);
+			glutSolidCube(0.2);
+		glPopMatrix();
+
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, yellow);
+			glTranslatef(-length / 2 + 0.075, 0.3, -0.6);
+			glScalef(1.0, 1.0, 1.0);
+			glutSolidCube(0.2);
+		glPopMatrix();
+
+		// Tires
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
+			glTranslatef(length / 4 + 0.2, -0.5, width / 2);
+			glRotatef(90.0, 1.0, 0.0, 0.0);
+			Turn::mySolidCylindre(0.5, 0.5, 10.0);
+		glPopMatrix();
+
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
+			glTranslatef(length / 4 + 0.2, -0.5, -width / 2);
+			glRotatef(90.0, 1.0, 0.0, 0.0);
+			glRotatef(180.0, 0.0, 0.0, 1.0);
+			Turn::mySolidCylindre(0.5, 0.5, 10.0);
+		glPopMatrix();
+
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
+			glTranslatef(-length / 4 - 0.2, -0.5, width / 2);
+			glRotatef(90.0, 1.0, 0.0, 0.0);
+			Turn::mySolidCylindre(0.5, 0.5, 10.0);
+		glPopMatrix();
+
+		glPushMatrix();
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
+			glTranslatef(-length / 4 - 0.2, -0.5, -width / 2);
+			glRotatef(90.0, 1.0, 0.0, 0.0);
+			glRotatef(180.0, 0.0, 0.0, 1.0);
+			Turn::mySolidCylindre(0.5, 0.5, 10.0);
 		glPopMatrix();
 	glPopMatrix();
 }

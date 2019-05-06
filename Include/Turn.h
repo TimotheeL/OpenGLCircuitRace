@@ -25,9 +25,6 @@ protected:
 	/* Bounding boxes generator */
 	virtual void generateBoundingBoxes(float offset);
 
-	/* Util function tu draw a cylindre */
-	void mySolidCylindre(double hauteur, double rayon, int ns);
-
 public:
 	/* Constructors */
 	Turn(void);
@@ -49,6 +46,9 @@ public:
 
 	/* Drawer */
 	void draw(void);
+
+	/* Util function to draw a cylindre */
+	static void mySolidCylindre(double hauteur, double rayon, int ns);
 };
 
 #endif // Turn
