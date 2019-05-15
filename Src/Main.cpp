@@ -21,8 +21,9 @@
 using namespace std;
 
 /* Global variables */
-static int pMode = 1; 
+static bool wiremode = false; 
 static bool drawBBox = false;
+static bool fullscreen = false;
 static int switchGameMode = 0;
 
 const double dt = 1 / 60.0;	/* Simulation framerate */
@@ -97,11 +98,18 @@ static void simulate(void) {
 	}
 }
 
+const float ambient[] = { 0.75F, 0.75F, 0.65F, 1.0F };
+const float ambient2[] = { 0.5F, 0.5F, 0.4F, 1.0F };
+const float ambient3[] = { 0.25F, 0.25F, 0.25F, 1.0F };
+
+const GLfloat posa[] = { 0.0, 100.0, 150.0, 1.0 };
+const GLfloat posb[] = { 150.0, 100.0, 0.0, 1.0 };
+const GLfloat posc[] = { -150.0, 100.0, 0.0, 1.0 };
+const GLfloat posd[] = { 0.0, 100.0, -150.0, 1.0 };
+
 /* Display function */
 static void display(void) {
-	const float blanc[] = { 0.5F,0.5F,0.5F,1.0F };
-
-	if (pMode == 1) {
+	if (!wiremode) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glEnable(GL_LIGHTING);
 	}
@@ -128,6 +136,7 @@ static void display(void) {
 		simulate();
 		accumulator -= dt;
 	}
+
 	glPushMatrix();
 		switch (switchGameMode) {
 			case 0: rc.setCamera(true); break;
@@ -136,19 +145,23 @@ static void display(void) {
 		}
 
 		glEnable(GL_LIGHTING);
-		const GLfloat pos[] = { 0.0, 100.0, 0.0, 1.0 };
-		const GLfloat post[] = { 0.0, 100.0, -50.0, 1.0 };
-		const GLfloat posb[] = { 0.0, 100.0, 50.0, 1.0 };
-		glLightfv(GL_LIGHT0, GL_AMBIENT, blanc);
-		glLightfv(GL_LIGHT0, GL_POSITION, pos);
-		glLightfv(GL_LIGHT1, GL_DIFFUSE, blanc);
-		glLightfv(GL_LIGHT1, GL_POSITION, pos);
-		glLightfv(GL_LIGHT2, GL_DIFFUSE, blanc);
-		glLightfv(GL_LIGHT2, GL_POSITION, pos);
+
+		glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+		glLightfv(GL_LIGHT0, GL_POSITION, posa);
+
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, ambient2);
+		glLightfv(GL_LIGHT1, GL_POSITION, posb);
+
+		glLightfv(GL_LIGHT2, GL_DIFFUSE, ambient2);
+		glLightfv(GL_LIGHT2, GL_POSITION, posc);
+
+		glLightfv(GL_LIGHT3, GL_DIFFUSE, ambient3);
+		glLightfv(GL_LIGHT3, GL_POSITION, posd);
+
 		glEnable(GL_LIGHT0);
 		glEnable(GL_LIGHT1);
 		glEnable(GL_LIGHT2);
-
+		glEnable(GL_LIGHT3);
 
 		scene();
 	glPopMatrix();
@@ -182,13 +195,21 @@ static void keyboard(unsigned char key, int x, int y) {
 	keyStates[key] = true;
 
 	switch (key) {
-		case ' ':
-			{ pMode = !pMode;
-			glutPostRedisplay(); }
-		break;
+		case 't':
+			wiremode = !wiremode;
+			glutPostRedisplay();
+			break;
 		case 'f':
 		case 'F':
-			glutFullScreen();
+			fullscreen = !fullscreen;
+
+			if (fullscreen) {
+				glutReshapeWindow(wTx, wTy);
+				glutPositionWindow(wPx, wPy);
+			}
+			else {
+				glutFullScreen();
+			}
 			break;
 		case 0x1B:
 			exit(0);
@@ -206,8 +227,7 @@ static void keyboard(unsigned char key, int x, int y) {
 			drawBBox = !drawBBox;
 			glutPostRedisplay();
 			break;
-		case 'c':
-		case 'C':
+		case 13:
 			switchGameMode++;
 			if (switchGameMode > 2) {
 				switchGameMode = 0;
@@ -273,7 +293,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutInitWindowSize(wTx, wTy);
 	glutInitWindowPosition(wPx, wPy);
-	glutCreateWindow("Circuit");
+	glutCreateWindow("Besancon Racing Track");
 	init();
 	glutKeyboardFunc(keyboard);
 	glutKeyboardUpFunc(keyboardUp);

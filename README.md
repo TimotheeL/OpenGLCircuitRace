@@ -51,13 +51,15 @@ This project is made to run on Windows 7 or above using Visual Studio. Open `Pro
 ```
 
 ### Controls
-Use **Enter Key** to start playing.
+Use **Enter Key** to switch views, first view rotate around the car, second view allows car movement, thrid view is a free camera.
 
 Use **Arrow Keys** to move the car forward, left, right and backward.
 
 Use **Space Bar** for hand braking.
 
 At any moment, press **R** to restart.
+
+The **B** key activates bounding boxes rendering.
 
 ### Authors
 - Nicolas Bouchard;

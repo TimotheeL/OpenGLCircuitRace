@@ -48,6 +48,7 @@ public:
 
 	/* Getters */
 	float getSpeed(void);
+	float getCamangle(void);
 	bool getHandbrakeState(void);
 	Position *getStartPos(void);
 	

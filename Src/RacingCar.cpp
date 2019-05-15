@@ -52,6 +52,7 @@ RacingCar::RacingCar(RacingCar *rc)
 	handbrakeState = rc->getHandbrakeState();
 	movingForward = rc->getMovingForward();
 	startpos = Position(rc->getStartPos());
+	camangle = rc->getCamangle();
 }
 
 /* Destructor */
@@ -60,6 +61,10 @@ RacingCar::~RacingCar(void) {}
 /* Getters */
 float RacingCar::getSpeed(void) {
 	return speed;
+}
+
+float RacingCar::getCamangle(void) {
+	return camangle;
 }
 
 bool RacingCar::getHandbrakeState(void) {
@@ -152,7 +157,7 @@ void RacingCar::draw(void) {
 			glutSolidCube(0.2);
 		glPopMatrix();
 
-		// Tires
+		// Front Tires
 		glPushMatrix();
 			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
 			glTranslatef(length / 4 + 0.2, -0.5, width / 2);
@@ -168,6 +173,7 @@ void RacingCar::draw(void) {
 			Turn::mySolidCylindre(0.5, 0.5, 10.0);
 		glPopMatrix();
 
+		// Back Tires
 		glPushMatrix();
 			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
 			glTranslatef(-length / 4 - 0.2, -0.5, width / 2);
