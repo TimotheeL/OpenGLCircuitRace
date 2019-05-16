@@ -24,7 +24,6 @@ private:
 	int nbTrees;
 	std::vector<Tree> trees;
 	bool drawGrass;
-
 	// Attributes to avoid calculations in the draw method
 	float xPos2;
 	float zPos2;

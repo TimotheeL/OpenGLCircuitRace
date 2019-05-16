@@ -47,7 +47,7 @@ BRT::BRT(void) {
 	track.push_back(new Turn(7.0, 12.3, 90.0, false, new Position(91.8, 0.0, 52.6, 290.0)));
 	track.push_back(new Turn(7.0, 9.9, 110.0, false, new Position(112.0, 0.0, 62.0, 200.0)));
 
-	patches.push_back(new Patch(-176, 128, 320, 240.0, 0, 0, true));
+	
 	for (int i = -11; i < 9; i++) {
 		for (int j = -6; j < 9; j++) {
 			int nbTrees = 0;
@@ -55,14 +55,6 @@ BRT::BRT(void) {
 				nbTrees = rand() % 5 + 3;
 				patches.push_back(new Patch(i * 16.0, j * 16.0, 16.0, 16.0, nbTrees, 0, false));
 			}
-			/* TEMPORARY GRID OF SPECTATORS
-			if (i == 0 && j == 0) {
-				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 1.0, 1.0, 1.0, false));
-			} else if (i % 2 == 0 && j % 2 == 0) {
-				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 1.0, 0.0, 0.0, false));
-			} else {
-				spectators.push_back(new Spectator(i * 16.0, 0.0, j * 16.0, 0.0, 0.0, 1.0, false));
-			}*/
 		}
 	}
 
@@ -99,6 +91,7 @@ BRT::BRT(void) {
 	}
 
 	billboards.push_back(new Billboard(-120.0, 0.0, 90.0, 6.0, 3.5, 135.0, 1.5));
+	patches.push_back(new Patch(-176, 128, 320, 240.0, 0, 0, true));
 }
 
 // getters
@@ -140,9 +133,6 @@ void BRT::update(void) {
 	for (unsigned int i = 0; i < patches.size(); i++) {
 		patches[i].update();
 	}
-	/*for (unsigned int i = 0; i < billboards.size(); i++) {
-		billboards[i].update();
-	}*/
 }
 
 // drawer

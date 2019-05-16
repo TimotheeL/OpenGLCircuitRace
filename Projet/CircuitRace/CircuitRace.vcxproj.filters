@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Source Files\PNG">
+      <UniqueIdentifier>{aeffee0f-c5a8-4048-8a2a-a83748a812fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\Lib\glut32.ms.lib" />
@@ -60,11 +63,107 @@
     <ClCompile Include="..\..\Src\Bleachers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Crowd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Billboard.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\zutil.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\uncompr.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\trees.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngwutil.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngwtran.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngwrite.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngwio.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngset.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngtrans.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngrutil.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngrtran.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngrio.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngpread.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngread.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngmem.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngget.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\PngFile.cpp">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\pngerror.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\png.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\inftrees.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\inflate.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\inffast.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\infback.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\ImageUtils.cpp">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Image.cpp">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\gzio.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Espace3UC.cpp">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\deflate.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Crowd.cpp">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\crc32.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\compress.c">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\ChargePngFile.cpp">
+      <Filter>Source Files\PNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\PNG\Png\adler32.c">
+      <Filter>Source Files\PNG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +211,63 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\Billboard.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\zutil.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\zlib.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\zconf.in.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\zconf.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\trees.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\PngFile.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\pngconf.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\png.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\inftrees.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\inflate.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\inffixed.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\inffast.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\ImageUtils.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Image.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Espace3UC.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\deflate.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\crc32.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\ChargePngFile.h">
+      <Filter>Source Files\PNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\PNG\Png\cexcept.h">
+      <Filter>Source Files\PNG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

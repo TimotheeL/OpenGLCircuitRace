@@ -1,4 +1,4 @@
-/* 
+/*
 	Racing game project - Main program
 	
 	2019
@@ -18,9 +18,13 @@
 #include "RacingCar.h"
 #include "Billboard.h"
 
+
+#include "PNG\ChargePngFile.h"
+
 using namespace std;
 
 /* Global variables */
+static unsigned int textureID = 0;
 static bool wiremode = false; 
 static bool drawBBox = false;
 static bool fullscreen = false;
@@ -56,6 +60,36 @@ static void init(void) {
 	glEnable(GL_NORMALIZE);
 
 	glClearColor(0.1F, 0.4F, 0.9F, 1.0F);
+
+	// TEXTURE INIT
+	/*glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	{
+		int rx;
+		int ry;
+		unsigned char *img = chargeImagePng("grass.png", &rx, &ry);
+		if (img && textureID) {
+			glBindTexture(GL_TEXTURE_2D, textureID);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+			glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			free(img);
+		}
+		else {
+			if (img) {
+				free(img);
+			}
+			if (textureID) {
+				glDeleteTextures(1, &textureID);
+				textureID = 0;
+			}
+		}
+	}*/
+	
 
 	/* Init circuit */
 	brt = BRT();
@@ -117,6 +151,8 @@ static void display(void) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDisable(GL_LIGHTING);
 	}
+	
+	//glEnable(GL_TEXTURE_2D);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -143,9 +179,8 @@ static void display(void) {
 			case 1: rc.setCamera(false); break;
 			default: gluLookAt(eye_x, eye_y, eye_z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 		}
-
 		glEnable(GL_LIGHTING);
-
+		
 		glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 		glLightfv(GL_LIGHT0, GL_POSITION, posa);
 
@@ -162,7 +197,6 @@ static void display(void) {
 		glEnable(GL_LIGHT1);
 		glEnable(GL_LIGHT2);
 		glEnable(GL_LIGHT3);
-
 		scene();
 	glPopMatrix();
 
@@ -282,6 +316,8 @@ static void passiveMouseMotion(int x, int y) {
 /* Called on exit */
 static void clean(void) {
 	printf("Bye\n");
+	if (textureID != 0)
+		glDeleteTextures(1, &textureID);
 }
 
 /* Main */

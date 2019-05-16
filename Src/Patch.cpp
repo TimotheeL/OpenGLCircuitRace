@@ -17,6 +17,7 @@
 #include "Patch.h"
 #include "Tree.h"
 
+
 // Regular constructor
 Patch::Patch(float xPos, float zPos, float width, float height, int nbTrees, int nbSpectators, bool drawGrass) {
 	this->xPos = xPos;
@@ -87,17 +88,18 @@ bool Patch::getDrawGrass(void) {
 
 // Draw a patch
 void Patch::draw(void) {
-	float colorLeaves[4] = { 0.1, 0.4, 0.1, 1.0 };
-
 	glPushMatrix();
 		if (drawGrass) {
 			glPushMatrix();
-				glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
 				glBegin(GL_QUADS);
 					glNormal3f(0.0F, 1.0F, 0.0F);
+					//glTexCoord2f(0.0F, 0.0F);
 					glVertex3f(xPos, -0.1, zPos);
+					//glTexCoord2f(1.0F, 0.0F);
 					glVertex3f(xPos2, -0.1, zPos);
+					//glTexCoord2f(1.0F, 1.0F);
 					glVertex3f(xPos2, -0.1, zPos2);
+					//glTexCoord2f(0.0F, 1.0F);
 					glVertex3f(xPos, -0.1, zPos2);
 				glEnd();
 			glPopMatrix();
