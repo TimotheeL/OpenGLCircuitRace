@@ -23,15 +23,18 @@ private:
 public:
 	/* Constructors */
 	Billboard(float xPos, float yPos, float zPos, float width, float height, float angle, float feetHeight);
+
 	Billboard(Billboard *b1);
+
 	Billboard(void);
 
 	/* Destructor */
 	~Billboard(void);
 
-	/* OpenGL code to draw the bleachers */
+	/* Draw */
 	void draw(void);
 
+	/* Update */
 	void update(void);
 
 	/* Getters */

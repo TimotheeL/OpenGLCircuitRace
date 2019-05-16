@@ -10,6 +10,8 @@
 #ifndef ____BLEACHERS____
 #define ____BLEACHERS____
 
+using namespace std;
+
 class Bleachers : public Crowd {
 
 private:
@@ -18,24 +20,23 @@ private:
 	float zPos;
 	float angle;
 	float filling; // Between 0 and 1: determines how crowded the bleachers are
+
 	int width;
 	int depth;
 
 public:
-
 	/* Constructors */
 	Bleachers(float xPos, float zPos, int width, int depth, float angle, float filling);
+
 	Bleachers(Bleachers *b1);
+
 	Bleachers(void);
 
 	/* Destructor */
 	~Bleachers(void);
 
-	/* OpenGL code to draw the bleachers */
+	/* Draw */
 	void draw(void);
-
-	/* Print */
-	void print(void);
 
 	/* Getters */
 	float getXPos(void);
@@ -44,8 +45,7 @@ public:
 	float getFilling(void);
 	int getWidth(void);
 	int getDepth(void);
-	std::vector<Spectator> getSpectators(void);
-
+	vector<Spectator> getSpectators(void);
 };
 
 #endif // BLEACHERS

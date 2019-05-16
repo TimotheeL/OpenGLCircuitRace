@@ -18,13 +18,9 @@
 #include "RacingCar.h"
 #include "Billboard.h"
 
-
-#include "PNG\ChargePngFile.h"
-
 using namespace std;
 
 /* Global variables */
-static unsigned int textureID = 0;
 static bool wiremode = false; 
 static bool drawBBox = false;
 static bool fullscreen = false;
@@ -58,38 +54,9 @@ static void init(void) {
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
+	glEnable(GL_TEXTURE_2D);
 
-	glClearColor(0.1F, 0.4F, 0.9F, 1.0F);
-
-	// TEXTURE INIT
-	/*glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	{
-		int rx;
-		int ry;
-		unsigned char *img = chargeImagePng("grass.png", &rx, &ry);
-		if (img && textureID) {
-			glBindTexture(GL_TEXTURE_2D, textureID);
-			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-			glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			free(img);
-		}
-		else {
-			if (img) {
-				free(img);
-			}
-			if (textureID) {
-				glDeleteTextures(1, &textureID);
-				textureID = 0;
-			}
-		}
-	}*/
-	
+	glClearColor(0.1F, 0.4F, 0.9F, 1.0F);	
 
 	/* Init circuit */
 	brt = BRT();
@@ -152,8 +119,6 @@ static void display(void) {
 		glDisable(GL_LIGHTING);
 	}
 	
-	//glEnable(GL_TEXTURE_2D);
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	/* Get time and calculate frame time in seconds */
@@ -315,9 +280,7 @@ static void passiveMouseMotion(int x, int y) {
 
 /* Called on exit */
 static void clean(void) {
-	printf("Bye\n");
-	if (textureID != 0)
-		glDeleteTextures(1, &textureID);
+	brt.deleteTextures();
 }
 
 /* Main */

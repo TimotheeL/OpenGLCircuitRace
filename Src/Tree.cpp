@@ -79,12 +79,14 @@ void Tree::draw(void) {
 
 	glPushMatrix();
 		glTranslatef(xPos, -0.1, zPos);
+
 		glPushMatrix();
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrunk);
 			glTranslatef(0.0, centerTrunk, 0.0);
 			glScalef(wTrunk, hTrunk, wTrunk);
 			glutSolidCube(1.0);
 		glPopMatrix();
+
 		glPushMatrix();
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorLeaves);
 			glTranslatef(0.0, centerLeaves, 0.0);

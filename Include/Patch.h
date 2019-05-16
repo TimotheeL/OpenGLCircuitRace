@@ -12,35 +12,44 @@
 #ifndef ____PATCH____
 #define ____PATCH____
 
+using namespace std;
+
 class Patch : public Crowd {
 
 private:
 	//Position of bottom left corner
 	float xPos;
 	float zPos;
-	// Size of the patch (width and height)
-	float width;
-	float height;
-	int nbTrees;
-	std::vector<Tree> trees;
-	bool drawGrass;
+
 	// Attributes to avoid calculations in the draw method
 	float xPos2;
 	float zPos2;
 
+	// Size of the patch (width and height)
+	float width;
+	float height;
+
+	int nbTrees;
 	
+	vector<Tree> trees;
+
+	bool drawGrass;
+
+	unsigned int textureID;
 
 public:
 
 	/* Constructors */
-	Patch(float xPos, float zPos, float width, float height, int nbTrees, int nbSpectators, bool drawGrass);
+	Patch(float xPos, float zPos, float width, float height, int nbTrees, int nbSpectators, bool drawGrass, unsigned int texID);
+
 	Patch(Patch *p1);
+
 	Patch(void);
 
 	/* Destructor */
 	~Patch(void);
 
-	/* OpenGL code to draw the patch */
+	/* Draw */
 	void draw(void);
 
 	/* Getters */

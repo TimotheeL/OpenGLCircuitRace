@@ -16,31 +16,31 @@ private:
 	float zPos;
 	float currYPos;
 	float color[3];
-	bool jumping;
-	bool goingUp;
-
 	float bodyPos;
 	float headPos;
+
+	bool jumping;
+	bool goingUp;
 
 public:
 
 	/* Constructors */
 	Spectator(float xPos, float yPos, float zPos, float color[3], bool jumping);
+
 	Spectator(float xPos, float yPos, float zPos, float red, float green, float blue, bool jumping);
+
 	Spectator(Spectator *s1);
+
 	Spectator(void);
 
 	/* Destructor */
 	~Spectator(void);
 
-	/* OpenGL code to draw the tree */
+	/* Draw */
 	void draw(void);
 
 	/* Move a spectator*/
 	void move(void);
-
-	/* Print */
-	void print(void);
 
 	/* Getters */
 	float getXPos(void);
@@ -49,7 +49,7 @@ public:
 	bool getJumping(void);
 	float getCurrYPos(void);
 	
-	/* Setters */
+	/* Setter */
 	void setJumping(void);
 };
 

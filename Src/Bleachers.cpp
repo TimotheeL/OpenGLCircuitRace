@@ -35,12 +35,15 @@ Bleachers::Bleachers(float xPos, float zPos, int width, int depth, float angle, 
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < depth; j++) {
 			float p = ((float)rand() / (RAND_MAX));
+
 			if (p < filling) {
-				float specX = (zPos - j - 1 - centerZ) * sin(rad) + (xPos + i + 0.5 - centerX) * cos(rad);
-				float specZ = (zPos - j - 1 - centerZ) * cos(rad) - (xPos + i + 0.5 - centerX) * sin(rad);
+				float specX = (zPos - j - 1 - centerZ) * sin(rad) + (xPos + i + 0.5f - centerX) * cos(rad);
+				float specZ = (zPos - j - 1 - centerZ) * cos(rad) - (xPos + i + 0.5f - centerX) * sin(rad);
+
 				specX += centerX;
 				specZ += centerZ;
-				spectators.push_back(new Spectator(specX, j * 0.5 + 0.5, specZ, ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), false));
+
+				spectators.push_back(new Spectator(specX, j * 0.5f + 0.5f, specZ, ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), false));
 			}
 		}
 	}
@@ -93,16 +96,19 @@ std::vector<Spectator> Bleachers::getSpectators(void) {
 	return spectators;
 }
 
+const GLfloat colorBleachers[4] = { 0.3, 0.3, 0.3, 1.0 };
+
 // Draw a bleachers
 void Bleachers::draw(void) {
-	glPushMatrix();
-	float colorBleachers[4] = { 0.3, 0.3, 0.3, 1.0 };
-	int i = 0; 
+	int i = 0;
 	int j = 0;
+
+	glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorBleachers);
 		glPushMatrix();
 			glTranslatef(xPos + width / 2, 0.0, zPos - depth / 2);
 			glRotatef(angle, 0.0, 1.0, 0.0);
+
 			for (int i = 0; i < depth; i++) {
 				glPushMatrix();
 					glTranslatef(0.0, i * 0.25 + 0.25, depth / 2 - i - 1.0);
@@ -111,6 +117,7 @@ void Bleachers::draw(void) {
 				glPopMatrix();
 			}
 		glPopMatrix();
+
 		Crowd::draw();
 	glPopMatrix();
 }

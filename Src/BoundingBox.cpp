@@ -34,7 +34,7 @@ const GLfloat blanc[] = { 1.0, 1.0, 1.0 };
 */
 
 /* Constructors */
-BoundingBox::BoundingBox(float objLength, float objWidth, float objHeight, Position *objCenter) {
+BoundingBox::BoundingBox(float objLength, float objWidth, float objHeight, Position* objCenter) {
 	length = objLength;
 	width = objWidth;
 	height = objHeight;
@@ -146,7 +146,7 @@ void BoundingBox::generateAxesSAT(void) {
 		float vec[2] = { p1.x - p2.x, p1.z - p2.z };
 
 		/* Normalize the vector */
-		float magnitude = sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
+		float magnitude = sqrtf(vec[0] * vec[0] + vec[1] * vec[1]);
 		vec[0] = vec[0] / magnitude;
 		vec[1] = vec[1] / magnitude;
 

@@ -88,10 +88,10 @@ void StraightLine::draw(void) {
 	glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
 		glTranslatef(pos.x, pos.y, pos.z);
+
 		glPushMatrix();
 			glBegin(GL_QUADS);
 				glNormal3f(0.0F, 1.0F, 0.0F);
-
 				for (unsigned int i = 0; i < vertices.size(); i++) {
 					glVertex3f(vertices[i].x - pos.x, vertices[i].y - pos.y, vertices[i].z - pos.z);
 				}

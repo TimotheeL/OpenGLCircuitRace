@@ -192,15 +192,15 @@ void Turn::mySolidCylindre(double hauteur, double rayon, int ns) {
 
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, grey);
 		glBegin(GL_POLYGON);
-		for (int i = 0; i <= ns; i++) {
-			float a = (2 * M_PI*i) / ns;
-			float cs = cos(a);
-			float sn = -sin(a);
-			glNormal3f(0.0, 1.0F, 0.0);
-			float x = rayon * cs;
-			float z = rayon * sn;
-			glVertex3f(x, hauteur, z);
-		}
+			for (int i = 0; i <= ns; i++) {
+				float a = (2 * M_PI*i) / ns;
+				float cs = cos(a);
+				float sn = -sin(a);
+				glNormal3f(0.0, 1.0F, 0.0);
+				float x = rayon * cs;
+				float z = rayon * sn;
+				glVertex3f(x, hauteur, z);
+			}
 		glEnd();
 	glPopMatrix();
 
@@ -214,6 +214,7 @@ void Turn::draw(void) {
 	float colorTrack[4] = { 0.15, 0.15, 0.15, 1.0 };
 	glPushMatrix();
 		glTranslatef(pos.x, pos.y, pos.z);
+
 		glPushMatrix();
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colorTrack);
 			glBegin(GL_QUAD_STRIP);
@@ -223,6 +224,7 @@ void Turn::draw(void) {
 				}
 			glEnd();
 		glPopMatrix();
+
 		glPushMatrix();
 			for (unsigned int i = 0; i < tires.size(); i++) {
 				if (i % 2 != 0) {

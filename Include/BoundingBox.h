@@ -58,7 +58,7 @@ public:
 	void update(Position *newPos);
 
 	/* Generate axes for the SAT */
-	void BoundingBox::generateAxesSAT(void);
+	void generateAxesSAT(void);
 
 	/* Draw the hitbox */
 	void draw(void);

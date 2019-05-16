@@ -65,7 +65,7 @@ void TrackPart::setWidth(float width) {
 
 // Rotate util function
 Position TrackPart::rotate(float x, float y, float z) {
-	float radangle = pos.angle * M_PI / 180.0;
+	float radangle = (float)(pos.angle * M_PI / 180.0f);
 	float rx = cos(radangle) * x + sin(radangle) * z;
 	float ry = y;
 	float rz = - sin(radangle) * x + cos(radangle) * z;

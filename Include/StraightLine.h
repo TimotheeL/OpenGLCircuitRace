@@ -25,7 +25,9 @@ protected:
 public:
 	/* Constructors */
 	StraightLine(void);
+
 	StraightLine(float width, float length, Position pos);
+
 	StraightLine(StraightLine *p1);
 
 	/* Destructor */
@@ -37,7 +39,7 @@ public:
 	/* Setters */
 	void setLength(float length);
 
-	/* Drawer */
+	/* Draw */
 	void draw(void);
 };
 

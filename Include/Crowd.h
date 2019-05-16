@@ -11,16 +11,19 @@
 #ifndef ____CROWD____
 #define ____CROWD____
 
+using namespace std;
+
 class Crowd {
 
 protected:
-	std::vector<Spectator> spectators;
+	vector<Spectator> spectators;
 
 public:
-
 	/* Constructors */
-	Crowd(std::vector<Spectator> spectators);
+	Crowd(vector<Spectator> spectators);
+
 	Crowd(Crowd *c1);
+
 	Crowd(void);
 
 	/* Destructor */
@@ -29,11 +32,11 @@ public:
 	/* Update spectators*/
 	void update(void);
 
-	/* OpenGL code to draw the crowd */
+	/* Draw */
 	void draw(void);
 
 	/* Getters */
-	std::vector<Spectator> getSpectators(void);
+	vector<Spectator> getSpectators(void);
 };
 
 #endif // Crowd

@@ -39,7 +39,6 @@ Checker::Checker(void)
 // Destructor
 Checker::~Checker(void) {}
 
-
 // Getters
 float Checker::getXPos(void) {
 	return this->xPos;

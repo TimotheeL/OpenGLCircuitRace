@@ -14,31 +14,30 @@ private:
 	float xPos;
 	float zPos;
 	float squareSize;
+
 	int width;
 	int height;
 
 public:
-
 	/* Constructors */
 	Checker(float xPos, float zPos, float squareSize, int width, int height);
+
 	Checker(Checker *c1);
+
 	Checker(void);
 
 	/* Destructor */
 	~Checker(void);
 
-	/* OpenGL code to draw the checker pattern */
+	/* Draw */
 	void draw(void);
 
-	/* Print */
-	//void print(void);
-
 	/* Getters */
-	float Checker::getXPos(void);
-	float Checker::getZPos(void);
-	float Checker::getSize(void);
-	int Checker::getWidth(void);
-	int Checker::getHeight(void);
+	float getXPos(void);
+	float getZPos(void);
+	float getSize(void);
+	int getWidth(void);
+	int getHeight(void);
 };
 
 #endif // Checker

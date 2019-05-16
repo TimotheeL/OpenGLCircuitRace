@@ -79,32 +79,37 @@ float Billboard::getHeight(void) {
 void Billboard::update(void) {
 }
 
+const GLfloat colorBoard[4] = { 0.8, 0.8, 0.8, 1.0 };
+const GLfloat colorMetal[4] = { 0.6, 0.6, 0.6, 1.0 };
+
 // Draw a billboard
 void Billboard::draw(void) {
-	float colorBoard[4] = { 0.8, 0.8, 0.8, 1.0 };
-	float colorMetal[4] = { 0.6, 0.6, 0.6, 1.0 };
 	glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorBoard);
 		glTranslatef(xPos, yPos, zPos);
 		glRotatef(angle, 0.0, 1.0, 0.0);
+
 		glPushMatrix();
 			glTranslatef(0.0, feetHeight + height / 2, 0.05);
 			glScalef(width, height, 0.1);
 			glutSolidCube(1.0);
 		glPopMatrix();
+
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, colorMetal);
 		glPushMatrix();
 			glTranslatef(-width / 2 + 0.07, feetHeight / 2, 0.0);
 			glScalef(0.1, feetHeight + height, 0.1);
 			glutSolidCube(1.0);
 		glPopMatrix();
+
 		glPushMatrix();
 			glTranslatef(width / 2 - 0.07, feetHeight / 2, 0.0);
 			glScalef(0.1, feetHeight + height, 0.1);
 			glutSolidCube(1.0);
 		glPopMatrix();
+
 		glPushMatrix();
-		glTranslatef(0.0, feetHeight + height / 2, 0.0);
+			glTranslatef(0.0, feetHeight + height / 2, 0.0);
 			glScalef(width - 0.04, 0.1, 0.1);
 			glutSolidCube(1.0);
 		glPopMatrix();

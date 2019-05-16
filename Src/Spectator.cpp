@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
@@ -24,11 +23,12 @@ Spectator::Spectator(float xPos, float yPos, float zPos, float color[3], bool ju
 	this->currYPos = yPos;
 	this->jumping = jumping;
 	this->goingUp = true;
+	this->bodyPos = yPos + 0.6;
+	this->headPos = yPos + 1.6;
+
 	for (int i = 0; i < 3; i++) {
 		this->color[i] = color[i];
 	}
-	this->bodyPos = yPos + 0.6;
-	this->headPos = yPos + 1.6;
 }
 
 Spectator::Spectator(float xPos, float yPos, float zPos, float red, float green, float blue, bool jumping) {
@@ -51,11 +51,12 @@ Spectator::Spectator(Spectator *s1) {
 	this->currYPos = s1->currYPos;
 	this->jumping = s1->jumping;
 	this->goingUp = s1->goingUp;
+	this->bodyPos = s1->bodyPos;
+	this->headPos = s1->headPos;
+
 	for (int i = 0; i < 3; i++) {
 		this->color[i] = s1->color[i];
 	}
-	this->bodyPos = s1->bodyPos;
-	this->headPos = s1->headPos;
 }
 
 Spectator::Spectator(void)
@@ -95,9 +96,11 @@ void Spectator::move(void) {
 	if (jumping || currYPos > yPos) {
 		if (currYPos > yPos + 1.0) {
 			goingUp = false;
-		} else if (currYPos < yPos) {
+		}
+		else if (currYPos < yPos) {
 			goingUp = true;
 		}
+
 		currYPos += goingUp ? 0.05 : -0.05;
 		bodyPos = currYPos + 0.6;
 		headPos = currYPos + 1.6;
@@ -112,6 +115,7 @@ void Spectator::draw(void) {
 			glScalef(0.6, 1.2, 0.6);
 			glutSolidSphere(0.5, 5, 4);
 		glPopMatrix();
+
 		glPushMatrix();
 			glTranslatef(xPos, headPos, zPos);
 			glutSolidSphere(0.3, 5, 4);

@@ -29,28 +29,34 @@ protected:
 	vector<Tree> trees;
 	vector<Spectator> spectators;
 	vector<Billboard> billboards;
+	vector<unsigned int> texturesID;
 
 public:
 	/* Constructors */
 	BRT(void);
 
 	/* getters */
-	vector<TrackPart*> *getTrack(void);
 	Checker getChecker(void);
+	vector<TrackPart*>* getTrack(void);
 	vector<Patch> getPatches(void);
 	vector<Tree> getTrees(void);
 	vector<Bleachers> getBleachers(void);
 	vector<Spectator> getSpectators(void);
 	vector<Billboard> getBillboards(void);
+	vector<unsigned int> getTexturesID(void);
 
-	/* update */
+	/* Update */
 	void update(void);
 
-	/* drawer */
+	/* Draw */
 	void draw(void);
 	void drawBoundingBoxes(void);
 
+	/* Collision */
 	void resetIsColliding(void);
+
+	/* Delete textures */
+	void deleteTextures(void);
 };
 
 #endif // BRT

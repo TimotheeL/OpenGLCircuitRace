@@ -83,7 +83,9 @@ public:
 
 	/* Collision handling */
 	virtual void collision(Object *o);
+
 	virtual void collision(TrackPart *tp);
+
 	virtual void collision(BRT *brt);
 };
 
